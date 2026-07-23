@@ -689,9 +689,17 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "14.0",
+  "version": "15.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "15.0",
+      "date": "2026-07-23",
+      "title": "Home Simplification",
+      "items": [
+        "Removed the redundant See What's Missing action from Home"
+      ]
+    },
     {
       "version": "14.0",
       "date": "2026-07-23",
