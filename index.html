@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21.4</title>
+<title>SpriteDex V21.5</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -206,9 +206,6 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
   background-repeat:no-repeat;
 }
 </style>
-<script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -366,30 +363,38 @@ function loadDatabase(){
  let oldMeta={};
  try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
  const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
- return{version:15,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
+ return{version:16,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
 async function init(){
- data=await fetch('sprites.json').then(r=>r.json());
- bind();buildFilters();render();
- if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+ try{
+  const response=await fetch('sprites.json',{cache:'no-store'});
+  if(!response.ok)throw new Error('Sprite data request failed');
+  data=await response.json();
+  allRowsCache=null;
+  bind();
+  buildFilters();
+  render();
+  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+ }catch(error){
+  console.error('SpriteDex startup failed:',error);
+  $('releaseStrip').innerHTML='<div class="empty"><b>SpriteDex could not load its collection data.</b><br>Refresh once. If this remains, reopen the site.</div>';
+  $('missingHome').textContent='—';
+ }
 }
 function bind(){
  document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>showView(b.dataset.view));
- $('search').addEventListener('input',renderCollection);
- $('statusFilter').addEventListener('change',renderCollection);
- $('missingSearch').addEventListener('input',renderMissing);
- $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
- $('exportBtn').onclick=exportBackup;
- $('importBtn').onclick=()=>$('fileInput').click();
- $('fileInput').onchange=importBackup;
- $('resetBtn').onclick=resetAll;
- $('showQrBtn').onclick=showMyQr;
- $('scanQrBtn').onclick=startQrScanner;
- $('closeShowQrBtn').onclick=closeShowQr;
- $('closeScanQrBtn').onclick=stopQrScanner;
- $('prevQrFrame').onclick=()=>changeQrFrame(-1);
- $('nextQrFrame').onclick=()=>changeQrFrame(1);
+ const on=(id,event,handler)=>{const el=$(id);if(el)el.addEventListener(event,handler)};
+ on('search','input',renderCollection);
+ on('statusFilter','change',renderCollection);
+ on('missingSearch','input',renderMissing);
+ on('modal','click',e=>{if(e.target===$('modal'))closeModal()});
+ on('showQrBtn','click',showMyQr);
+ on('scanQrBtn','click',startQrScanner);
+ on('closeShowQrBtn','click',closeShowQr);
+ on('closeScanQrBtn','click',stopQrScanner);
+ on('prevQrFrame','click',()=>changeQrFrame(-1));
+ on('nextQrFrame','click',()=>changeQrFrame(1));
 }
 function buildFilters(){}
 function save(r=true){persist();if(r)render()}
@@ -516,6 +521,33 @@ function toggleEntry(id,key){
 function toggleFavorite(){state()['favorite:'+currentSprite.id]=!state()['favorite:'+currentSprite.id];save();openSprite(currentSprite.id)}
 
 
+
+let qrLibrariesPromise=null;
+function loadScriptOnce(src,globalName){
+ if(globalName&&window[globalName])return Promise.resolve();
+ return new Promise((resolve,reject)=>{
+  const existing=document.querySelector(`script[data-src="${src}"]`);
+  if(existing){
+   existing.addEventListener('load',resolve,{once:true});
+   existing.addEventListener('error',reject,{once:true});
+   return;
+  }
+  const script=document.createElement('script');
+  script.src=src;script.async=true;script.dataset.src=src;
+  script.onload=resolve;script.onerror=reject;
+  document.head.appendChild(script);
+ });
+}
+function loadQrLibraries(){
+ if(qrLibrariesPromise)return qrLibrariesPromise;
+ qrLibrariesPromise=Promise.all([
+  loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),
+  loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),
+  loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')
+ ]);
+ return qrLibrariesPromise;
+}
+
 let qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 
 function compactFamilyPayload(){
@@ -546,8 +578,9 @@ function renderQrFrame(){
  $('prevQrFrame').disabled=qrFrameIndex===0;
  $('nextQrFrame').disabled=qrFrameIndex===qrFrames.length-1;
 }
-function showMyQr(){
+async function showMyQr(){
  try{
+  await loadQrLibraries();
   qrFrames=buildQrFrames();qrFrameIndex=0;
   $('qrOwnerName').textContent=activeProfile().name;
   renderQrFrame();
@@ -565,7 +598,7 @@ function changeQrFrame(delta){
  qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1,qrFrameIndex+delta));renderQrFrame();
 }
 async function startQrScanner(){
- if(typeof jsQR==='undefined'){alert('QR scanner did not load. Check your internet connection and reopen SpriteDex.');return}
+ try{await loadQrLibraries()}catch{alert('QR scanner could not load. Check your connection and try again.');return}
  qrParts={};
  $('scanMessage').textContent='Point the camera at the SpriteDex QR code.';
  $('scanQrModal').classList.add('open');

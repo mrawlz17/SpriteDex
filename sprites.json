@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "21.4",
+  "version": "21.5",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "21.5",
+      "date": "2026-07-23",
+      "title": "Startup Reliability Fix",
+      "items": [
+        "Removed stale bindings to deleted backup controls",
+        "Guarded all UI event bindings so missing controls cannot stop startup",
+        "QR libraries now load only when Show QR or Scan QR is used",
+        "Added visible startup error handling",
+        "Forced a fresh sprites.json request during startup"
+      ]
+    },
     {
       "version": "21.4",
       "date": "2026-07-23",
