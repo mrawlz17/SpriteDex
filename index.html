@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V17</title>
+<title>SpriteDex V18</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -120,23 +120,21 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .modal.open{display:flex}
 .sheet{
  width:100%;max-width:820px;max-height:93vh;overflow:auto;margin:auto;background:#0e1625;
- border:1px solid var(--line);border-radius:24px 24px 0 0;padding:15px 14px calc(25px + env(safe-area-inset-bottom))
+ border:1px solid var(--line);border-radius:24px 24px 0 0;padding:18px 16px calc(28px + env(safe-area-inset-bottom))
 }
 .sheetHead{display:flex;justify-content:space-between;align-items:center}
 .sheetHead h2{font-size:26px;margin:0}
 .close{width:39px;height:39px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:#fff}
-.detailHero{height:238px;border-radius:19px;background:#0b1220;display:grid;place-items:center;position:relative;margin:10px 0}
+.detailHero{height:300px;border-radius:24px;background:#0b1220;display:grid;place-items:center;position:relative;margin:12px 0 18px;overflow:hidden}
 .detailHero img{width:100%;height:100%;object-fit:contain}
 .favoriteBtn{position:absolute;right:10px;top:10px;width:43px;height:43px;border-radius:50%;border:1px solid var(--line);background:rgba(8,12,22,.8);color:#71809b;font-size:21px}
 .favoriteBtn.on{color:var(--gold)}
-.variantList{display:grid;gap:8px}
-.variantRow{display:grid;grid-template-columns:56px 1fr auto auto;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:8px}
-.variantRow.owned{border-color:#357b5b}
-.variantVisual{width:56px;height:56px;background:#0d1422;border-radius:12px;overflow:hidden}
-.variantVisual img{width:100%;height:100%;object-fit:contain}
-.toggle{width:39px;height:37px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:white}
+.variantList{display:grid;gap:10px}
+.variantRow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:14px 12px}
+.variantRow.owned{border-color:#357b5b;background:linear-gradient(180deg,#152b25,#111827)}
+.variantName{font-size:18px;font-weight:800}
+.toggle{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:white;font-size:18px}
 .toggle.on{background:#1d6649;border-color:#49ae7d}
-.counter{display:grid;grid-template-columns:38px 48px 38px;gap:6px}
 .toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#172238;border:1px solid #4b607f;color:#fff;border-radius:999px;padding:10px 15px;opacity:0;transition:.2s;z-index:90;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--muted);padding:35px}
@@ -236,8 +234,6 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 <div class="detailHero"><img id="detailImage"><button id="favoriteBtn" class="favoriteBtn" onclick="toggleFavorite()">★</button></div>
 <div id="detailMeta" class="subtle"></div>
 <div class="sectionHead"><h2>Variants</h2><span>✓ owned · ★ mastered</span></div><div id="variantList" class="variantList"></div>
-<div class="sectionHead"><h2>Duplicates</h2></div><div class="counter"><button class="btn" onclick="changeDuplicates(-1)">−</button><div id="duplicateCount" style="text-align:center;font-weight:900;padding:9px">0</div><button class="btn" onclick="changeDuplicates(1)">+</button></div>
-<div class="sectionHead"><h2>Notes</h2></div><textarea id="notes" rows="3" placeholder="Where found, chest type, notes…"></textarea>
 </div></div>
 
 <div id="toast" class="toast"></div>
@@ -279,7 +275,6 @@ function bind(){
  ['search','variantFilter','statusFilter'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderCollection));
  ['missingSearch','missingVariant','missingRarity'].forEach(id=>$(id).addEventListener(id==='missingSearch'?'input':'change',renderMissing));
  $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
- $('notes').oninput=()=>{if(currentSprite){state()['notes:'+currentSprite.id]=$('notes').value;save(false)}};
  $('exportBtn').onclick=exportBackup;
  $('importBtn').onclick=()=>$('fileInput').click();
  $('fileInput').onchange=importBackup;
@@ -380,14 +375,12 @@ function openSprite(id){
  currentSprite=data.sprites.find(s=>s.id===id);if(!currentSprite)return;
  $('detailName').textContent=currentSprite.name;
  $('detailImage').src=currentSprite.image;
- $('detailMeta').textContent=activeProfile().name+' · '+currentSprite.rarity+' Sprite · '+currentSprite.variants.length+' variants';
+ $('detailMeta').textContent=currentSprite.rarity+' · '+currentSprite.variants.length+' variants';
  $('favoriteBtn').classList.toggle('on',!!state()['favorite:'+id]);
- $('duplicateCount').textContent=state()['duplicates:'+id]||0;
  $('variantList').innerHTML=currentSprite.variants.map(v=>{
   const s=st(v.id);
-  return`<div class="variantRow ${s.owned?'owned':''}"><div class="variantVisual"><img src="${currentSprite.image}"></div><div><b>${v.name}</b><small style="display:block;color:var(--muted)">${v.rareHunt?'Rare hunt':'Released'}</small></div><button class="toggle ${s.owned?'on':''}" onclick="toggleEntry('${v.id}','owned')">✓</button><button class="toggle ${s.mastered?'on':''}" onclick="toggleEntry('${v.id}','mastered')">★</button></div>`
+  return`<div class="variantRow ${s.owned?'owned':''}"><div class="variantName">${v.name}</div><button class="toggle ${s.owned?'on':''}" onclick="toggleEntry('${v.id}','owned')" aria-label="Toggle owned">✓</button><button class="toggle ${s.mastered?'on':''}" onclick="toggleEntry('${v.id}','mastered')" aria-label="Toggle mastered">★</button></div>`
  }).join('');
- $('notes').value=state()['notes:'+id]||'';
  $('modal').classList.add('open');
 }
 function closeModal(){$('modal').classList.remove('open');currentSprite=null}
@@ -404,7 +397,6 @@ function toggleEntry(id,key){
  save();if(currentSprite)openSprite(currentSprite.id);
 }
 function toggleFavorite(){state()['favorite:'+currentSprite.id]=!state()['favorite:'+currentSprite.id];save();openSprite(currentSprite.id)}
-function changeDuplicates(d){const k='duplicates:'+currentSprite.id;state()[k]=Math.max(0,Number(state()[k]||0)+d);save();openSprite(currentSprite.id)}
 function exportBackup(){
  const blob=new Blob([JSON.stringify({version:11,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
@@ -429,7 +421,7 @@ function resetAll(){
  db=loadDatabase();save();toast('SpriteDex reset');
 }
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
-Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,changeDuplicates,addProfile,switchProfile,renameProfile,deleteProfile});
+Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,addProfile,switchProfile,renameProfile,deleteProfile});
 init();
 </script>
 </body>

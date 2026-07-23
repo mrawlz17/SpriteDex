@@ -689,9 +689,22 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "17.0",
+  "version": "18.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "18.0",
+      "date": "2026-07-23",
+      "title": "Simplified Sprite Detail",
+      "items": [
+        "Removed duplicates",
+        "Removed notes",
+        "Removed variant thumbnails",
+        "Removed repeated release labels",
+        "Simplified Sprite metadata",
+        "Added larger artwork and roomier variant rows"
+      ]
+    },
     {
       "version": "17.0",
       "date": "2026-07-23",
