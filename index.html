@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V20</title>
+<title>SpriteDex V21</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -186,7 +186,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 <header class="top">
  <div class="brand">
   <h1>SpriteDex</h1>
-  <button class="profileSwitch" onclick="showView('family')"><span class="avatar" id="topAvatar">M</span><span id="topProfileName">Mike</span><b>⌄</b></button>
+  <div class="profileSwitch" aria-label="Current collector"><div class="avatar" id="headerAvatar">M</div><div><b id="headerName">Mike</b></div></div>
  </div>
 </header>
 
@@ -241,9 +241,20 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 </section>
 
 
+
 <section id="family" class="view">
  <div class="sectionHead"><h2>Family</h2><span>Shared collection view</span></div>
- <div id="familyEmpty" class="familyCallout"><b>Add a family member</b><span>Export a read-only snapshot from one phone, then import it on the other. Neither collection can overwrite the other.</span></div>
+
+ <div id="familyEmpty" class="empty" style="padding:28px 12px">
+  <b style="display:block;font-size:18px;color:var(--text);margin-bottom:6px">No family connected</b>
+  <span>Show your QR or scan a family member’s QR to get started.</span>
+ </div>
+
+ <div class="qrActions">
+  <button class="qrAction" id="showQrBtn"><b>Show QR</b><span>Let a family member scan your collection</span></button>
+  <button class="qrAction" id="scanQrBtn"><b>Scan QR</b><span>Add or refresh a family collection</span></button>
+ </div>
+
  <div id="familySummary" hidden>
   <div class="familyGrid">
    <div class="familyMetric"><b id="familyOwned">0</b><span>Owned by the family</span></div>
@@ -251,32 +262,18 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
    <div class="familyMetric"><b id="familyMissingAll">0</b><span>Needed by everyone</span></div>
    <div class="familyMetric"><b id="familyMembersCount">1</b><span>Family members</span></div>
   </div>
+
+  <div class="sectionHead"><h2>Family members</h2><span>Read-only snapshots</span></div>
+  <div id="familyMemberList" class="profileList"></div>
+
   <div class="sectionHead"><h2>Available to share</h2><span>Who can help whom</span></div>
   <div id="shareOpportunities" class="shareList"></div>
+
   <div class="sectionHead"><h2>Still needed by everyone</h2><span id="neededByAllCount"></span></div>
   <div id="neededByAll" class="grouped"></div>
  </div>
- <div class="qrActions">
-  <button class="qrAction" id="showQrBtn"><b>Show My QR</b><span>Let a family member scan your current collection</span></button>
-  <button class="qrAction" id="scanQrBtn"><b>Scan Family QR</b><span>Add or refresh a read-only family collection</span></button>
- </div>
- <details class="advancedDetails">
-  <summary>Advanced file sharing</summary>
-  <button class="primaryAction" id="exportFamilyBtn"><div><b>Export family snapshot</b><span>Create a JSON file</span></div><strong>↗</strong></button>
-  <button class="primaryAction" id="importFamilyBtn"><div><b>Import family snapshot</b><span>Select a JSON file</span></div><strong>＋</strong></button>
-  <input id="familyFileInput" type="file" accept="application/json" hidden>
- </details>
- <div class="sectionHead"><h2>Family members</h2><span>Imported snapshots</span></div>
- <div id="familyMemberList" class="profileList"></div>
- <div class="sectionHead"><h2>This device</h2><span>Your local collector</span></div>
- <div id="profileList" class="profileList"></div>
- <button class="primaryAction" onclick="addProfile()"><div><b>Add local collector</b><span>Create another independent collection on this device</span></div><strong>＋</strong></button>
- <div class="sectionHead"><h2>Data</h2><span>Local backups</span></div>
- <div class="settings">
-  <div class="setting"><button class="btn primary" id="exportBtn">Export full backup</button> <button class="btn" id="importBtn">Import full backup</button><input id="fileInput" type="file" accept="application/json" hidden></div>
-  <div class="setting"><button class="btn danger" id="resetBtn">Erase all SpriteDex data</button></div>
- </div>
 </section>
+
 
 </main>
 </div>
@@ -328,6 +325,7 @@ const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
 db.familySnapshots=db.familySnapshots||[];
+if(db.profiles&&db.profiles.length>1){const keep=db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];db.profiles=[keep];db.activeProfileId=keep.id;localStorage.setItem('spritedex-db',JSON.stringify(db));}
 let data={sprites:[]},currentSprite=null;
 
 const $=id=>document.getElementById(id);
@@ -348,7 +346,7 @@ function loadDatabase(){
  let oldMeta={};
  try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
  const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
- return{version:13,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
+ return{version:14,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
 async function init(){
@@ -371,9 +369,6 @@ function bind(){
  $('closeScanQrBtn').onclick=stopQrScanner;
  $('prevQrFrame').onclick=()=>changeQrFrame(-1);
  $('nextQrFrame').onclick=()=>changeQrFrame(1);
- $('exportFamilyBtn').onclick=exportFamilySnapshot;
- $('importFamilyBtn').onclick=()=>$('familyFileInput').click();
- $('familyFileInput').onchange=importFamilySnapshot;
 }
 function buildFilters(){
  const variants=[...new Set(all().map(x=>x.name))];
@@ -394,11 +389,13 @@ function showView(id){
  window.scrollTo({top:0,behavior:'smooth'});render();
 }
 function render(){renderHeader();renderHome();renderCollection();renderMissing();renderFamily()}
+
 function renderHeader(){
- const p=activeProfile();
- $('topProfileName').textContent=p.name;
- $('topAvatar').textContent=p.name.trim().charAt(0).toUpperCase()||'?';
+ const p=activeProfile(),m=metrics(p),initial=p.name.trim().charAt(0).toUpperCase()||'?';
+ $('headerName').textContent=p.name;
+ $('headerAvatar').textContent=initial;
 }
+
 function renderHome(){
  const p=activeProfile(),m=metrics(),pct=Math.round(m.pct*100);
  $('homeName').textContent=p.name;
@@ -436,6 +433,7 @@ function renderMissing(){
  $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead" onclick="openSprite('${g.sprite.id}')"><div><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity} · Tap to view</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<span class="tag">${x.name}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
 }
 
+
 function renderFamily(){
  const current=activeProfile(),snapshots=db.familySnapshots||[];
  $('familyMembersCount').textContent=1+snapshots.length;
@@ -443,14 +441,12 @@ function renderFamily(){
   const sm=metrics({state:s.state||{}}),initial=(s.name||'?').trim().charAt(0).toUpperCase()||'?';
   const updated=s.sharedAt?new Date(s.sharedAt).toLocaleDateString():'Unknown';
   return`<div class="familyMember"><div class="profileAvatar">${initial}</div><div><b>${s.name}</b><small>${sm.owned} owned · Updated ${updated}</small></div><button class="btn danger" onclick="removeFamilyMember('${s.id}')">×</button></div>`
- }).join('')||'<div class="empty">No family members imported yet.</div>';
- $('profileList').innerHTML=db.profiles.map(p=>{
-  const pm=metrics(p),initial=p.name.trim().charAt(0).toUpperCase()||'?';
-  return`<div class="profileCard ${p.id===db.activeProfileId?'active':''}"><div class="profileAvatar">${initial}</div><div onclick="switchProfile('${p.id}')"><b>${p.name}</b><small>${pm.owned} owned · ${pm.missing} missing</small></div><div class="actions"><button class="btn" onclick="renameProfile('${p.id}')">Edit</button>${db.profiles.length>1?`<button class="btn danger" onclick="deleteProfile('${p.id}')">×</button>`:''}</div></div>`
- }).join('');
+ }).join('')||'<div class="empty">No family members connected yet.</div>';
+
  $('familyEmpty').hidden=snapshots.length>0;
  $('familySummary').hidden=snapshots.length===0;
  if(!snapshots.length)return;
+
  const rows=all();
  const people=[{id:'local',name:current.name,state:current.state||{}},...snapshots];
  const familyOwned=rows.filter(x=>people.some(p=>p.state[x.id]?.owned));
@@ -459,6 +455,7 @@ function renderFamily(){
  $('familyPercent').textContent=Math.round(familyOwned.length/rows.length*100)+'%';
  $('familyMissingAll').textContent=neededByAll.length;
  $('neededByAllCount').textContent=neededByAll.length+' variants';
+
  const opportunities=[];
  people.forEach(giver=>people.forEach(receiver=>{
   if(giver.id===receiver.id)return;
@@ -466,29 +463,15 @@ function renderFamily(){
   if(canShare.length)opportunities.push({giver,receiver,rows:canShare});
  }));
  $('shareOpportunities').innerHTML=opportunities.map(o=>`<div class="shareGroup"><div class="shareGroupHead"><div><h3>${o.giver.name} can help ${o.receiver.name}</h3><small>${o.rows.length} variants available to share</small></div><span class="badge">${o.rows.length}</span></div><div class="tags">${o.rows.slice(0,8).map(x=>`<span class="tag">${x.sprite.name} · ${x.name}</span>`).join('')}${o.rows.length>8?`<span class="tag">+ ${o.rows.length-8} more</span>`:''}</div></div>`).join('')||'<div class="empty">No sharing opportunities right now.</div>';
+
  const groups=data.sprites.map(s=>({sprite:s,rows:neededByAll.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
  $('neededByAll').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} needed</span></div><div class="tags">${g.rows.map(x=>`<span class="tag">${x.name}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Your family has every released variant.</div>';
 }
 
-function addProfile(){
- const name=prompt('Collector name','Son');
- if(!name||!name.trim())return;
- const p={id:makeId(),name:name.trim().slice(0,24),state:{},meta:{recentFound:[]}};
- db.profiles.push(p);db.activeProfileId=p.id;save();toast('Collector added');
-}
-function switchProfile(id){db.activeProfileId=id;save();showView('home');toast('Profile switched')}
-function renameProfile(id){
- const p=db.profiles.find(x=>x.id===id);if(!p)return;
- const name=prompt('Collector name',p.name);
- if(name&&name.trim()){p.name=name.trim().slice(0,24);save()}
-}
-function deleteProfile(id){
- const p=db.profiles.find(x=>x.id===id);if(!p||db.profiles.length===1)return;
- if(!confirm(`Delete ${p.name} and all of this profile's progress?`))return;
- db.profiles=db.profiles.filter(x=>x.id!==id);
- if(db.activeProfileId===id)db.activeProfileId=db.profiles[0].id;
- save();toast('Collector deleted');
-}
+
+
+
+
 function openSprite(id){
  currentSprite=data.sprites.find(s=>s.id===id);if(!currentSprite)return;
  $('detailName').textContent=currentSprite.name;
@@ -627,6 +610,7 @@ function importQrPayload(d){
  (d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});
  const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state};
  db.familySnapshots=db.familySnapshots||[];
+if(db.profiles&&db.profiles.length>1){const keep=db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];db.profiles=[keep];db.activeProfileId=keep.id;localStorage.setItem('spritedex-db',JSON.stringify(db));}
  const existing=db.familySnapshots.findIndex(x=>x.id===snapshot.id);
  if(existing>=0)db.familySnapshots[existing]=snapshot;else db.familySnapshots.push(snapshot);
  save();
@@ -634,33 +618,8 @@ function importQrPayload(d){
  setTimeout(()=>{stopQrScanner();showView('family');toast(existing>=0?'Family member updated':'Family member added')},900);
 }
 
-function exportFamilySnapshot(){
- const p=activeProfile(),cleanState={};
- Object.entries(p.state||{}).forEach(([k,v])=>{
-  if(k.startsWith('favorite:'))return;
-  if(v&&typeof v==='object'&&(v.owned||v.mastered))cleanState[k]={owned:!!v.owned,mastered:!!v.mastered};
- });
- const payload={type:'spritedex-family-snapshot',version:2,id:p.id,name:p.name,sharedAt:new Date().toISOString(),state:cleanState};
- const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);
- a.download='SpriteDex-'+p.name.replace(/[^a-z0-9]+/gi,'-')+'-family.json';a.click();
- toast('Family snapshot created');
-}
-function importFamilySnapshot(e){
- const f=e.target.files[0];if(!f)return;
- const r=new FileReader();
- r.onload=()=>{try{
-  const d=JSON.parse(r.result);
-  if(d.type!=='spritedex-family-snapshot'||!d.id||!d.name||!d.state)throw new Error();
-  if(d.id===activeProfile().id)throw new Error('same');
-  db.familySnapshots=db.familySnapshots||[];
-  const existing=db.familySnapshots.findIndex(x=>x.id===d.id);
-  const snapshot={id:d.id,name:String(d.name).slice(0,24),sharedAt:d.sharedAt||new Date().toISOString(),state:d.state};
-  if(existing>=0)db.familySnapshots[existing]=snapshot;else db.familySnapshots.push(snapshot);
-  e.target.value='';save();toast(existing>=0?'Family member updated':'Family member added');
- }catch(err){e.target.value='';alert(err.message==='same'?'This snapshot belongs to the active collector on this phone.':'Invalid SpriteDex family snapshot')}};
- r.readAsText(f);
-}
+
+
 function removeFamilyMember(id){
  const p=(db.familySnapshots||[]).find(x=>x.id===id);if(!p)return;
  if(!confirm(`Remove ${p.name} from Family? Their original collection is not affected.`))return;
@@ -668,7 +627,7 @@ function removeFamilyMember(id){
 }
 
 function exportBackup(){
- const blob=new Blob([JSON.stringify({version:13,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
+ const blob=new Blob([JSON.stringify({version:14,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 function importBackup(e){
@@ -680,6 +639,7 @@ function importBackup(e){
   else if(d.profiles)db=d;
   else throw new Error();
   db.familySnapshots=db.familySnapshots||[];
+if(db.profiles&&db.profiles.length>1){const keep=db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];db.profiles=[keep];db.activeProfileId=keep.id;localStorage.setItem('spritedex-db',JSON.stringify(db));}
   save();toast('All profiles restored');
  }catch{alert('Invalid SpriteDex backup')}};
  r.readAsText(f);
@@ -692,7 +652,7 @@ function resetAll(){
  db=loadDatabase();save();toast('SpriteDex reset');
 }
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
-Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,addProfile,switchProfile,renameProfile,deleteProfile,removeFamilyMember});
+Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,removeFamilyMember});
 init();
 </script>
 </body>

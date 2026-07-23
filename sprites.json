@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "20.0",
+  "version": "21.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "21.0",
+      "date": "2026-07-23",
+      "title": "One Owner Per Device",
+      "items": [
+        "Removed local collector creation and switching",
+        "Removed JSON family sharing from the Family screen",
+        "Simplified Family to Show QR and Scan QR",
+        "Replaced the large intro card with a compact empty state",
+        "Kept imported family collections read-only"
+      ]
+    },
     {
       "version": "20.0",
       "date": "2026-07-23",
