@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21.3</title>
+<title>SpriteDex V21.4</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -177,40 +177,14 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 @media(max-width:390px){.qrActions{grid-template-columns:1fr}}
 
 
-.filterRow select{
-  display:block;
-  width:100%;
-  min-width:0;
-  height:56px;
-  margin:0;
-  padding:0 46px 0 18px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background-color:var(--card);
-  color:var(--text);
-  font:inherit;
-  line-height:normal;
-  box-sizing:border-box;
-  -webkit-appearance:none;
-  appearance:none;
-  background-image:
-    linear-gradient(45deg,transparent 50%,var(--muted) 50%),
-    linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-  background-position:
-    calc(100% - 21px) 24px,
-    calc(100% - 15px) 24px;
-  background-size:6px 6px,6px 6px;
-  background-repeat:no-repeat;
-}
-.filterRow select:focus{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
+
 
 
 .statusOnly{display:block}
 .statusOnly select{
+  display:block;
   width:100%;
+  min-width:0;
   height:56px;
   margin:0;
   padding:0 46px 0 18px;
@@ -267,15 +241,12 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div class="sectionHead"><h2>Collection</h2><span id="collectionCount"></span></div>
  <div class="controls">
   <input id="search" placeholder="Search Sprites…">
-  <div class="filterrow">
-   <select id="variantFilter"><option value="" selected>All variants</option></select>
-   <select id="statusFilter">
+  <div class="filterrow statusOnly"><select id="statusFilter">
     <option value="">All status</option>
     <option value="missing">Has missing</option>
     <option value="complete">Complete</option>
     <option value="favorite">Favorites</option>
-   </select>
-  </div>
+   </select></div>
  </div>
  <div id="spriteGrid" class="spriteGrid"></div>
 </section>
@@ -284,13 +255,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div class="sectionHead"><h2><span id="missingTotal">0</span> Missing</h2><span id="missingProfileLabel"></span></div>
  <div class="controls">
   <input id="missingSearch" placeholder="Search missing entries…">
-  <div class="filterrow">
-   <select id="missingVariant"><option value="" selected>All variants</option></select>
-   <select id="missingRarity">
-    <option value="">All rarities</option>
-    <option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option>
-   </select>
-  </div>
+  
  </div>
  <div id="missingGrouped" class="grouped"></div>
 </section>
@@ -388,7 +353,7 @@ const activeProfile=()=>db.profiles.find(p=>p.id===db.activeProfileId)||db.profi
 const state=()=>activeProfile().state;
 const meta=()=>activeProfile().meta;
 const st=id=>state()[id]||{};
-const all=()=>data.sprites.flatMap(s=>s.variants.map(v=>({...v,sprite:s})));
+const all=()=>allRowsCache||(allRowsCache=data.sprites.flatMap(s=>s.variants.map(v=>({...v,sprite:s}))));
 
 function makeId(){return 'p-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
 function loadDatabase(){
@@ -411,8 +376,9 @@ async function init(){
 }
 function bind(){
  document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>showView(b.dataset.view));
- ['search','variantFilter','statusFilter'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderCollection));
- ['missingSearch','missingVariant','missingRarity'].forEach(id=>$(id).addEventListener(id==='missingSearch'?'input':'change',renderMissing));
+ $('search').addEventListener('input',renderCollection);
+ $('statusFilter').addEventListener('change',renderCollection);
+ $('missingSearch').addEventListener('input',renderMissing);
  $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
  $('exportBtn').onclick=exportBackup;
  $('importBtn').onclick=()=>$('fileInput').click();
@@ -459,12 +425,11 @@ function renderHome(){
  $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
 }
 function renderCollection(){
- const q=$('search').value.toLowerCase().trim(),vf=$('variantFilter').value,sf=$('statusFilter').value;
+ const q=$('search').value.toLowerCase().trim(),sf=$('statusFilter').value;
  const shown=data.sprites.filter(s=>{
-  const rel=vf?s.variants.filter(v=>v.name===vf):s.variants;
-  const owned=rel.filter(v=>st(v.id).owned).length;
+  const owned=s.variants.filter(v=>st(v.id).owned).length;
   const txt=(s.name+' '+s.rarity+' '+s.variants.map(v=>v.name).join(' ')).toLowerCase();
-  return(!q||txt.includes(q))&&(!vf||rel.length)&&(!sf||(sf==='missing'&&owned<rel.length)||(sf==='complete'&&owned===rel.length)||(sf==='favorite'&&state()['favorite:'+s.id]));
+  return(!q||txt.includes(q))&&(!sf||(sf==='missing'&&owned<s.variants.length)||(sf==='complete'&&owned===s.variants.length)||(sf==='favorite'&&state()['favorite:'+s.id]));
  });
  $('collectionCount').textContent=shown.length+' Sprites';
  $('spriteGrid').innerHTML=shown.map(s=>{
@@ -473,8 +438,8 @@ function renderCollection(){
  }).join('')||'<div class="empty">No matching Sprites.</div>';
 }
 function missingRows(){
- const q=$('missingSearch').value.toLowerCase().trim(),vf=$('missingVariant').value,rf=$('missingRarity').value;
- return all().filter(x=>!st(x.id).owned&&(!q||(x.sprite.name+' '+x.name+' '+x.sprite.rarity).toLowerCase().includes(q))&&(!vf||x.name===vf)&&(!rf||x.sprite.rarity===rf));
+ const q=$('missingSearch').value.toLowerCase().trim();
+ return all().filter(x=>!st(x.id).owned&&(!q||(x.sprite.name+' '+x.name+' '+x.sprite.rarity).toLowerCase().includes(q)));
 }
 function renderMissing(){
  const rows=missingRows(),p=activeProfile();
@@ -678,7 +643,7 @@ function removeFamilyMember(id){
 }
 
 function exportBackup(){
- const blob=new Blob([JSON.stringify({version:15,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
+ const blob=new Blob([JSON.stringify({version:14,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 function importBackup(e){
