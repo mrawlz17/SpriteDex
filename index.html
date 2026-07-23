@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V13</title>
+<title>SpriteDex V14</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -59,6 +59,7 @@ main{padding:18px 16px calc(92px + env(safe-area-inset-bottom))}
 }
 .primaryAction b{font-size:17px}
 .primaryAction span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.compactAction{padding:13px 15px;margin-top:16px}
 .sectionHead{display:flex;justify-content:space-between;align-items:end;margin:24px 0 10px}
 .sectionHead h2{margin:0;font-size:21px}
 .sectionHead span{font-size:11px;color:var(--muted)}
@@ -109,7 +110,8 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 }
 .navInner{width:min(100%,820px);display:grid;grid-template-columns:repeat(4,1fr)}
 .navBtn{border:0;background:none;color:var(--muted);font-size:10px;padding:5px 2px}
-.navBtn i{display:block;font-style:normal;font-size:20px;margin-bottom:2px}
+.navBtn i{display:block;font-style:normal;margin-bottom:3px}
+.navBtn i svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .navBtn.active{color:var(--cyan)}
 .modal{position:fixed;inset:0;background:rgba(2,5,10,.78);z-index:60;display:none;align-items:flex-end}
 .modal.open{display:flex}
@@ -160,12 +162,10 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
    <div class="stat"><b id="completeHome">0</b><span>Completed</span></div>
    <div class="stat"><b id="missingHome">0</b><span>Missing</span></div>
   </div>
-  <button class="primaryAction" onclick="showView('missing')"><div><b>See what’s missing</b><span>Open the fast collection checklist</span></div><strong>→</strong></button>
+  <button class="primaryAction compactAction" onclick="showView('missing')"><div><b>See what’s missing</b><span>View your remaining collection</span></div><strong>→</strong></button>
  </div>
  <div class="sectionHead"><h2>Latest releases</h2><span>Newest Sprites</span></div>
  <div id="releaseStrip" class="strip"></div>
- <div class="sectionHead"><h2>Recently found</h2><span id="recentProfileLabel"></span></div>
- <div id="recentHome" class="recentList"></div>
 </section>
 
 <section id="collection" class="view">
@@ -223,10 +223,10 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 </div>
 
 <nav class="bottom"><div class="navInner">
-<button class="navBtn active" data-view="home"><i>⌂</i>Home</button>
-<button class="navBtn" data-view="collection"><i>▦</i>Collection</button>
-<button class="navBtn" data-view="missing"><i>?</i>Missing</button>
-<button class="navBtn" data-view="profiles"><i>♙</i>Collectors</button>
+<button class="navBtn active" data-view="home"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5z"/></svg></i>Home</button>
+<button class="navBtn" data-view="collection"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H11v17H5.5A1.5 1.5 0 0 0 4 21.5zm16 0A1.5 1.5 0 0 0 18.5 3H13v17h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg></i>Collection</button>
+<button class="navBtn" data-view="missing"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4zm1 4h4m-4 4h4m-4 4h2"/></svg></i>Missing</button>
+<button class="navBtn" data-view="profiles"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm6.5-1a3 3 0 1 0 0-6m-13 16v-2a5.5 5.5 0 0 1 11 0v2zm11 0v-1.5a4.5 4.5 0 0 0-3-4.24"/></svg></i>Collectors</button>
 </div></nav>
 
 <div class="modal" id="modal"><div class="sheet">
@@ -316,10 +316,7 @@ function renderHome(){
  $('masteredHome').textContent=m.mastered;
  $('completeHome').textContent=m.complete;
  $('missingHome').textContent=m.missing;
- $('recentProfileLabel').textContent=p.name;
  $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
- const recent=(meta().recentFound||[]).slice(0,6);
- $('recentHome').innerHTML=recent.map(r=>{const x=all().find(a=>a.id===r.id);return x?`<div class="recent"><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div><small style="color:var(--muted)">${new Date(r.at).toLocaleDateString()}</small></div>`:''}).join('')||'<div class="empty">No recent finds for this collector.</div>';
 }
 function renderCollection(){
  const q=$('search').value.toLowerCase().trim(),vf=$('variantFilter').value,sf=$('statusFilter').value;

@@ -689,9 +689,19 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "13.0",
+  "version": "14.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "14.0",
+      "date": "2026-07-23",
+      "title": "Home Cleanup",
+      "items": [
+        "Removed Recently Found from Home",
+        "Added consistent SVG bottom navigation icons",
+        "Made the See What's Missing action more compact"
+      ]
+    },
     {
       "version": "13.0",
       "date": "2026-07-23",
