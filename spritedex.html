@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b1020">
+<title>SpriteDex</title>
+<style>
+:root{--bg:#090d18;--panel:#12182a;--panel2:#192139;--text:#f7f8fb;--muted:#9ca7bf;--accent:#70e1f5;--good:#71e09a;--line:#28324b}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#11182b 0,#090d18 32%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:5;padding:max(16px,env(safe-area-inset-top)) 16px 14px;background:rgba(9,13,24,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:28px;letter-spacing:-.7px} .sub{color:var(--muted);font-size:13px;margin-top:3px}
+main{padding:14px 14px calc(100px + env(safe-area-inset-bottom));max-width:760px;margin:auto}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px} .stat b{display:block;font-size:22px} .stat span{font-size:11px;color:var(--muted)}
+.progress{height:10px;background:#222b42;border-radius:99px;overflow:hidden;margin:10px 0 14px} .bar{height:100%;background:linear-gradient(90deg,#70e1f5,#9b7cff);width:0}
+.controls{display:grid;gap:9px;margin-bottom:12px} input,select,button{font:inherit}
+input,select{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:13px;padding:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.actions{display:flex;gap:8px;overflow:auto;padding-bottom:2px} button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:10px 12px;white-space:nowrap}
+button.primary{background:#243c5b;border-color:#41658d}
+.list{display:grid;gap:9px} .card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px}
+.card.owned{border-color:#2d7f59;background:linear-gradient(90deg,rgba(52,147,98,.16),var(--panel))}
+.name{font-weight:700;font-size:16px} .variant{font-size:12px;color:var(--muted);margin-top:2px}
+.badge{display:inline-block;margin-left:6px;padding:2px 7px;border-radius:999px;background:#252f48;color:#cbd4e7;font-size:10px;vertical-align:2px}
+.toggles{display:flex;gap:7px} .toggle{width:44px;height:38px;border-radius:11px;padding:0;font-size:18px} .toggle.on{background:#195e42;border-color:#3aa875}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+footer{position:fixed;bottom:0;left:0;right:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(9,13,24,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<header><h1>SpriteDex</h1><div class="sub">Fortnite Sprite Collection • 91 released entries</div></header>
+<main>
+<section class="stats">
+<div class="stat"><b id="ownedCount">0</b><span>Owned</span></div>
+<div class="stat"><b id="masteredCount">0</b><span>Mastered</span></div>
+<div class="stat"><b id="missingCount">91</b><span>Missing</span></div>
+</section>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<section class="controls">
+<input id="search" placeholder="Search sprites…">
+<div class="row">
+<select id="variant"><option value="">All variants</option><option>Base</option><option>Gold</option><option>Gummy</option><option>Galaxy</option><option>Holofoil</option><option>Cube</option></select>
+<select id="status"><option value="">All status</option><option value="owned">Owned</option><option value="missing">Missing</option><option value="mastered">Mastered</option></select>
+</div>
+<div class="actions">
+<button class="primary" id="missingBtn">Show missing</button>
+<button id="exportBtn">Export backup</button>
+<button id="importBtn">Import backup</button>
+<button id="resetBtn">Reset</button>
+<input type="file" id="fileInput" accept="application/json" hidden>
+</div>
+</section>
+<section class="list" id="list"></section>
+</main>
+<footer>Tap ✓ for owned • Tap ★ for mastered • Saved automatically on this device</footer>
+<script>
+const sprites=[
+{id:"batman-base",name:"Batman",variant:"Base"},
+{id:"batman-gold",name:"Batman",variant:"Gold"},
+{id:"batman-gummy",name:"Batman",variant:"Gummy"},
+{id:"batman-galaxy",name:"Batman",variant:"Galaxy"},
+{id:"batman-holofoil",name:"Batman",variant:"Holofoil"},
+{id:"batman-cube",name:"Batman",variant:"Cube"},
+{id:"water-base",name:"Water",variant:"Base"},
+{id:"water-gold",name:"Water",variant:"Gold"},
+{id:"water-gummy",name:"Water",variant:"Gummy"},
+{id:"water-galaxy",name:"Water",variant:"Galaxy"},
+{id:"water-holofoil",name:"Water",variant:"Holofoil"},
+{id:"earth-base",name:"Earth",variant:"Base"},
+{id:"earth-gold",name:"Earth",variant:"Gold"},
+{id:"earth-gummy",name:"Earth",variant:"Gummy"},
+{id:"earth-galaxy",name:"Earth",variant:"Galaxy"},
+{id:"earth-cube",name:"Earth",variant:"Cube"},
+{id:"fire-base",name:"Fire",variant:"Base"},
+{id:"fire-gold",name:"Fire",variant:"Gold"},
+{id:"fire-gummy",name:"Fire",variant:"Gummy"},
+{id:"fire-galaxy",name:"Fire",variant:"Galaxy"},
+{id:"fire-holofoil",name:"Fire",variant:"Holofoil"},
+{id:"fire-cube",name:"Fire",variant:"Cube"},
+{id:"duck-base",name:"Duck",variant:"Base"},
+{id:"duck-gold",name:"Duck",variant:"Gold"},
+{id:"duck-gummy",name:"Duck",variant:"Gummy"},
+{id:"duck-galaxy",name:"Duck",variant:"Galaxy"},
+{id:"ghost-base",name:"Ghost",variant:"Base"},
+{id:"ghost-gold",name:"Ghost",variant:"Gold"},
+{id:"ghost-gummy",name:"Ghost",variant:"Gummy"},
+{id:"ghost-galaxy",name:"Ghost",variant:"Galaxy"},
+{id:"ghost-holofoil",name:"Ghost",variant:"Holofoil"},
+{id:"dream-base",name:"Dream",variant:"Base"},
+{id:"dream-gold",name:"Dream",variant:"Gold"},
+{id:"dream-gummy",name:"Dream",variant:"Gummy"},
+{id:"dream-galaxy",name:"Dream",variant:"Galaxy"},
+{id:"dream-cube",name:"Dream",variant:"Cube"},
+{id:"demon-base",name:"Demon",variant:"Base"},
+{id:"demon-gold",name:"Demon",variant:"Gold"},
+{id:"demon-gummy",name:"Demon",variant:"Gummy"},
+{id:"demon-galaxy",name:"Demon",variant:"Galaxy"},
+{id:"punk-base",name:"Punk",variant:"Base"},
+{id:"punk-gold",name:"Punk",variant:"Gold"},
+{id:"punk-gummy",name:"Punk",variant:"Gummy"},
+{id:"punk-galaxy",name:"Punk",variant:"Galaxy"},
+{id:"punk-cube",name:"Punk",variant:"Cube"},
+{id:"king-base",name:"King",variant:"Base"},
+{id:"king-gold",name:"King",variant:"Gold"},
+{id:"king-gummy",name:"King",variant:"Gummy"},
+{id:"king-galaxy",name:"King",variant:"Galaxy"},
+{id:"king-holofoil",name:"King",variant:"Holofoil"},
+{id:"burnt-peanut-base",name:"Burnt Peanut",variant:"Base"},
+{id:"vini-jr-base",name:"Vini Jr.",variant:"Base"},
+{id:"zero-point-base",name:"Zero Point",variant:"Base"},
+{id:"zero-point-gold",name:"Zero Point",variant:"Gold"},
+{id:"zero-point-gummy",name:"Zero Point",variant:"Gummy"},
+{id:"zero-point-galaxy",name:"Zero Point",variant:"Galaxy"},
+{id:"fishy-base",name:"Fishy",variant:"Base"},
+{id:"fishy-gold",name:"Fishy",variant:"Gold"},
+{id:"fishy-gummy",name:"Fishy",variant:"Gummy"},
+{id:"fishy-galaxy",name:"Fishy",variant:"Galaxy"},
+{id:"fishy-cube",name:"Fishy",variant:"Cube"},
+{id:"striker-base",name:"Striker",variant:"Base"},
+{id:"striker-gold",name:"Striker",variant:"Gold"},
+{id:"striker-gummy",name:"Striker",variant:"Gummy"},
+{id:"striker-galaxy",name:"Striker",variant:"Galaxy"},
+{id:"striker-holofoil",name:"Striker",variant:"Holofoil"},
+{id:"aura-base",name:"Aura",variant:"Base"},
+{id:"aura-gold",name:"Aura",variant:"Gold"},
+{id:"aura-gummy",name:"Aura",variant:"Gummy"},
+{id:"aura-galaxy",name:"Aura",variant:"Galaxy"},
+{id:"boss-base",name:"Boss",variant:"Base"},
+{id:"boss-gold",name:"Boss",variant:"Gold"},
+{id:"boss-gummy",name:"Boss",variant:"Gummy"},
+{id:"boss-galaxy",name:"Boss",variant:"Galaxy"},
+{id:"boss-cube",name:"Boss",variant:"Cube"},
+{id:"grim-base",name:"Grim",variant:"Base"},
+{id:"grim-gold",name:"Grim",variant:"Gold"},
+{id:"grim-gummy",name:"Grim",variant:"Gummy"},
+{id:"grim-galaxy",name:"Grim",variant:"Galaxy"},
+{id:"grim-cube",name:"Grim",variant:"Cube"},
+{id:"air-base",name:"Air",variant:"Base"},
+{id:"air-gold",name:"Air",variant:"Gold"},
+{id:"air-gummy",name:"Air",variant:"Gummy"},
+{id:"air-galaxy",name:"Air",variant:"Galaxy"},
+{id:"air-holofoil",name:"Air",variant:"Holofoil"},
+{id:"seven-base",name:"Seven",variant:"Base"},
+{id:"seven-gold",name:"Seven",variant:"Gold"},
+{id:"seven-gummy",name:"Seven",variant:"Gummy"},
+{id:"seven-galaxy",name:"Seven",variant:"Galaxy"},
+{id:"seven-holofoil",name:"Seven",variant:"Holofoil"},
+{id:"pollo-base",name:"Pollo",variant:"Base"}
+];
+const KEY="spritedex-v1";
+let state=JSON.parse(localStorage.getItem(KEY)||"{}");
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function render(){
+ const q=$("search").value.trim().toLowerCase(), v=$("variant").value, s=$("status").value;
+ const filtered=sprites.filter(x=>{
+   const st=state[x.id]||{};
+   return (!q || (x.name+" "+x.variant).toLowerCase().includes(q))
+   && (!v || x.variant===v)
+   && (!s || (s==="owned"&&st.owned)||(s==="missing"&&!st.owned)||(s==="mastered"&&st.mastered));
+ });
+ $("list").innerHTML=filtered.length?filtered.map(x=>{
+   const st=state[x.id]||{};
+   return `<article class="card ${st.owned?"owned":""}">
+    <div><div class="name">${x.name} <span class="badge">${x.variant}</span></div><div class="variant">${x.variant==="Base"?"Standard Sprite":x.variant+" variant"}</div></div>
+    <div class="toggles">
+      <button class="toggle ${st.owned?"on":""}" onclick="toggle('${x.id}','owned')" aria-label="Owned">✓</button>
+      <button class="toggle ${st.mastered?"on":""}" onclick="toggle('${x.id}','mastered')" aria-label="Mastered">★</button>
+    </div></article>`;
+ }).join(""):`<div class="empty">No sprites match this filter.</div>`;
+ const owned=sprites.filter(x=>state[x.id]?.owned).length;
+ const mastered=sprites.filter(x=>state[x.id]?.mastered).length;
+ $("ownedCount").textContent=owned; $("masteredCount").textContent=mastered; $("missingCount").textContent=sprites.length-owned;
+ $("bar").style.width=(owned/sprites.length*100).toFixed(1)+"%";
+}
+window.toggle=(id,key)=>{
+ state[id]=state[id]||{};
+ state[id][key]=!state[id][key];
+ if(key==="mastered"&&state[id][key]) state[id].owned=true;
+ if(key==="owned"&&!state[id][key]) state[id].mastered=false;
+ save(); render();
+};
+["search","variant","status"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("missingBtn").onclick=()=>{$("status").value="missing";render();};
+$("exportBtn").onclick=()=>{
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="spritedex-backup.json";a.click();URL.revokeObjectURL(a.href);
+};
+$("importBtn").onclick=()=>$("fileInput").click();
+$("fileInput").onchange=e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const r=new FileReader(); r.onload=()=>{try{state=JSON.parse(r.result);save();render();alert("Backup imported.");}catch{alert("That backup file is not valid.");}}; r.readAsText(f);
+};
+$("resetBtn").onclick=()=>{if(confirm("Erase all SpriteDex progress on this device?")){state={};save();render();}};
+render();
+</script>
+</body></html>
