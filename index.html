@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21.1</title>
+<title>SpriteDex V21.2</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -175,6 +175,37 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .advancedDetails{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
 .advancedDetails summary{cursor:pointer;color:var(--muted);font-size:13px}
 @media(max-width:390px){.qrActions{grid-template-columns:1fr}}
+
+
+.filterRow select{
+  display:block;
+  width:100%;
+  min-width:0;
+  height:56px;
+  margin:0;
+  padding:0 46px 0 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background-color:var(--card);
+  color:var(--text);
+  font:inherit;
+  line-height:normal;
+  box-sizing:border-box;
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:
+    linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+    linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:
+    calc(100% - 21px) 24px,
+    calc(100% - 15px) 24px;
+  background-size:6px 6px,6px 6px;
+  background-repeat:no-repeat;
+}
+.filterRow select:focus{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>

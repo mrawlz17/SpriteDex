@@ -689,9 +689,19 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "21.1",
+  "version": "21.2",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "21.2",
+      "date": "2026-07-23",
+      "title": "Collection Filter Layout Fix",
+      "items": [
+        "Fixed the oversized All variants control on iPhone Safari",
+        "Normalized both Collection dropdowns to the same height and width",
+        "Replaced the inconsistent native select arrow with a stable in-app arrow"
+      ]
+    },
     {
       "version": "21.1",
       "date": "2026-07-23",
