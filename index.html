@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V12</title>
+<title>SpriteDex V13</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -88,10 +88,10 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .miniTrack i{display:block;height:100%;background:var(--green)}
 .grouped,.profileList,.recentList,.settings{display:grid;gap:9px}
 .group,.profileCard,.recent,.setting{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px}
-.groupHead,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.groupHead,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}.groupHead{cursor:pointer}
 .group h3{margin:0}
 .tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
-.tag{border:1px solid #40506e;background:#172136;color:#e5ebf6;border-radius:14px;padding:12px 14px;text-align:left;font-weight:700;min-height:46px}
+.tag{border:1px solid #40506e;background:#172136;color:#cfd7e6;border-radius:14px;padding:12px 14px;text-align:left;font-weight:700;min-height:46px;cursor:default;user-select:none}
 .badge{font-size:11px;background:#242d45;color:#cdd6e7;padding:6px 9px;border-radius:999px}
 .profileCard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
 .profileCard.active{border-color:#4e7897;background:#142236}
@@ -344,7 +344,7 @@ function renderMissing(){
  $('missingTotal').textContent=metrics().missing;
  $('missingProfileLabel').textContent=p.name;
  const groups=data.sprites.map(s=>({sprite:s,rows:rows.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
- $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div onclick="openSprite('${g.sprite.id}')"><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<button class="tag" onclick="toggleEntry('${x.id}','owned')">✓ ${x.name}</button>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
+ $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead" onclick="openSprite('${g.sprite.id}')"><div><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity} · Tap to view</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<span class="tag">${x.name}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
 }
 function renderProfiles(){
  const current=activeProfile(),m=metrics(current);
