@@ -689,9 +689,17 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "11.1",
+  "version": "11.2",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "11.2",
+      "date": "2026-07-23",
+      "title": "Missing Wall Cleanup",
+      "items": [
+        "Completed Sprite collections no longer appear on the Missing wall"
+      ]
+    },
     {
       "version": "11.1",
       "date": "2026-07-23",

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V11.1</title>
+<title>SpriteDex V11.2</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -369,7 +369,8 @@ function renderMissing(){
   $('missingChecklist').innerHTML=rows.map(x=>`<div class="check"><div class="checkLabel"><button onclick="toggleEntry('${x.id}','owned')">✓</button><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div></div><button class="btn" onclick="openSprite('${x.sprite.id}')">View</button></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
  }else{
   $('missingWall').hidden=false;
-  $('missingWall').innerHTML=data.sprites.map(s=>`<div class="wallRow" onclick="openSprite('${s.id}')"><div class="wallTop"><b>${s.name}</b><span class="subtle">${s.variants.filter(v=>st(v.id).owned).length}/${s.variants.length}</span></div><div class="dots">${s.variants.map(v=>`<span class="dot ${st(v.id).owned?'on':''}">${v.name[0]}</span>`).join('')}</div></div>`).join('');
+  const incomplete=data.sprites.filter(s=>s.variants.some(v=>!st(v.id).owned));
+  $('missingWall').innerHTML=incomplete.map(s=>`<div class="wallRow" onclick="openSprite('${s.id}')"><div class="wallTop"><b>${s.name}</b><span class="subtle">${s.variants.filter(v=>st(v.id).owned).length}/${s.variants.length}</span></div><div class="dots">${s.variants.map(v=>`<span class="dot ${st(v.id).owned?'on':''}">${v.name[0]}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Every Sprite collection is complete.</div>';
  }
 }
 function renderProfiles(){
