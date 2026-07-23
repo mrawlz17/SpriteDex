@@ -689,9 +689,19 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "21.0",
+  "version": "21.1",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "21.1",
+      "date": "2026-07-23",
+      "title": "Variant Filter Fix",
+      "items": [
+        "Fixed blank variant dropdown on iPhone",
+        "Added an explicit All variants default",
+        "Sorted variant filter options alphabetically"
+      ]
+    },
     {
       "version": "21.0",
       "date": "2026-07-23",

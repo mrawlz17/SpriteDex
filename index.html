@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21</title>
+<title>SpriteDex V21.1</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -213,7 +213,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div class="controls">
   <input id="search" placeholder="Search Sprites…">
   <div class="filterrow">
-   <select id="variantFilter"></select>
+   <select id="variantFilter"><option value="" selected>All variants</option></select>
    <select id="statusFilter">
     <option value="">All status</option>
     <option value="missing">Has missing</option>
@@ -230,7 +230,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div class="controls">
   <input id="missingSearch" placeholder="Search missing entries…">
   <div class="filterrow">
-   <select id="missingVariant"></select>
+   <select id="missingVariant"><option value="" selected>All variants</option></select>
    <select id="missingRarity">
     <option value="">All rarities</option>
     <option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option>
@@ -371,9 +371,13 @@ function bind(){
  $('nextQrFrame').onclick=()=>changeQrFrame(1);
 }
 function buildFilters(){
- const variants=[...new Set(all().map(x=>x.name))];
- const options='<option value="">All variants</option>'+variants.map(v=>`<option>${v}</option>`).join('');
- $('variantFilter').innerHTML=options;$('missingVariant').innerHTML=options;
+ const variants=[...new Set(all().map(x=>x.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ const options='<option value="">All variants</option>'+variants.map(v=>`<option value="${v}">${v}</option>`).join('');
+ const collectionFilter=$('variantFilter'),missingFilter=$('missingVariant');
+ collectionFilter.innerHTML=options;
+ missingFilter.innerHTML=options;
+ collectionFilter.value='';
+ missingFilter.value='';
 }
 function save(r=true){persist();if(r)render()}
 function metrics(profile=activeProfile()){
