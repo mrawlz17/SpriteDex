@@ -689,9 +689,17 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "11.0",
+  "version": "11.1",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "11.1",
+      "date": "2026-07-23",
+      "title": "Missing View Fix",
+      "items": [
+        "Fixed Sprite, Checklist and Wall mode switching on iPhone Safari"
+      ]
+    },
     {
       "version": "11.0",
       "date": "2026-07-23",
