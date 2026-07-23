@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21.2</title>
+<title>SpriteDex V21.3</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -207,10 +207,34 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
   outline-offset:2px;
 }
 
+
+.statusOnly{display:block}
+.statusOnly select{
+  width:100%;
+  height:56px;
+  margin:0;
+  padding:0 46px 0 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background-color:var(--card);
+  color:var(--text);
+  font:inherit;
+  box-sizing:border-box;
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:
+    linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+    linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:
+    calc(100% - 21px) 24px,
+    calc(100% - 15px) 24px;
+  background-size:6px 6px,6px 6px;
+  background-repeat:no-repeat;
+}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -357,7 +381,7 @@ const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
 db.familySnapshots=db.familySnapshots||[];
 if(db.profiles&&db.profiles.length>1){const keep=db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];db.profiles=[keep];db.activeProfileId=keep.id;localStorage.setItem('spritedex-db',JSON.stringify(db));}
-let data={sprites:[]},currentSprite=null;
+let data={sprites:[]},currentSprite=null,allRowsCache=null;
 
 const $=id=>document.getElementById(id);
 const activeProfile=()=>db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];
@@ -377,7 +401,7 @@ function loadDatabase(){
  let oldMeta={};
  try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
  const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
- return{version:14,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
+ return{version:15,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
 async function init(){
@@ -401,15 +425,7 @@ function bind(){
  $('prevQrFrame').onclick=()=>changeQrFrame(-1);
  $('nextQrFrame').onclick=()=>changeQrFrame(1);
 }
-function buildFilters(){
- const variants=[...new Set(all().map(x=>x.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
- const options='<option value="">All variants</option>'+variants.map(v=>`<option value="${v}">${v}</option>`).join('');
- const collectionFilter=$('variantFilter'),missingFilter=$('missingVariant');
- collectionFilter.innerHTML=options;
- missingFilter.innerHTML=options;
- collectionFilter.value='';
- missingFilter.value='';
-}
+function buildFilters(){}
 function save(r=true){persist();if(r)render()}
 function metrics(profile=activeProfile()){
  const rows=all(),s=profile.state||{};
@@ -662,7 +678,7 @@ function removeFamilyMember(id){
 }
 
 function exportBackup(){
- const blob=new Blob([JSON.stringify({version:14,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
+ const blob=new Blob([JSON.stringify({version:15,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 function importBackup(e){

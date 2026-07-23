@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "21.2",
+  "version": "21.3",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "21.3",
+      "date": "2026-07-23",
+      "title": "Filter Cleanup and Loading Optimization",
+      "items": [
+        "Removed variant and rarity filters",
+        "Collection now has only the status filter",
+        "Missing has no filters",
+        "Deferred QR libraries so they do not block initial rendering",
+        "Cached flattened Sprite data to reduce repeated processing"
+      ]
+    },
     {
       "version": "21.2",
       "date": "2026-07-23",
