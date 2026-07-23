@@ -689,6 +689,41 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": 5,
-  "appUpdated": "2026-07-23"
+  "version": 8,
+  "appUpdated": "2026-07-23",
+  "changelog": [
+    {
+      "version": "8.0",
+      "date": "2026-07-23",
+      "title": "Collector Universe",
+      "items": [
+        "XP and levels",
+        "Achievements",
+        "Release hub",
+        "Share cards",
+        "Collection comparison",
+        "Trade checklist"
+      ]
+    },
+    {
+      "version": "5.0",
+      "date": "2026-07-23",
+      "title": "Collector Experience",
+      "items": [
+        "Favorites",
+        "Duplicate tracking",
+        "Recently found",
+        "Missing Wall"
+      ]
+    },
+    {
+      "version": "4.0",
+      "date": "2026-07-23",
+      "title": "Visual Collection",
+      "items": [
+        "Sprite artwork",
+        "Visual variant treatments"
+      ]
+    }
+  ]
 }
