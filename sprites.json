@@ -689,9 +689,35 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "15.0",
+  "version": "17.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "17.0",
+      "date": "2026-07-23",
+      "title": "Premium Polish",
+      "items": [
+        "Unified gradients",
+        "Larger artwork",
+        "Softer corners",
+        "Improved shadows",
+        "Micro animations",
+        "Cleaner typography"
+      ]
+    },
+    {
+      "version": "16.0",
+      "date": "2026-07-23",
+      "title": "Visual Polish",
+      "items": [
+        "Larger artwork",
+        "Softer rounded cards",
+        "Subtle shadows",
+        "Larger release cards",
+        "Rarity badges",
+        "General spacing improvements"
+      ]
+    },
     {
       "version": "15.0",
       "date": "2026-07-23",

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V15</title>
+<title>SpriteDex V17</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -18,6 +18,10 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
+*{transition:background-color .18s ease,border-color .18s ease,transform .14s ease,box-shadow .18s ease}
+.spriteCard:hover,.stripCard:hover,.group:hover{transform:translateY(-2px)}
+.spriteCard:active,.stripCard:active,.group:active{transform:scale(.985)}
+
 html{background:var(--bg)}
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,select,textarea{font:inherit}
@@ -64,10 +68,10 @@ main{padding:18px 16px calc(92px + env(safe-area-inset-bottom))}
 .sectionHead span{font-size:11px;color:var(--muted)}
 .strip{display:flex;gap:10px;overflow:auto;padding-bottom:3px}
 .stripCard{
- min-width:154px;background:var(--card);border:1px solid var(--line);
- color:var(--text);border-radius:17px;padding:10px;text-align:left
+ min-width:168px;background:var(--card);border:1px solid var(--line);
+ color:var(--text);border-radius:24px;padding:10px;text-align:left
 }
-.stripCard img{width:100%;height:102px;object-fit:contain}
+.stripCard img{width:100%;height:138px;object-fit:contain}
 .stripCard b{display:block;margin-top:6px}
 .stripCard small{color:var(--muted)}
 .controls{display:grid;gap:9px;margin-bottom:12px}
@@ -76,13 +80,13 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .spriteGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
 .spriteCard{
  border:1px solid var(--line);background:var(--card);color:var(--text);
- border-radius:19px;padding:10px;text-align:left;position:relative
+ border-radius:24px;padding:12px;text-align:left;position:relative;box-shadow:0 14px 32px rgba(0,0,0,.22)
 }
 .spriteCard.complete{border-color:#347d5b}
 .spriteCard.favorite:after{content:"★";position:absolute;right:10px;top:8px;color:var(--gold);font-size:20px}
-.art{height:138px;border-radius:14px;background:#0d1422;display:grid;place-items:center;overflow:hidden}
+.art{height:182px;border-radius:14px;background:#0d1422;display:grid;place-items:center;overflow:hidden}
 .art img{width:100%;height:100%;object-fit:contain}
-.spriteCard h3{margin:9px 0 4px;font-size:18px}
+.spriteCard h3{margin:9px 0 4px;font-size:19px}
 .meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}
 .miniTrack{height:6px;border-radius:99px;background:#263149;overflow:hidden;margin-top:8px}
 .miniTrack i{display:block;height:100%;background:var(--green)}
@@ -92,7 +96,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .group h3{margin:0}
 .tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
 .tag{border:1px solid #40506e;background:#172136;color:#cfd7e6;border-radius:14px;padding:12px 14px;text-align:left;font-weight:700;min-height:46px;cursor:default;user-select:none}
-.badge{font-size:11px;background:#242d45;color:#cdd6e7;padding:6px 9px;border-radius:999px}
+.badge{font-size:11px;background:#1d2a42;color:#fff;padding:7px 10px;border-radius:999px;font-weight:700}
 .profileCard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
 .profileCard.active{border-color:#4e7897;background:#142236}
 .profileAvatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#203047;color:var(--cyan);font-size:18px;font-weight:900}
@@ -153,7 +157,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div class="hero">
   <div class="kicker">Current collection</div>
   <h2 id="homeName">Mike</h2>
-  <div class="subtle">Personal Sprite progress</div>
+  <div class="subtle">Collector progress</div>
   <div class="progressRow"><div class="track"><div class="fill" id="homeProgress"></div></div><div class="percent" id="homePercent">0%</div></div>
   <div class="stats">
    <div class="stat"><b id="ownedHome">0</b><span>Owned</span></div>
