@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "11.2",
+  "version": "12.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "12.0",
+      "date": "2026-07-23",
+      "title": "Simplified Missing",
+      "items": [
+        "Removed Checklist mode",
+        "Removed Wall mode",
+        "Removed Missing view selector",
+        "Kept one grouped Sprite missing list",
+        "Made missing variant buttons larger and easier to tap"
+      ]
+    },
     {
       "version": "11.2",
       "date": "2026-07-23",

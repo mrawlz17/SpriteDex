@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V11.2</title>
+<title>SpriteDex V12</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -73,9 +73,6 @@ main{padding:18px 16px calc(92px + env(safe-area-inset-bottom))}
 .controls{display:grid;gap:9px;margin-bottom:12px}
 input,select,textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--text);padding:12px;border-radius:13px}
 .filterrow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.segment{display:flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px;gap:4px}
-.segment button{flex:1;border:0;background:none;color:var(--muted);padding:8px;border-radius:9px}
-.segment button.active{background:#22324a;color:#fff}
 .spriteGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
 .spriteCard{
  border:1px solid var(--line);background:var(--card);color:var(--text);
@@ -89,18 +86,13 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}
 .miniTrack{height:6px;border-radius:99px;background:#263149;overflow:hidden;margin-top:8px}
 .miniTrack i{display:block;height:100%;background:var(--green)}
-.grouped,.checklist,.wall,.profileList,.recentList,.settings{display:grid;gap:9px}
-.group,.check,.wallRow,.profileCard,.recent,.setting{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px}
-.groupHead,.check,.wallTop,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.grouped,.profileList,.recentList,.settings{display:grid;gap:9px}
+.group,.profileCard,.recent,.setting{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px}
+.groupHead,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .group h3{margin:0}
-.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.tag{border:1px solid #40506e;background:#172136;color:#e5ebf6;border-radius:999px;padding:7px 10px}
-.check button{width:34px;height:34px;border-radius:10px;border:1px solid #45607f;background:#18243a;color:#fff}
-.checkLabel{display:flex;align-items:center;gap:10px}
+.tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.tag{border:1px solid #40506e;background:#172136;color:#e5ebf6;border-radius:14px;padding:12px 14px;text-align:left;font-weight:700;min-height:46px}
 .badge{font-size:11px;background:#242d45;color:#cdd6e7;padding:6px 9px;border-radius:999px}
-.dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-.dot{width:28px;height:28px;border-radius:8px;background:#263149;border:1px solid #35425c;color:#748198;display:grid;place-items:center;font-size:10px}
-.dot.on{background:#1f684b;border-color:#46aa7b;color:white}
 .profileCard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
 .profileCard.active{border-color:#4e7897;background:#142236}
 .profileAvatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#203047;color:var(--cyan);font-size:18px;font-weight:900}
@@ -204,15 +196,8 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
     <option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option>
    </select>
   </div>
-  <div class="segment">
-   <button class="active" data-mode="grouped">Sprite</button>
-   <button data-mode="checklist">Checklist</button>
-   <button data-mode="wall">Wall</button>
-  </div>
  </div>
  <div id="missingGrouped" class="grouped"></div>
- <div id="missingChecklist" class="checklist" hidden></div>
- <div id="missingWall" class="wall" hidden></div>
 </section>
 
 <section id="profiles" class="view">
@@ -259,7 +244,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
-let data={sprites:[]},currentSprite=null,missingMode='grouped';
+let data={sprites:[]},currentSprite=null;
 
 const $=id=>document.getElementById(id);
 const activeProfile=()=>db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];
@@ -289,7 +274,6 @@ async function init(){
 }
 function bind(){
  document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>showView(b.dataset.view));
- document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{missingMode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));renderMissing()});
  ['search','variantFilter','statusFilter'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderCollection));
  ['missingSearch','missingVariant','missingRarity'].forEach(id=>$(id).addEventListener(id==='missingSearch'?'input':'change',renderMissing));
  $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
@@ -359,19 +343,8 @@ function renderMissing(){
  const rows=missingRows(),p=activeProfile();
  $('missingTotal').textContent=metrics().missing;
  $('missingProfileLabel').textContent=p.name;
- ['missingGrouped','missingChecklist','missingWall'].forEach(id=>$(id).hidden=true);
- if(missingMode==='grouped'){
-  $('missingGrouped').hidden=false;
-  const groups=data.sprites.map(s=>({sprite:s,rows:rows.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
-  $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div onclick="openSprite('${g.sprite.id}')"><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<button class="tag" onclick="toggleEntry('${x.id}','owned')">${x.name}</button>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
- }else if(missingMode==='checklist'){
-  $('missingChecklist').hidden=false;
-  $('missingChecklist').innerHTML=rows.map(x=>`<div class="check"><div class="checkLabel"><button onclick="toggleEntry('${x.id}','owned')">✓</button><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div></div><button class="btn" onclick="openSprite('${x.sprite.id}')">View</button></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
- }else{
-  $('missingWall').hidden=false;
-  const incomplete=data.sprites.filter(s=>s.variants.some(v=>!st(v.id).owned));
-  $('missingWall').innerHTML=incomplete.map(s=>`<div class="wallRow" onclick="openSprite('${s.id}')"><div class="wallTop"><b>${s.name}</b><span class="subtle">${s.variants.filter(v=>st(v.id).owned).length}/${s.variants.length}</span></div><div class="dots">${s.variants.map(v=>`<span class="dot ${st(v.id).owned?'on':''}">${v.name[0]}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Every Sprite collection is complete.</div>';
- }
+ const groups=data.sprites.map(s=>({sprite:s,rows:rows.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
+ $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div onclick="openSprite('${g.sprite.id}')"><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<button class="tag" onclick="toggleEntry('${x.id}','owned')">✓ ${x.name}</button>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
 }
 function renderProfiles(){
  const current=activeProfile(),m=metrics(current);
