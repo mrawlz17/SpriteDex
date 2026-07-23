@@ -689,9 +689,22 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": 8,
+  "version": "9.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "9.0",
+      "date": "2026-07-23",
+      "title": "Hunter Edition",
+      "items": [
+        "Dedicated Missing tab",
+        "Checklist, grouped and wall missing modes",
+        "Smart Hunt recommendations",
+        "Almost Complete sets",
+        "New collector command center",
+        "Improved collection encyclopedia"
+      ]
+    },
     {
       "version": "8.0",
       "date": "2026-07-23",
