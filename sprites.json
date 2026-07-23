@@ -689,9 +689,22 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "9.0",
+  "version": "10.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "10.0",
+      "date": "2026-07-23",
+      "title": "Collection First",
+      "items": [
+        "Simplified home screen",
+        "Removed duplicate navigation tiles",
+        "Reduced Hunt to concise recommendations",
+        "Missing opens directly to grouped checklist",
+        "Cleaner cards, fewer borders and gradients",
+        "Preserved V8/V9 progress compatibility"
+      ]
+    },
     {
       "version": "9.0",
       "date": "2026-07-23",
