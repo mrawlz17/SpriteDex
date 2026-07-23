@@ -39,7 +39,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "water",
@@ -73,7 +75,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Unvault_Ch7S3_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "earth",
@@ -107,7 +111,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Ch7S3_UI_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "fire",
@@ -146,7 +152,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Unvault_Ch7S3_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "duck",
@@ -175,7 +183,9 @@
           "name": "Galaxy",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Duck_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "ghost",
@@ -209,7 +219,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Ghost_Unvault_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "dream",
@@ -243,7 +255,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Sleepy_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "demon",
@@ -272,7 +286,9 @@
           "name": "Galaxy",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_RedDemon_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "punk",
@@ -306,7 +322,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Punk_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "king",
@@ -340,7 +358,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_King_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "burnt-peanut",
@@ -354,7 +374,9 @@
           "name": "Base",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BurntPeanut_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "vini-jr",
@@ -368,7 +390,9 @@
           "name": "Base",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CokeParmesan_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "zero-point",
@@ -397,7 +421,9 @@
           "name": "Galaxy",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ZeroPoint_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "fishy",
@@ -431,7 +457,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fishy_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "striker",
@@ -465,7 +493,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Soccer_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "aura",
@@ -494,7 +524,9 @@
           "name": "Galaxy",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "boss",
@@ -528,7 +560,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "grim",
@@ -562,7 +596,9 @@
           "name": "Cube",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "air",
@@ -596,7 +632,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Default_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "seven",
@@ -630,7 +668,9 @@
           "name": "Holofoil",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_ui_L.webp",
+      "source": "Fortnite.GG"
     },
     {
       "id": "pollo",
@@ -644,7 +684,10 @@
           "name": "Base",
           "rareHunt": true
         }
-      ]
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CompanyStargazer_Default_L.webp",
+      "source": "Fortnite.GG"
     }
-  ]
+  ],
+  "version": 4
 }
