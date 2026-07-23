@@ -1,0 +1,650 @@
+{
+  "updated": "2026-07-23",
+  "releasedEntries": 91,
+  "sprites": [
+    {
+      "id": "batman",
+      "name": "Batman",
+      "rarity": "Mythic",
+      "icon": "\ud83e\udd87",
+      "releaseOrder": 1,
+      "variants": [
+        {
+          "id": "batman-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "batman-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "batman-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "batman-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "batman-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        },
+        {
+          "id": "batman-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "water",
+      "name": "Water",
+      "rarity": "Rare",
+      "icon": "\ud83d\udca7",
+      "releaseOrder": 2,
+      "variants": [
+        {
+          "id": "water-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "water-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "water-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "water-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "water-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "earth",
+      "name": "Earth",
+      "rarity": "Rare",
+      "icon": "\ud83e\udea8",
+      "releaseOrder": 3,
+      "variants": [
+        {
+          "id": "earth-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "earth-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "earth-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "earth-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "earth-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "fire",
+      "name": "Fire",
+      "rarity": "Rare",
+      "icon": "\ud83d\udd25",
+      "releaseOrder": 4,
+      "variants": [
+        {
+          "id": "fire-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "fire-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "fire-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "fire-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "fire-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        },
+        {
+          "id": "fire-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "duck",
+      "name": "Duck",
+      "rarity": "Epic",
+      "icon": "\ud83e\udd86",
+      "releaseOrder": 5,
+      "variants": [
+        {
+          "id": "duck-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "duck-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "duck-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "duck-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost",
+      "rarity": "Epic",
+      "icon": "\ud83d\udc7b",
+      "releaseOrder": 6,
+      "variants": [
+        {
+          "id": "ghost-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "ghost-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "ghost-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "ghost-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "ghost-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "dream",
+      "name": "Dream",
+      "rarity": "Legendary",
+      "icon": "\u2728",
+      "releaseOrder": 7,
+      "variants": [
+        {
+          "id": "dream-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "dream-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "dream-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "dream-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "dream-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "demon",
+      "name": "Demon",
+      "rarity": "Epic",
+      "icon": "\ud83d\ude08",
+      "releaseOrder": 8,
+      "variants": [
+        {
+          "id": "demon-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "demon-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "demon-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "demon-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "punk",
+      "name": "Punk",
+      "rarity": "Legendary",
+      "icon": "\ud83c\udf83",
+      "releaseOrder": 9,
+      "variants": [
+        {
+          "id": "punk-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "punk-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "punk-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "punk-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "punk-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "king",
+      "name": "King",
+      "rarity": "Epic",
+      "icon": "\ud83d\udc51",
+      "releaseOrder": 10,
+      "variants": [
+        {
+          "id": "king-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "king-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "king-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "king-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "king-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "burnt-peanut",
+      "name": "Burnt Peanut",
+      "rarity": "Mythic",
+      "icon": "\ud83e\udd5c",
+      "releaseOrder": 11,
+      "variants": [
+        {
+          "id": "burnt-peanut-base",
+          "name": "Base",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "vini-jr",
+      "name": "Vini Jr.",
+      "rarity": "Mythic",
+      "icon": "\u26bd",
+      "releaseOrder": 12,
+      "variants": [
+        {
+          "id": "vini-jr-base",
+          "name": "Base",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "zero-point",
+      "name": "Zero Point",
+      "rarity": "Mythic",
+      "icon": "\ud83c\udf00",
+      "releaseOrder": 13,
+      "variants": [
+        {
+          "id": "zero-point-base",
+          "name": "Base",
+          "rareHunt": true
+        },
+        {
+          "id": "zero-point-gold",
+          "name": "Gold",
+          "rareHunt": true
+        },
+        {
+          "id": "zero-point-gummy",
+          "name": "Gummy",
+          "rareHunt": true
+        },
+        {
+          "id": "zero-point-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "fishy",
+      "name": "Fishy",
+      "rarity": "Rare",
+      "icon": "\ud83d\udc1f",
+      "releaseOrder": 14,
+      "variants": [
+        {
+          "id": "fishy-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "fishy-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "fishy-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "fishy-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "fishy-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "striker",
+      "name": "Striker",
+      "rarity": "Epic",
+      "icon": "\ud83c\udfaf",
+      "releaseOrder": 15,
+      "variants": [
+        {
+          "id": "striker-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "striker-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "striker-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "striker-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "striker-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "aura",
+      "name": "Aura",
+      "rarity": "Epic",
+      "icon": "\u26a1",
+      "releaseOrder": 16,
+      "variants": [
+        {
+          "id": "aura-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "aura-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "aura-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "aura-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "boss",
+      "name": "Boss",
+      "rarity": "Legendary",
+      "icon": "\ud83d\udcbc",
+      "releaseOrder": 17,
+      "variants": [
+        {
+          "id": "boss-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "boss-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "boss-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "boss-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "boss-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "grim",
+      "name": "Grim",
+      "rarity": "Mythic",
+      "icon": "\ud83d\udc80",
+      "releaseOrder": 18,
+      "variants": [
+        {
+          "id": "grim-base",
+          "name": "Base",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-gold",
+          "name": "Gold",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-gummy",
+          "name": "Gummy",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-cube",
+          "name": "Cube",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "air",
+      "name": "Air",
+      "rarity": "Rare",
+      "icon": "\ud83c\udf2a\ufe0f",
+      "releaseOrder": 19,
+      "variants": [
+        {
+          "id": "air-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "air-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "air-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "air-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "air-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "seven",
+      "name": "Seven",
+      "rarity": "Legendary",
+      "icon": "7\ufe0f\u20e3",
+      "releaseOrder": 20,
+      "variants": [
+        {
+          "id": "seven-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "seven-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "seven-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "seven-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "seven-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ]
+    },
+    {
+      "id": "pollo",
+      "name": "Pollo",
+      "rarity": "Mythic",
+      "icon": "\ud83c\udfc6",
+      "releaseOrder": 21,
+      "variants": [
+        {
+          "id": "pollo-base",
+          "name": "Base",
+          "rareHunt": true
+        }
+      ]
+    }
+  ]
+}
