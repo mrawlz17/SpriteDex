@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V21.5</title>
+<title>SpriteDex V22</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -205,7 +205,36 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
   background-size:6px 6px,6px 6px;
   background-repeat:no-repeat;
 }
+
+.statusOnly{display:block}
+.statusOnly select{
+  display:block;width:100%;height:56px;margin:0;padding:0 46px 0 18px;
+  border:1px solid var(--line);border-radius:16px;background:var(--card);
+  color:var(--text);font:inherit;box-sizing:border-box;
+  -webkit-appearance:none;appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+                   linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 21px) 24px,calc(100% - 15px) 24px;
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;
+}
+.art img,.releaseCard img,.detailArt img{referrer-policy:no-referrer}
 </style>
+
+<script>
+(async()=>{
+  try{
+    if('serviceWorker' in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if('caches' in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.filter(k=>k.startsWith('spritedex-')).map(k=>caches.delete(k)));
+    }
+  }catch(e){ console.warn('SpriteDex cache cleanup skipped',e); }
+})();
+</script>
+
 </head>
 <body>
 <div class="app">
@@ -343,7 +372,7 @@ const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
 db.familySnapshots=db.familySnapshots||[];
 if(db.profiles&&db.profiles.length>1){const keep=db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];db.profiles=[keep];db.activeProfileId=keep.id;localStorage.setItem('spritedex-db',JSON.stringify(db));}
-let data={sprites:[]},currentSprite=null,allRowsCache=null;
+let data={"updated":"2026-07-23","releasedEntries":91,"sprites":[{"id":"batman","name":"Batman","rarity":"Mythic","icon":"\ud83e\udd87","releaseOrder":1,"variants":[{"id":"batman-base","name":"Base","rareHunt":false},{"id":"batman-gold","name":"Gold","rareHunt":false},{"id":"batman-gummy","name":"Gummy","rareHunt":false},{"id":"batman-galaxy","name":"Galaxy","rareHunt":true},{"id":"batman-holofoil","name":"Holofoil","rareHunt":true},{"id":"batman-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Default_L.webp","source":"Fortnite.GG"},{"id":"water","name":"Water","rarity":"Rare","icon":"\ud83d\udca7","releaseOrder":2,"variants":[{"id":"water-base","name":"Base","rareHunt":false},{"id":"water-gold","name":"Gold","rareHunt":false},{"id":"water-gummy","name":"Gummy","rareHunt":false},{"id":"water-galaxy","name":"Galaxy","rareHunt":true},{"id":"water-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Unvault_Ch7S3_ui_L.webp","source":"Fortnite.GG"},{"id":"earth","name":"Earth","rarity":"Rare","icon":"\ud83e\udea8","releaseOrder":3,"variants":[{"id":"earth-base","name":"Base","rareHunt":false},{"id":"earth-gold","name":"Gold","rareHunt":false},{"id":"earth-gummy","name":"Gummy","rareHunt":false},{"id":"earth-galaxy","name":"Galaxy","rareHunt":true},{"id":"earth-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Ch7S3_UI_L.webp","source":"Fortnite.GG"},{"id":"fire","name":"Fire","rarity":"Rare","icon":"\ud83d\udd25","releaseOrder":4,"variants":[{"id":"fire-base","name":"Base","rareHunt":false},{"id":"fire-gold","name":"Gold","rareHunt":false},{"id":"fire-gummy","name":"Gummy","rareHunt":false},{"id":"fire-galaxy","name":"Galaxy","rareHunt":true},{"id":"fire-holofoil","name":"Holofoil","rareHunt":true},{"id":"fire-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Unvault_Ch7S3_ui_L.webp","source":"Fortnite.GG"},{"id":"duck","name":"Duck","rarity":"Epic","icon":"\ud83e\udd86","releaseOrder":5,"variants":[{"id":"duck-base","name":"Base","rareHunt":false},{"id":"duck-gold","name":"Gold","rareHunt":false},{"id":"duck-gummy","name":"Gummy","rareHunt":false},{"id":"duck-galaxy","name":"Galaxy","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Duck_Default_L.webp","source":"Fortnite.GG"},{"id":"ghost","name":"Ghost","rarity":"Epic","icon":"\ud83d\udc7b","releaseOrder":6,"variants":[{"id":"ghost-base","name":"Base","rareHunt":false},{"id":"ghost-gold","name":"Gold","rareHunt":false},{"id":"ghost-gummy","name":"Gummy","rareHunt":false},{"id":"ghost-galaxy","name":"Galaxy","rareHunt":true},{"id":"ghost-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Ghost_Unvault_L.webp","source":"Fortnite.GG"},{"id":"dream","name":"Dream","rarity":"Legendary","icon":"\u2728","releaseOrder":7,"variants":[{"id":"dream-base","name":"Base","rareHunt":false},{"id":"dream-gold","name":"Gold","rareHunt":false},{"id":"dream-gummy","name":"Gummy","rareHunt":false},{"id":"dream-galaxy","name":"Galaxy","rareHunt":true},{"id":"dream-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Sleepy_ui_L.webp","source":"Fortnite.GG"},{"id":"demon","name":"Demon","rarity":"Epic","icon":"\ud83d\ude08","releaseOrder":8,"variants":[{"id":"demon-base","name":"Base","rareHunt":false},{"id":"demon-gold","name":"Gold","rareHunt":false},{"id":"demon-gummy","name":"Gummy","rareHunt":false},{"id":"demon-galaxy","name":"Galaxy","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_RedDemon_Default_L.webp","source":"Fortnite.GG"},{"id":"punk","name":"Punk","rarity":"Legendary","icon":"\ud83c\udf83","releaseOrder":9,"variants":[{"id":"punk-base","name":"Base","rareHunt":false},{"id":"punk-gold","name":"Gold","rareHunt":false},{"id":"punk-gummy","name":"Gummy","rareHunt":false},{"id":"punk-galaxy","name":"Galaxy","rareHunt":true},{"id":"punk-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Punk_ui_L.webp","source":"Fortnite.GG"},{"id":"king","name":"King","rarity":"Epic","icon":"\ud83d\udc51","releaseOrder":10,"variants":[{"id":"king-base","name":"Base","rareHunt":false},{"id":"king-gold","name":"Gold","rareHunt":false},{"id":"king-gummy","name":"Gummy","rareHunt":false},{"id":"king-galaxy","name":"Galaxy","rareHunt":true},{"id":"king-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_King_ui_L.webp","source":"Fortnite.GG"},{"id":"burnt-peanut","name":"Burnt Peanut","rarity":"Mythic","icon":"\ud83e\udd5c","releaseOrder":11,"variants":[{"id":"burnt-peanut-base","name":"Base","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BurntPeanut_ui_L.webp","source":"Fortnite.GG"},{"id":"vini-jr","name":"Vini Jr.","rarity":"Mythic","icon":"\u26bd","releaseOrder":12,"variants":[{"id":"vini-jr-base","name":"Base","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CokeParmesan_Default_L.webp","source":"Fortnite.GG"},{"id":"zero-point","name":"Zero Point","rarity":"Mythic","icon":"\ud83c\udf00","releaseOrder":13,"variants":[{"id":"zero-point-base","name":"Base","rareHunt":true},{"id":"zero-point-gold","name":"Gold","rareHunt":true},{"id":"zero-point-gummy","name":"Gummy","rareHunt":true},{"id":"zero-point-galaxy","name":"Galaxy","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ZeroPoint_ui_L.webp","source":"Fortnite.GG"},{"id":"fishy","name":"Fishy","rarity":"Rare","icon":"\ud83d\udc1f","releaseOrder":14,"variants":[{"id":"fishy-base","name":"Base","rareHunt":false},{"id":"fishy-gold","name":"Gold","rareHunt":false},{"id":"fishy-gummy","name":"Gummy","rareHunt":false},{"id":"fishy-galaxy","name":"Galaxy","rareHunt":true},{"id":"fishy-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fishy_ui_L.webp","source":"Fortnite.GG"},{"id":"striker","name":"Striker","rarity":"Epic","icon":"\ud83c\udfaf","releaseOrder":15,"variants":[{"id":"striker-base","name":"Base","rareHunt":false},{"id":"striker-gold","name":"Gold","rareHunt":false},{"id":"striker-gummy","name":"Gummy","rareHunt":false},{"id":"striker-galaxy","name":"Galaxy","rareHunt":true},{"id":"striker-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Soccer_ui_L.webp","source":"Fortnite.GG"},{"id":"aura","name":"Aura","rarity":"Epic","icon":"\u26a1","releaseOrder":16,"variants":[{"id":"aura-base","name":"Base","rareHunt":false},{"id":"aura-gold","name":"Gold","rareHunt":false},{"id":"aura-gummy","name":"Gummy","rareHunt":false},{"id":"aura-galaxy","name":"Galaxy","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_ui_L.webp","source":"Fortnite.GG"},{"id":"boss","name":"Boss","rarity":"Legendary","icon":"\ud83d\udcbc","releaseOrder":17,"variants":[{"id":"boss-base","name":"Base","rareHunt":false},{"id":"boss-gold","name":"Gold","rareHunt":false},{"id":"boss-gummy","name":"Gummy","rareHunt":false},{"id":"boss-galaxy","name":"Galaxy","rareHunt":true},{"id":"boss-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_ui_L.webp","source":"Fortnite.GG"},{"id":"grim","name":"Grim","rarity":"Mythic","icon":"\ud83d\udc80","releaseOrder":18,"variants":[{"id":"grim-base","name":"Base","rareHunt":true},{"id":"grim-gold","name":"Gold","rareHunt":true},{"id":"grim-gummy","name":"Gummy","rareHunt":true},{"id":"grim-galaxy","name":"Galaxy","rareHunt":true},{"id":"grim-cube","name":"Cube","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Default_L.webp","source":"Fortnite.GG"},{"id":"air","name":"Air","rarity":"Rare","icon":"\ud83c\udf2a\ufe0f","releaseOrder":19,"variants":[{"id":"air-base","name":"Base","rareHunt":false},{"id":"air-gold","name":"Gold","rareHunt":false},{"id":"air-gummy","name":"Gummy","rareHunt":false},{"id":"air-galaxy","name":"Galaxy","rareHunt":true},{"id":"air-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Air_Default_L.webp","source":"Fortnite.GG"},{"id":"seven","name":"Seven","rarity":"Legendary","icon":"7\ufe0f\u20e3","releaseOrder":20,"variants":[{"id":"seven-base","name":"Base","rareHunt":false},{"id":"seven-gold","name":"Gold","rareHunt":false},{"id":"seven-gummy","name":"Gummy","rareHunt":false},{"id":"seven-galaxy","name":"Galaxy","rareHunt":true},{"id":"seven-holofoil","name":"Holofoil","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Seven_ui_L.webp","source":"Fortnite.GG"},{"id":"pollo","name":"Pollo","rarity":"Mythic","icon":"\ud83c\udfc6","releaseOrder":21,"variants":[{"id":"pollo-base","name":"Base","rareHunt":true}],"image":"https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CompanyStargazer_Default_L.webp","source":"Fortnite.GG"}],"version":"21.5","appUpdated":"2026-07-23","changelog":[{"version":"21.5","date":"2026-07-23","title":"Startup Reliability Fix","items":["Removed stale bindings to deleted backup controls","Guarded all UI event bindings so missing controls cannot stop startup","QR libraries now load only when Show QR or Scan QR is used","Added visible startup error handling","Forced a fresh sprites.json request during startup"]},{"version":"21.4","date":"2026-07-23","title":"Filter Cleanup and Startup Fix","items":["Collection now uses only the Status filter","Missing has no filters","Fixed startup failure caused by bindings to removed controls","Deferred QR libraries so they do not block initial rendering","Cached flattened Sprite data for faster repeated renders"]},{"version":"21.2","date":"2026-07-23","title":"Collection Filter Layout Fix","items":["Fixed the oversized All variants control on iPhone Safari","Normalized both Collection dropdowns to the same height and width","Replaced the inconsistent native select arrow with a stable in-app arrow"]},{"version":"21.1","date":"2026-07-23","title":"Variant Filter Fix","items":["Fixed blank variant dropdown on iPhone","Added an explicit All variants default","Sorted variant filter options alphabetically"]},{"version":"21.0","date":"2026-07-23","title":"One Owner Per Device","items":["Removed local collector creation and switching","Removed JSON family sharing from the Family screen","Simplified Family to Show QR and Scan QR","Replaced the large intro card with a compact empty state","Kept imported family collections read-only"]},{"version":"20.0","date":"2026-07-23","title":"QR Family Sharing","items":["Added Show My QR","Added camera-based Scan Family QR","Added multi-frame QR support for larger collections","Kept JSON snapshot sharing under Advanced","Imported QR collections remain read-only"]},{"version":"19.0","date":"2026-07-23","title":"Family Sharing","items":["Replaced Collectors with Family","Added read-only family snapshots","Added combined family completion","Added available-to-share lists","Added variants needed by everyone"]},{"version":"18.0","date":"2026-07-23","title":"Simplified Sprite Detail","items":["Removed duplicates","Removed notes","Removed variant thumbnails","Removed repeated release labels","Simplified Sprite metadata","Added larger artwork and roomier variant rows"]},{"version":"17.0","date":"2026-07-23","title":"Premium Polish","items":["Unified gradients","Larger artwork","Softer corners","Improved shadows","Micro animations","Cleaner typography"]},{"version":"16.0","date":"2026-07-23","title":"Visual Polish","items":["Larger artwork","Softer rounded cards","Subtle shadows","Larger release cards","Rarity badges","General spacing improvements"]},{"version":"15.0","date":"2026-07-23","title":"Home Simplification","items":["Removed the redundant See What's Missing action from Home"]},{"version":"14.0","date":"2026-07-23","title":"Home Cleanup","items":["Removed Recently Found from Home","Added consistent SVG bottom navigation icons","Made the See What's Missing action more compact"]},{"version":"13.0","date":"2026-07-23","title":"Read-Only Missing","items":["Missing tab is now read-only","Missing variants can no longer be marked owned from the Missing tab","Tap a Sprite heading to open its detail page","Collection remains the only place to edit ownership"]},{"version":"12.0","date":"2026-07-23","title":"Simplified Missing","items":["Removed Checklist mode","Removed Wall mode","Removed Missing view selector","Kept one grouped Sprite missing list","Made missing variant buttons larger and easier to tap"]},{"version":"11.2","date":"2026-07-23","title":"Missing Wall Cleanup","items":["Completed Sprite collections no longer appear on the Missing wall"]},{"version":"11.1","date":"2026-07-23","title":"Missing View Fix","items":["Fixed Sprite, Checklist and Wall mode switching on iPhone Safari"]},{"version":"11.0","date":"2026-07-23","title":"Multi-Collector","items":["Removed XP, levels, ranks and achievements","Removed Hunt and Almost Complete","Added multiple collector profiles","Added quick profile switching","Separate progress, notes, favorites and duplicates per profile","Migrates existing progress into the first profile"]},{"version":"10.0","date":"2026-07-23","title":"Collection First","items":["Simplified home screen","Removed duplicate navigation tiles","Reduced Hunt to concise recommendations","Missing opens directly to grouped checklist","Cleaner cards, fewer borders and gradients","Preserved V8/V9 progress compatibility"]},{"version":"9.0","date":"2026-07-23","title":"Hunter Edition","items":["Dedicated Missing tab","Checklist, grouped and wall missing modes","Smart Hunt recommendations","Almost Complete sets","New collector command center","Improved collection encyclopedia"]},{"version":"8.0","date":"2026-07-23","title":"Collector Universe","items":["XP and levels","Achievements","Release hub","Share cards","Collection comparison","Trade checklist"]},{"version":"5.0","date":"2026-07-23","title":"Collector Experience","items":["Favorites","Duplicate tracking","Recently found","Missing Wall"]},{"version":"4.0","date":"2026-07-23","title":"Visual Collection","items":["Sprite artwork","Visual variant treatments"]}]},currentSprite=null,allRowsCache=null;
 
 const $=id=>document.getElementById(id);
 const activeProfile=()=>db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];
@@ -366,20 +395,15 @@ function loadDatabase(){
  return{version:16,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
-async function init(){
+function init(){
  try{
-  const response=await fetch('sprites.json',{cache:'no-store'});
-  if(!response.ok)throw new Error('Sprite data request failed');
-  data=await response.json();
-  allRowsCache=null;
   bind();
   buildFilters();
   render();
-  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
  }catch(error){
   console.error('SpriteDex startup failed:',error);
-  $('releaseStrip').innerHTML='<div class="empty"><b>SpriteDex could not load its collection data.</b><br>Refresh once. If this remains, reopen the site.</div>';
-  $('missingHome').textContent='—';
+  const strip=$('releaseStrip');
+  if(strip)strip.innerHTML='<div class="empty"><b>SpriteDex could not start.</b><br>Reload this page once.</div>';
  }
 }
 function bind(){
@@ -397,14 +421,6 @@ function bind(){
  on('nextQrFrame','click',()=>changeQrFrame(1));
 }
 function buildFilters(){}
-function save(r=true){persist();if(r)render()}
-function metrics(profile=activeProfile()){
- const rows=all(),s=profile.state||{};
- const owned=rows.filter(x=>s[x.id]?.owned).length;
- const mastered=rows.filter(x=>s[x.id]?.mastered).length;
- const complete=data.sprites.filter(sp=>sp.variants.every(v=>s[v.id]?.owned)).length;
- return{rows,owned,mastered,missing:rows.length-owned,complete,pct:rows.length?owned/rows.length:0};
-}
 function showView(id){
  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
  document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
@@ -427,7 +443,7 @@ function renderHome(){
  $('masteredHome').textContent=m.mastered;
  $('completeHome').textContent=m.complete;
  $('missingHome').textContent=m.missing;
- $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
+ $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img referrerpolicy="no-referrer" src="${s.image}" alt="${s.name}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
 }
 function renderCollection(){
  const q=$('search').value.toLowerCase().trim(),sf=$('statusFilter').value;
@@ -439,7 +455,7 @@ function renderCollection(){
  $('collectionCount').textContent=shown.length+' Sprites';
  $('spriteGrid').innerHTML=shown.map(s=>{
   const owned=s.variants.filter(v=>st(v.id).owned).length,p=owned/s.variants.length*100;
-  return`<button class="spriteCard ${owned===s.variants.length?'complete':''} ${state()['favorite:'+s.id]?'favorite':''}" onclick="openSprite('${s.id}')"><div class="art"><img src="${s.image}"></div><h3>${s.name}</h3><div class="meta"><span>${s.rarity}</span><span>${owned}/${s.variants.length}</span></div><div class="miniTrack"><i style="width:${p}%"></i></div></button>`
+  return`<button class="spriteCard ${owned===s.variants.length?'complete':''} ${state()['favorite:'+s.id]?'favorite':''}" onclick="openSprite('${s.id}')"><div class="art"><img referrerpolicy="no-referrer" loading="lazy" src="${s.image}" alt="${s.name}"></div><h3>${s.name}</h3><div class="meta"><span>${s.rarity}</span><span>${owned}/${s.variants.length}</span></div><div class="miniTrack"><i style="width:${p}%"></i></div></button>`
  }).join('')||'<div class="empty">No matching Sprites.</div>';
 }
 function missingRows(){

@@ -689,9 +689,22 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "21.5",
+  "version": "22.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "22.0",
+      "date": "2026-07-23",
+      "title": "Clean Startup",
+      "items": [
+        "Embedded Sprite data directly into the app",
+        "Removed service-worker caching",
+        "Clears legacy SpriteDex caches and registrations",
+        "Collection uses only Search and Status",
+        "Missing uses Search only",
+        "Added no-referrer image loading"
+      ]
+    },
     {
       "version": "21.5",
       "date": "2026-07-23",
