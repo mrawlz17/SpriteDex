@@ -689,9 +689,22 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "10.0",
+  "version": "11.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "11.0",
+      "date": "2026-07-23",
+      "title": "Multi-Collector",
+      "items": [
+        "Removed XP, levels, ranks and achievements",
+        "Removed Hunt and Almost Complete",
+        "Added multiple collector profiles",
+        "Added quick profile switching",
+        "Separate progress, notes, favorites and duplicates per profile",
+        "Migrates existing progress into the first profile"
+      ]
+    },
     {
       "version": "10.0",
       "date": "2026-07-23",

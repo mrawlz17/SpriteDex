@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V10</title>
+<title>SpriteDex V11</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -18,42 +18,39 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
-body{
- margin:0;min-height:100vh;background:var(--bg);color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
-}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .app{max-width:820px;margin:auto;min-height:100vh}
 .top{
  position:sticky;top:0;z-index:30;
- padding:max(14px,env(safe-area-inset-top)) 18px 13px;
+ padding:max(14px,env(safe-area-inset-top)) 16px 13px;
  background:rgba(8,12,22,.94);backdrop-filter:blur(20px);
  border-bottom:1px solid rgba(39,52,78,.7)
 }
-.brand{display:flex;justify-content:space-between;align-items:center}
-.brand h1{margin:0;font-size:29px;letter-spacing:-1px}
-.save{text-align:right;font-size:11px;color:var(--muted)}
-.save b{display:block;color:var(--green)}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand h1{margin:0;font-size:28px;letter-spacing:-1px}
+.profileSwitch{
+ min-width:0;display:flex;align-items:center;gap:8px;border:1px solid var(--line);
+ background:var(--card);color:var(--text);border-radius:13px;padding:8px 10px
+}
+.avatar{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#203047;color:var(--cyan);font-size:12px;font-weight:900}
+.profileSwitch span{max-width:108px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
 main{padding:18px 16px calc(92px + env(safe-area-inset-bottom))}
 .view{display:none}
 .view.active{display:block}
-.hero{
- padding:20px 4px 18px;border-bottom:1px solid var(--line)
-}
-.heroTop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hero{padding:10px 2px 20px;border-bottom:1px solid var(--line)}
 .kicker{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--cyan);font-weight:900}
-.hero h2{font-size:31px;line-height:1.05;margin:5px 0 6px}
-.edit{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 11px;border-radius:12px}
-.rankLine{font-size:17px;font-weight:800;margin-top:3px}
-.progressRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-top:16px}
+.hero h2{font-size:31px;line-height:1.05;margin:6px 0 4px}
+.subtle{color:var(--muted)}
+.progressRow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-top:18px}
 .track{height:9px;border-radius:999px;background:#202b40;overflow:hidden}
 .fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .3s}
 .percent{font-size:24px;font-weight:900}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
-.stat{padding:12px 0;border-top:1px solid var(--line)}
-.stat b{display:block;font-size:24px}
-.stat span{font-size:11px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+.stat{padding:12px 4px;border-top:1px solid var(--line)}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:10px;color:var(--muted)}
 .primaryAction{
  width:100%;margin-top:18px;padding:15px 17px;border-radius:16px;
  border:1px solid #3c5876;background:#15263a;color:#eafbff;
@@ -73,10 +70,7 @@ main{padding:18px 16px calc(92px + env(safe-area-inset-bottom))}
 .stripCard b{display:block;margin-top:6px}
 .stripCard small{color:var(--muted)}
 .controls{display:grid;gap:9px;margin-bottom:12px}
-input,select,textarea{
- width:100%;border:1px solid var(--line);background:var(--card);
- color:var(--text);padding:12px;border-radius:13px
-}
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--text);padding:12px;border-radius:13px}
 .filterrow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .segment{display:flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px;gap:4px}
 .segment button{flex:1;border:0;background:none;color:var(--muted);padding:8px;border-radius:9px}
@@ -94,11 +88,9 @@ input,select,textarea{
 .meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}
 .miniTrack{height:6px;border-radius:99px;background:#263149;overflow:hidden;margin-top:8px}
 .miniTrack i{display:block;height:100%;background:var(--green)}
-.grouped,.checklist,.wall,.huntList,.achievementGrid,.recentList,.settings{display:grid;gap:9px}
-.group,.check,.wallRow,.huntCard,.achievement,.recent,.setting{
- border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px
-}
-.groupHead,.check,.wallTop,.huntCard,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.grouped,.checklist,.wall,.profileList,.recentList,.settings{display:grid;gap:9px}
+.group,.check,.wallRow,.profileCard,.recent,.setting{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:12px}
+.groupHead,.check,.wallTop,.recent{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .group h3{margin:0}
 .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .tag{border:1px solid #40506e;background:#172136;color:#e5ebf6;border-radius:999px;padding:7px 10px}
@@ -108,26 +100,21 @@ input,select,textarea{
 .dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
 .dot{width:28px;height:28px;border-radius:8px;background:#263149;border:1px solid #35425c;color:#748198;display:grid;place-items:center;font-size:10px}
 .dot.on{background:#1f684b;border-color:#46aa7b;color:white}
-.huntCard{display:grid;grid-template-columns:58px 1fr auto}
-.huntCard img{width:58px;height:58px;object-fit:contain}
-.huntCard b{display:block}
-.huntCard small{color:var(--muted)}
+.profileCard{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.profileCard.active{border-color:#4e7897;background:#142236}
+.profileAvatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#203047;color:var(--cyan);font-size:18px;font-weight:900}
+.profileCard b{display:block;font-size:17px}
+.profileCard small{color:var(--muted)}
+.actions{display:flex;gap:6px}
 .btn{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:9px 11px;border-radius:11px}
-.btn.gold{border-color:#766329;background:#3a3016;color:#ffe79a}
-.profileCard{border-bottom:1px solid var(--line);padding:6px 2px 20px}
-.profileCard h2{font-size:30px;margin:6px 0}
-.rankBadge{display:inline-block;padding:7px 10px;border-radius:999px;background:#3a3016;color:#ffe79a;font-size:12px}
-.achievementGrid{grid-template-columns:1fr 1fr}
-.achievement{opacity:.42}
-.achievement.on{opacity:1;border-color:#6d5c2c}
-.achievement b{display:block;margin:6px 0 2px}
-.achievement small{color:var(--muted)}
+.btn.primary{border-color:#42698b;background:#18304a}
+.btn.danger{color:#ffc2cb}
 .bottom{
  position:fixed;bottom:0;left:0;right:0;z-index:40;background:rgba(8,12,22,.96);
  backdrop-filter:blur(20px);border-top:1px solid var(--line);
  padding:7px 8px calc(7px + env(safe-area-inset-bottom));display:flex;justify-content:center
 }
-.navInner{width:min(100%,820px);display:grid;grid-template-columns:repeat(5,1fr)}
+.navInner{width:min(100%,820px);display:grid;grid-template-columns:repeat(4,1fr)}
 .navBtn{border:0;background:none;color:var(--muted);font-size:10px;padding:5px 2px}
 .navBtn i{display:block;font-style:normal;font-size:20px;margin-bottom:2px}
 .navBtn.active{color:var(--cyan)}
@@ -155,61 +142,95 @@ input,select,textarea{
 .toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#172238;border:1px solid #4b607f;color:#fff;border-radius:999px;padding:10px 15px;opacity:0;transition:.2s;z-index:90;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--muted);padding:35px}
-@media(max-width:390px){.art{height:120px}.stats{gap:7px}.stat b{font-size:21px}}
+@media(max-width:390px){.art{height:120px}.stats{gap:5px}.stat b{font-size:19px}.stat span{font-size:9px}.brand h1{font-size:25px}}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><h1>SpriteDex</h1><div class="save"><b>✓ Auto-save active</b><span id="savedText">No changes yet</span></div></div></header>
+<header class="top">
+ <div class="brand">
+  <h1>SpriteDex</h1>
+  <button class="profileSwitch" onclick="showView('profiles')"><span class="avatar" id="topAvatar">M</span><span id="topProfileName">Mike</span><b>⌄</b></button>
+ </div>
+</header>
+
 <main>
 <section id="home" class="view active">
  <div class="hero">
-  <div class="heroTop"><div><div class="kicker">Collection first</div><h2>Welcome back, <span id="homeName">Mike</span></h2><div class="rankLine"><span id="levelText">Level 1</span> · <span id="rankText">New Collector</span></div></div><button class="edit" onclick="editName()">Edit</button></div>
+  <div class="kicker">Current collection</div>
+  <h2 id="homeName">Mike</h2>
+  <div class="subtle">Personal Sprite progress</div>
   <div class="progressRow"><div class="track"><div class="fill" id="homeProgress"></div></div><div class="percent" id="homePercent">0%</div></div>
-  <div class="stats"><div class="stat"><b id="ownedHome">0</b><span>Owned</span></div><div class="stat"><b id="missingHome">0</b><span>Missing</span></div><div class="stat"><b id="masteredHome">0</b><span>Mastered</span></div></div>
-  <button class="primaryAction" onclick="showView('missing')"><div><b>Continue collection</b><span>See exactly what is still missing</span></div><strong>→</strong></button>
+  <div class="stats">
+   <div class="stat"><b id="ownedHome">0</b><span>Owned</span></div>
+   <div class="stat"><b id="masteredHome">0</b><span>Mastered</span></div>
+   <div class="stat"><b id="completeHome">0</b><span>Completed</span></div>
+   <div class="stat"><b id="missingHome">0</b><span>Missing</span></div>
+  </div>
+  <button class="primaryAction" onclick="showView('missing')"><div><b>See what’s missing</b><span>Open the fast collection checklist</span></div><strong>→</strong></button>
  </div>
- <div class="sectionHead"><h2>Almost complete</h2><span>Fastest wins</span></div>
- <div id="almostStrip" class="strip"></div>
  <div class="sectionHead"><h2>Latest releases</h2><span>Newest Sprites</span></div>
  <div id="releaseStrip" class="strip"></div>
+ <div class="sectionHead"><h2>Recently found</h2><span id="recentProfileLabel"></span></div>
+ <div id="recentHome" class="recentList"></div>
 </section>
 
 <section id="collection" class="view">
  <div class="sectionHead"><h2>Collection</h2><span id="collectionCount"></span></div>
  <div class="controls">
   <input id="search" placeholder="Search Sprites…">
-  <div class="filterrow"><select id="variantFilter"></select><select id="statusFilter"><option value="">All status</option><option value="missing">Has missing</option><option value="complete">Complete</option><option value="favorite">Favorites</option></select></div>
+  <div class="filterrow">
+   <select id="variantFilter"></select>
+   <select id="statusFilter">
+    <option value="">All status</option>
+    <option value="missing">Has missing</option>
+    <option value="complete">Complete</option>
+    <option value="favorite">Favorites</option>
+   </select>
+  </div>
  </div>
  <div id="spriteGrid" class="spriteGrid"></div>
 </section>
 
 <section id="missing" class="view">
- <div class="sectionHead"><h2><span id="missingTotal">0</span> Missing</h2><span>Tap to mark owned</span></div>
+ <div class="sectionHead"><h2><span id="missingTotal">0</span> Missing</h2><span id="missingProfileLabel"></span></div>
  <div class="controls">
   <input id="missingSearch" placeholder="Search missing entries…">
-  <div class="filterrow"><select id="missingVariant"></select><select id="missingRarity"><option value="">All rarities</option><option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option></select></div>
-  <div class="segment"><button class="active" data-mode="grouped">Sprite</button><button data-mode="checklist">Checklist</button><button data-mode="wall">Wall</button></div>
+  <div class="filterrow">
+   <select id="missingVariant"></select>
+   <select id="missingRarity">
+    <option value="">All rarities</option>
+    <option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option>
+   </select>
+  </div>
+  <div class="segment">
+   <button class="active" data-mode="grouped">Sprite</button>
+   <button data-mode="checklist">Checklist</button>
+   <button data-mode="wall">Wall</button>
+  </div>
  </div>
  <div id="missingGrouped" class="grouped"></div>
  <div id="missingChecklist" class="checklist" hidden></div>
  <div id="missingWall" class="wall" hidden></div>
 </section>
 
-<section id="hunt" class="view">
- <div class="sectionHead"><h2>Recommended Next</h2><span>Five best targets</span></div>
- <div id="huntList" class="huntList"></div>
-</section>
+<section id="profiles" class="view">
+ <div class="sectionHead"><h2>Collectors</h2><span>Separate progress for each person</span></div>
+ <div id="profileList" class="profileList"></div>
+ <button class="primaryAction" onclick="addProfile()"><div><b>Add collector</b><span>Create another independent collection</span></div><strong>＋</strong></button>
 
-<section id="profile" class="view">
- <div class="profileCard"><div class="kicker">Collector profile</div><h2 id="profileName">Mike</h2><span class="rankBadge" id="profileRank">New Collector</span>
- <div class="stats"><div class="stat"><b id="ownedProfile">0</b><span>Owned</span></div><div class="stat"><b id="completeProfile">0</b><span>Complete sets</span></div><div class="stat"><b id="levelProfile">1</b><span>Level</span></div></div></div>
- <div class="sectionHead"><h2>Achievements</h2><span id="achievementCount"></span></div><div id="achievementGrid" class="achievementGrid"></div>
- <div class="sectionHead"><h2>Recently found</h2><span>Newest first</span></div><div id="recentList" class="recentList"></div>
- <div class="sectionHead"><h2>Data</h2><span>Backup and restore</span></div>
+ <div class="sectionHead"><h2>Current profile stats</h2><span id="profileStatsName"></span></div>
+ <div class="stats">
+  <div class="stat"><b id="ownedProfile">0</b><span>Owned</span></div>
+  <div class="stat"><b id="masteredProfile">0</b><span>Mastered</span></div>
+  <div class="stat"><b id="completeProfile">0</b><span>Completed</span></div>
+  <div class="stat"><b id="missingProfile">0</b><span>Missing</span></div>
+ </div>
+
+ <div class="sectionHead"><h2>Data</h2><span>All collector profiles</span></div>
  <div class="settings">
-  <div class="setting"><button class="btn" id="exportBtn">Export backup</button> <button class="btn" id="importBtn">Import backup</button><input id="fileInput" type="file" accept="application/json" hidden></div>
-  <div class="setting"><button class="btn" id="resetBtn" style="color:#ffc2cb">Erase all progress</button></div>
+  <div class="setting"><button class="btn primary" id="exportBtn">Export backup</button> <button class="btn" id="importBtn">Import backup</button><input id="fileInput" type="file" accept="application/json" hidden></div>
+  <div class="setting"><button class="btn danger" id="resetBtn">Erase all SpriteDex data</button></div>
  </div>
 </section>
 </main>
@@ -219,31 +240,49 @@ input,select,textarea{
 <button class="navBtn active" data-view="home"><i>⌂</i>Home</button>
 <button class="navBtn" data-view="collection"><i>▦</i>Collection</button>
 <button class="navBtn" data-view="missing"><i>?</i>Missing</button>
-<button class="navBtn" data-view="hunt"><i>◎</i>Hunt</button>
-<button class="navBtn" data-view="profile"><i>♙</i>Profile</button>
+<button class="navBtn" data-view="profiles"><i>♙</i>Collectors</button>
 </div></nav>
 
 <div class="modal" id="modal"><div class="sheet">
 <div class="sheetHead"><h2 id="detailName"></h2><button class="close" onclick="closeModal()">×</button></div>
 <div class="detailHero"><img id="detailImage"><button id="favoriteBtn" class="favoriteBtn" onclick="toggleFavorite()">★</button></div>
-<div id="detailMeta" style="color:var(--muted)"></div>
+<div id="detailMeta" class="subtle"></div>
 <div class="sectionHead"><h2>Variants</h2><span>✓ owned · ★ mastered</span></div><div id="variantList" class="variantList"></div>
 <div class="sectionHead"><h2>Duplicates</h2></div><div class="counter"><button class="btn" onclick="changeDuplicates(-1)">−</button><div id="duplicateCount" style="text-align:center;font-weight:900;padding:9px">0</div><button class="btn" onclick="changeDuplicates(1)">+</button></div>
 <div class="sectionHead"><h2>Notes</h2></div><textarea id="notes" rows="3" placeholder="Where found, chest type, notes…"></textarea>
 </div></div>
+
 <div id="toast" class="toast"></div>
 
 <script>
-const KEY='spritedex-v1',META='spritedex-meta-v9';
-let state=JSON.parse(localStorage.getItem(KEY)||'{}');
-let meta=JSON.parse(localStorage.getItem(META)||'{}');
+const LEGACY_KEY='spritedex-v1';
+const V11_KEY='spritedex-v11-profiles';
+let db=loadDatabase();
 let data={sprites:[]},currentSprite=null,missingMode='grouped';
-const $=id=>document.getElementById(id),st=id=>state[id]||{};
+
+const $=id=>document.getElementById(id);
+const activeProfile=()=>db.profiles.find(p=>p.id===db.activeProfileId)||db.profiles[0];
+const state=()=>activeProfile().state;
+const meta=()=>activeProfile().meta;
+const st=id=>state()[id]||{};
 const all=()=>data.sprites.flatMap(s=>s.variants.map(v=>({...v,sprite:s})));
 
+function makeId(){return 'p-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
+function loadDatabase(){
+ try{
+  const existing=JSON.parse(localStorage.getItem(V11_KEY)||'null');
+  if(existing&&existing.profiles&&existing.profiles.length)return existing;
+ }catch{}
+ let legacy={};
+ try{legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||'{}')}catch{}
+ let oldMeta={};
+ try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
+ const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
+ return{version:11,activeProfileId:first.id,profiles:[first]};
+}
+function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
 async function init(){
  data=await fetch('sprites.json').then(r=>r.json());
- meta.profileName=meta.profileName||'Mike';
  bind();buildFilters();render();
  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
@@ -253,98 +292,170 @@ function bind(){
  ['search','variantFilter','statusFilter'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderCollection));
  ['missingSearch','missingVariant','missingRarity'].forEach(id=>$(id).addEventListener(id==='missingSearch'?'input':'change',renderMissing));
  $('modal').onclick=e=>{if(e.target===$('modal'))closeModal()};
- $('notes').oninput=()=>{if(currentSprite){state['notes:'+currentSprite.id]=$('notes').value;save(false)}};
- $('exportBtn').onclick=exportBackup;$('importBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=importBackup;$('resetBtn').onclick=resetAll;
+ $('notes').oninput=()=>{if(currentSprite){state()['notes:'+currentSprite.id]=$('notes').value;save(false)}};
+ $('exportBtn').onclick=exportBackup;
+ $('importBtn').onclick=()=>$('fileInput').click();
+ $('fileInput').onchange=importBackup;
+ $('resetBtn').onclick=resetAll;
 }
 function buildFilters(){
- const variants=[...new Set(all().map(x=>x.name))],o='<option value="">All variants</option>'+variants.map(v=>`<option>${v}</option>`).join('');
- $('variantFilter').innerHTML=o;$('missingVariant').innerHTML=o;
+ const variants=[...new Set(all().map(x=>x.name))];
+ const options='<option value="">All variants</option>'+variants.map(v=>`<option>${v}</option>`).join('');
+ $('variantFilter').innerHTML=options;$('missingVariant').innerHTML=options;
 }
-function metrics(){
- const rows=all(),owned=rows.filter(x=>st(x.id).owned).length,mastered=rows.filter(x=>st(x.id).mastered).length;
- const complete=data.sprites.filter(s=>s.variants.every(v=>st(v.id).owned)).length;
+function save(r=true){persist();if(r)render()}
+function metrics(profile=activeProfile()){
+ const rows=all(),s=profile.state||{};
+ const owned=rows.filter(x=>s[x.id]?.owned).length;
+ const mastered=rows.filter(x=>s[x.id]?.mastered).length;
+ const complete=data.sprites.filter(sp=>sp.variants.every(v=>s[v.id]?.owned)).length;
  return{rows,owned,mastered,missing:rows.length-owned,complete,pct:rows.length?owned/rows.length:0};
 }
-function xpInfo(){const m=metrics(),xp=m.owned*10+m.mastered*25+m.complete*100,level=Math.floor(Math.sqrt(xp/250))+1;return{xp,level}}
-function rankFor(l){if(l>=12)return'Sprite Legend';if(l>=9)return'Master Collector';if(l>=6)return'Elite Hunter';if(l>=4)return'Rare Hunter';if(l>=2)return'Sprite Scout';return'New Collector'}
-function save(r=true){localStorage.setItem(KEY,JSON.stringify(state));meta.lastSaved=new Date().toISOString();localStorage.setItem(META,JSON.stringify(meta));if(r)render();else renderSaved()}
-function renderSaved(){$('savedText').textContent=meta.lastSaved?'Last saved '+new Date(meta.lastSaved).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'No changes yet'}
-function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));window.scrollTo({top:0,behavior:'smooth'});render()}
-function render(){renderSaved();renderHome();renderCollection();renderMissing();renderHunt();renderProfile()}
-function renderHome(){
- const m=metrics(),x=xpInfo(),p=Math.round(m.pct*100);
- $('homeName').textContent=meta.profileName;$('levelText').textContent='Level '+x.level;$('rankText').textContent=rankFor(x.level);$('homeProgress').style.width=p+'%';$('homePercent').textContent=p+'%';
- $('ownedHome').textContent=m.owned;$('missingHome').textContent=m.missing;$('masteredHome').textContent=m.mastered;
- const almost=getAlmost(5);
- $('almostStrip').innerHTML=almost.length?almost.map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.missing} missing</small></button>`).join(''):'<div class="empty">Start collecting to reveal fast wins.</div>';
- $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
+function showView(id){
+ document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+ document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
+ window.scrollTo({top:0,behavior:'smooth'});render();
 }
-function getAlmost(limit=99){return data.sprites.map(s=>({...s,missing:s.variants.filter(v=>!st(v.id).owned).length,owned:s.variants.filter(v=>st(v.id).owned).length})).filter(s=>s.owned>0&&s.missing>0).sort((a,b)=>a.missing-b.missing||b.owned-a.owned).slice(0,limit)}
+function render(){renderHeader();renderHome();renderCollection();renderMissing();renderProfiles()}
+function renderHeader(){
+ const p=activeProfile();
+ $('topProfileName').textContent=p.name;
+ $('topAvatar').textContent=p.name.trim().charAt(0).toUpperCase()||'?';
+}
+function renderHome(){
+ const p=activeProfile(),m=metrics(),pct=Math.round(m.pct*100);
+ $('homeName').textContent=p.name;
+ $('homeProgress').style.width=pct+'%';
+ $('homePercent').textContent=pct+'%';
+ $('ownedHome').textContent=m.owned;
+ $('masteredHome').textContent=m.mastered;
+ $('completeHome').textContent=m.complete;
+ $('missingHome').textContent=m.missing;
+ $('recentProfileLabel').textContent=p.name;
+ $('releaseStrip').innerHTML=[...data.sprites].sort((a,b)=>b.releaseOrder-a.releaseOrder).slice(0,5).map(s=>`<button class="stripCard" onclick="openSprite('${s.id}')"><img src="${s.image}"><b>${s.name}</b><small>${s.rarity}</small></button>`).join('');
+ const recent=(meta().recentFound||[]).slice(0,6);
+ $('recentHome').innerHTML=recent.map(r=>{const x=all().find(a=>a.id===r.id);return x?`<div class="recent"><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div><small style="color:var(--muted)">${new Date(r.at).toLocaleDateString()}</small></div>`:''}).join('')||'<div class="empty">No recent finds for this collector.</div>';
+}
 function renderCollection(){
  const q=$('search').value.toLowerCase().trim(),vf=$('variantFilter').value,sf=$('statusFilter').value;
- const shown=data.sprites.filter(s=>{const rel=vf?s.variants.filter(v=>v.name===vf):s.variants,o=rel.filter(v=>st(v.id).owned).length,txt=(s.name+' '+s.rarity+' '+s.variants.map(v=>v.name).join(' ')).toLowerCase();return(!q||txt.includes(q))&&(!vf||rel.length)&&(!sf||(sf==='missing'&&o<rel.length)||(sf==='complete'&&o===rel.length)||(sf==='favorite'&&state['favorite:'+s.id]))});
+ const shown=data.sprites.filter(s=>{
+  const rel=vf?s.variants.filter(v=>v.name===vf):s.variants;
+  const owned=rel.filter(v=>st(v.id).owned).length;
+  const txt=(s.name+' '+s.rarity+' '+s.variants.map(v=>v.name).join(' ')).toLowerCase();
+  return(!q||txt.includes(q))&&(!vf||rel.length)&&(!sf||(sf==='missing'&&owned<rel.length)||(sf==='complete'&&owned===rel.length)||(sf==='favorite'&&state()['favorite:'+s.id]));
+ });
  $('collectionCount').textContent=shown.length+' Sprites';
- $('spriteGrid').innerHTML=shown.map(s=>{const o=s.variants.filter(v=>st(v.id).owned).length,p=o/s.variants.length*100;return`<button class="spriteCard ${o===s.variants.length?'complete':''} ${state['favorite:'+s.id]?'favorite':''}" onclick="openSprite('${s.id}')"><div class="art"><img src="${s.image}"></div><h3>${s.name}</h3><div class="meta"><span>${s.rarity}</span><span>${o}/${s.variants.length}</span></div><div class="miniTrack"><i style="width:${p}%"></i></div></button>`}).join('')||'<div class="empty">No matching Sprites.</div>';
+ $('spriteGrid').innerHTML=shown.map(s=>{
+  const owned=s.variants.filter(v=>st(v.id).owned).length,p=owned/s.variants.length*100;
+  return`<button class="spriteCard ${owned===s.variants.length?'complete':''} ${state()['favorite:'+s.id]?'favorite':''}" onclick="openSprite('${s.id}')"><div class="art"><img src="${s.image}"></div><h3>${s.name}</h3><div class="meta"><span>${s.rarity}</span><span>${owned}/${s.variants.length}</span></div><div class="miniTrack"><i style="width:${p}%"></i></div></button>`
+ }).join('')||'<div class="empty">No matching Sprites.</div>';
 }
 function missingRows(){
  const q=$('missingSearch').value.toLowerCase().trim(),vf=$('missingVariant').value,rf=$('missingRarity').value;
  return all().filter(x=>!st(x.id).owned&&(!q||(x.sprite.name+' '+x.name+' '+x.sprite.rarity).toLowerCase().includes(q))&&(!vf||x.name===vf)&&(!rf||x.sprite.rarity===rf));
 }
 function renderMissing(){
- const rows=missingRows();$('missingTotal').textContent=metrics().missing;
+ const rows=missingRows(),p=activeProfile();
+ $('missingTotal').textContent=metrics().missing;
+ $('missingProfileLabel').textContent=p.name;
  ['missingGrouped','missingChecklist','missingWall'].forEach(id=>$(id).hidden=true);
  if(missingMode==='grouped'){
   $('missingGrouped').hidden=false;
   const groups=data.sprites.map(s=>({sprite:s,rows:rows.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
-  $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div onclick="openSprite('${g.sprite.id}')"><h3>${g.sprite.name}</h3><small style="color:var(--muted)">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<button class="tag" onclick="toggleEntry('${x.id}','owned')">${x.name}</button>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
+  $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div onclick="openSprite('${g.sprite.id}')"><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<button class="tag" onclick="toggleEntry('${x.id}','owned')">${x.name}</button>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
  }else if(missingMode==='checklist'){
   $('missingChecklist').hidden=false;
   $('missingChecklist').innerHTML=rows.map(x=>`<div class="check"><div class="checkLabel"><button onclick="toggleEntry('${x.id}','owned')">✓</button><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div></div><button class="btn" onclick="openSprite('${x.sprite.id}')">View</button></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
  }else{
   $('missingWall').hidden=false;
-  $('missingWall').innerHTML=data.sprites.map(s=>`<div class="wallRow" onclick="openSprite('${s.id}')"><div class="wallTop"><b>${s.name}</b><span style="color:var(--muted)">${s.variants.filter(v=>st(v.id).owned).length}/${s.variants.length}</span></div><div class="dots">${s.variants.map(v=>`<span class="dot ${st(v.id).owned?'on':''}">${v.name[0]}</span>`).join('')}</div></div>`).join('');
+  $('missingWall').innerHTML=data.sprites.map(s=>`<div class="wallRow" onclick="openSprite('${s.id}')"><div class="wallTop"><b>${s.name}</b><span class="subtle">${s.variants.filter(v=>st(v.id).owned).length}/${s.variants.length}</span></div><div class="dots">${s.variants.map(v=>`<span class="dot ${st(v.id).owned?'on':''}">${v.name[0]}</span>`).join('')}</div></div>`).join('');
  }
 }
-function renderHunt(){
- const picks=getAlmost(5);
- $('huntList').innerHTML=picks.length?picks.map(s=>`<div class="huntCard"><img src="${s.image}"><div><b>Finish ${s.name}</b><small>Only ${s.missing} left</small></div><button class="btn gold" onclick="openSprite('${s.id}')">Open</button></div>`).join(''):'<div class="empty">Start collecting to unlock recommendations.</div>';
+function renderProfiles(){
+ const current=activeProfile(),m=metrics(current);
+ $('profileStatsName').textContent=current.name;
+ $('ownedProfile').textContent=m.owned;
+ $('masteredProfile').textContent=m.mastered;
+ $('completeProfile').textContent=m.complete;
+ $('missingProfile').textContent=m.missing;
+ $('profileList').innerHTML=db.profiles.map(p=>{
+  const pm=metrics(p),initial=p.name.trim().charAt(0).toUpperCase()||'?';
+  return`<div class="profileCard ${p.id===db.activeProfileId?'active':''}"><div class="profileAvatar">${initial}</div><div onclick="switchProfile('${p.id}')"><b>${p.name}</b><small>${pm.owned} owned · ${pm.missing} missing</small></div><div class="actions"><button class="btn" onclick="renameProfile('${p.id}')">Edit</button>${db.profiles.length>1?`<button class="btn danger" onclick="deleteProfile('${p.id}')">×</button>`:''}</div></div>`
+ }).join('');
 }
-function achievements(){
- const m=metrics();return[
- {icon:'✨',title:'First Sprite',desc:'Collect one entry',on:m.owned>=1},
- {icon:'⚡',title:'Halfway',desc:'Reach 50%',on:m.pct>=.5},
- {icon:'💎',title:'Set Complete',desc:'Complete one Sprite',on:m.complete>=1},
- {icon:'🌟',title:'Sprite Legend',desc:'Reach 100%',on:m.pct===1}
-]}
-function renderProfile(){
- const m=metrics(),x=xpInfo(),a=achievements();
- $('profileName').textContent=meta.profileName;$('profileRank').textContent=rankFor(x.level);$('ownedProfile').textContent=m.owned;$('completeProfile').textContent=m.complete;$('levelProfile').textContent=x.level;
- $('achievementCount').textContent=a.filter(x=>x.on).length+'/'+a.length;
- $('achievementGrid').innerHTML=a.map(x=>`<div class="achievement ${x.on?'on':''}"><div style="font-size:24px">${x.icon}</div><b>${x.title}</b><small>${x.desc}</small></div>`).join('');
- const recent=(meta.recentFound||[]).slice(0,8);
- $('recentList').innerHTML=recent.map(r=>{const x=all().find(a=>a.id===r.id);return x?`<div class="recent"><div><b>${x.sprite.name} — ${x.name}</b><small style="display:block;color:var(--muted)">${x.sprite.rarity}</small></div><small style="color:var(--muted)">${new Date(r.at).toLocaleDateString()}</small></div>`:''}).join('')||'<div class="empty">No finds logged yet.</div>';
+function addProfile(){
+ const name=prompt('Collector name','Son');
+ if(!name||!name.trim())return;
+ const p={id:makeId(),name:name.trim().slice(0,24),state:{},meta:{recentFound:[]}};
+ db.profiles.push(p);db.activeProfileId=p.id;save();toast('Collector added');
+}
+function switchProfile(id){db.activeProfileId=id;save();showView('home');toast('Profile switched')}
+function renameProfile(id){
+ const p=db.profiles.find(x=>x.id===id);if(!p)return;
+ const name=prompt('Collector name',p.name);
+ if(name&&name.trim()){p.name=name.trim().slice(0,24);save()}
+}
+function deleteProfile(id){
+ const p=db.profiles.find(x=>x.id===id);if(!p||db.profiles.length===1)return;
+ if(!confirm(`Delete ${p.name} and all of this profile's progress?`))return;
+ db.profiles=db.profiles.filter(x=>x.id!==id);
+ if(db.activeProfileId===id)db.activeProfileId=db.profiles[0].id;
+ save();toast('Collector deleted');
 }
 function openSprite(id){
  currentSprite=data.sprites.find(s=>s.id===id);if(!currentSprite)return;
- $('detailName').textContent=currentSprite.name;$('detailImage').src=currentSprite.image;$('detailMeta').textContent=currentSprite.rarity+' Sprite · '+currentSprite.variants.length+' variants';$('favoriteBtn').classList.toggle('on',!!state['favorite:'+id]);$('duplicateCount').textContent=state['duplicates:'+id]||0;
- $('variantList').innerHTML=currentSprite.variants.map(v=>{const s=st(v.id);return`<div class="variantRow ${s.owned?'owned':''}"><div class="variantVisual"><img src="${currentSprite.image}"></div><div><b>${v.name}</b><small style="display:block;color:var(--muted)">${v.rareHunt?'Rare hunt':'Released'}</small></div><button class="toggle ${s.owned?'on':''}" onclick="toggleEntry('${v.id}','owned')">✓</button><button class="toggle ${s.mastered?'on':''}" onclick="toggleEntry('${v.id}','mastered')">★</button></div>`}).join('');
- $('notes').value=state['notes:'+id]||'';$('modal').classList.add('open');
+ $('detailName').textContent=currentSprite.name;
+ $('detailImage').src=currentSprite.image;
+ $('detailMeta').textContent=activeProfile().name+' · '+currentSprite.rarity+' Sprite · '+currentSprite.variants.length+' variants';
+ $('favoriteBtn').classList.toggle('on',!!state()['favorite:'+id]);
+ $('duplicateCount').textContent=state()['duplicates:'+id]||0;
+ $('variantList').innerHTML=currentSprite.variants.map(v=>{
+  const s=st(v.id);
+  return`<div class="variantRow ${s.owned?'owned':''}"><div class="variantVisual"><img src="${currentSprite.image}"></div><div><b>${v.name}</b><small style="display:block;color:var(--muted)">${v.rareHunt?'Rare hunt':'Released'}</small></div><button class="toggle ${s.owned?'on':''}" onclick="toggleEntry('${v.id}','owned')">✓</button><button class="toggle ${s.mastered?'on':''}" onclick="toggleEntry('${v.id}','mastered')">★</button></div>`
+ }).join('');
+ $('notes').value=state()['notes:'+id]||'';
+ $('modal').classList.add('open');
 }
 function closeModal(){$('modal').classList.remove('open');currentSprite=null}
 function toggleEntry(id,key){
- state[id]=state[id]||{};const before=!!state[id].owned;state[id][key]=!state[id][key];
- if(key==='mastered'&&state[id][key])state[id].owned=true;if(key==='owned'&&!state[id][key])state[id].mastered=false;
- if(!before&&state[id].owned){meta.recentFound=[{id,at:new Date().toISOString()},...(meta.recentFound||[]).filter(x=>x.id!==id)].slice(0,30);const x=all().find(a=>a.id===id);toast(x.sprite.name+' '+x.name+' added')}
+ const s=state();s[id]=s[id]||{};
+ const before=!!s[id].owned;
+ s[id][key]=!s[id][key];
+ if(key==='mastered'&&s[id][key])s[id].owned=true;
+ if(key==='owned'&&!s[id][key])s[id].mastered=false;
+ if(!before&&s[id].owned){
+  meta().recentFound=[{id,at:new Date().toISOString()},...(meta().recentFound||[]).filter(x=>x.id!==id)].slice(0,30);
+  const x=all().find(a=>a.id===id);toast(x.sprite.name+' '+x.name+' added');
+ }
  save();if(currentSprite)openSprite(currentSprite.id);
 }
-function toggleFavorite(){state['favorite:'+currentSprite.id]=!state['favorite:'+currentSprite.id];save();openSprite(currentSprite.id)}
-function changeDuplicates(d){const k='duplicates:'+currentSprite.id;state[k]=Math.max(0,Number(state[k]||0)+d);save();openSprite(currentSprite.id)}
-function editName(){const n=prompt('Collector name',meta.profileName);if(n&&n.trim()){meta.profileName=n.trim().slice(0,24);save()}}
-function exportBackup(){const b=new Blob([JSON.stringify({version:10,exportedAt:new Date().toISOString(),state,meta},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='SpriteDex-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
-function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);state=d.state||d;meta=d.meta||{profileName:'Mike'};save();toast('Backup restored')}catch{alert('Invalid backup')}};r.readAsText(f)}
-function resetAll(){if(confirm('Erase all SpriteDex progress?')){state={};meta={profileName:'Mike'};localStorage.removeItem(KEY);localStorage.removeItem(META);save()}}
-function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1500)}
-Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,changeDuplicates,editName});
+function toggleFavorite(){state()['favorite:'+currentSprite.id]=!state()['favorite:'+currentSprite.id];save();openSprite(currentSprite.id)}
+function changeDuplicates(d){const k='duplicates:'+currentSprite.id;state()[k]=Math.max(0,Number(state()[k]||0)+d);save();openSprite(currentSprite.id)}
+function exportBackup(){
+ const blob=new Blob([JSON.stringify({version:11,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+}
+function importBackup(e){
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{try{
+  const d=JSON.parse(r.result);
+  if(d.database&&d.database.profiles)db=d.database;
+  else if(d.profiles)db=d;
+  else throw new Error();
+  save();toast('All profiles restored');
+ }catch{alert('Invalid V11 backup')}};
+ r.readAsText(f);
+}
+function resetAll(){
+ if(!confirm('Erase every collector profile and all SpriteDex progress?'))return;
+ localStorage.removeItem(V11_KEY);
+ localStorage.removeItem(LEGACY_KEY);
+ localStorage.removeItem('spritedex-meta-v9');
+ db=loadDatabase();save();toast('SpriteDex reset');
+}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
+Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,changeDuplicates,addProfile,switchProfile,renameProfile,deleteProfile});
 init();
 </script>
 </body>
