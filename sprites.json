@@ -689,9 +689,33 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "18.0",
+  "version": "20.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "20.0",
+      "date": "2026-07-23",
+      "title": "QR Family Sharing",
+      "items": [
+        "Added Show My QR",
+        "Added camera-based Scan Family QR",
+        "Added multi-frame QR support for larger collections",
+        "Kept JSON snapshot sharing under Advanced",
+        "Imported QR collections remain read-only"
+      ]
+    },
+    {
+      "version": "19.0",
+      "date": "2026-07-23",
+      "title": "Family Sharing",
+      "items": [
+        "Replaced Collectors with Family",
+        "Added read-only family snapshots",
+        "Added combined family completion",
+        "Added available-to-share lists",
+        "Added variants needed by everyone"
+      ]
+    },
     {
       "version": "18.0",
       "date": "2026-07-23",

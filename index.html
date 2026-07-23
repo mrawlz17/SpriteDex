@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V18</title>
+<title>SpriteDex V20</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -139,14 +139,54 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .toast.show{opacity:1;transform:translateX(-50%)}
 .empty{text-align:center;color:var(--muted);padding:35px}
 @media(max-width:390px){.art{height:120px}.stats{gap:5px}.stat b{font-size:19px}.stat span{font-size:9px}.brand h1{font-size:25px}}
+
+.familyGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.familyMetric{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:14px}
+.familyMetric b{display:block;font-size:24px}
+.familyMetric span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.familyMember{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:13px;display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center}
+.familyMember .profileAvatar{width:42px;height:42px}
+.familyMember b{display:block}.familyMember small{color:var(--muted)}
+.shareList{display:grid;gap:9px}
+.shareGroup{border:1px solid var(--line);background:var(--card);border-radius:16px;overflow:hidden}
+.shareGroupHead{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:13px}
+.shareGroupHead h3{margin:0;font-size:17px}.shareGroupHead small{display:block;color:var(--muted);margin-top:2px}
+.shareGroup .tags{margin:0;padding:0 13px 13px}
+.familyCallout{border:1px solid #3c5876;background:#132438;border-radius:16px;padding:14px}
+.familyCallout b{display:block;font-size:18px}.familyCallout span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+
+.qrActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.qrAction{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;text-align:left;color:inherit}
+.qrAction b{display:block;font-size:17px}.qrAction span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.qrModal{position:fixed;inset:0;z-index:90;background:rgba(3,8,16,.94);display:none;align-items:center;justify-content:center;padding:18px}
+.qrModal.open{display:flex}
+.qrPanel{width:min(100%,440px);background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}
+.qrPanelHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.qrPanelHead h2{margin:0}.qrClose{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:inherit;font-size:22px}
+.qrCanvasWrap{background:#fff;border-radius:18px;padding:14px;display:flex;justify-content:center;overflow:hidden}
+.qrCanvasWrap canvas,.qrCanvasWrap img{max-width:100%;height:auto}
+.qrStatus{text-align:center;margin-top:12px}.qrStatus b{display:block;font-size:18px}.qrStatus span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.qrFrameControls{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px}
+.qrFrameControls button{min-width:92px}
+.scanViewport{position:relative;border-radius:18px;overflow:hidden;background:#000;aspect-ratio:3/4}
+.scanViewport video,.scanViewport canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scanGuide{position:absolute;left:12%;right:12%;top:25%;aspect-ratio:1;border:3px solid rgba(255,255,255,.9);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.28)}
+.scanMessage{text-align:center;color:var(--muted);font-size:13px;margin-top:12px}
+.advancedDetails{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.advancedDetails summary{cursor:pointer;color:var(--muted);font-size:13px}
+@media(max-width:390px){.qrActions{grid-template-columns:1fr}}
+
 </style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 </head>
 <body>
 <div class="app">
 <header class="top">
  <div class="brand">
   <h1>SpriteDex</h1>
-  <button class="profileSwitch" onclick="showView('profiles')"><span class="avatar" id="topAvatar">M</span><span id="topProfileName">Mike</span><b>⌄</b></button>
+  <button class="profileSwitch" onclick="showView('family')"><span class="avatar" id="topAvatar">M</span><span id="topProfileName">Mike</span><b>⌄</b></button>
  </div>
 </header>
 
@@ -200,25 +240,44 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  <div id="missingGrouped" class="grouped"></div>
 </section>
 
-<section id="profiles" class="view">
- <div class="sectionHead"><h2>Collectors</h2><span>Separate progress for each person</span></div>
- <div id="profileList" class="profileList"></div>
- <button class="primaryAction" onclick="addProfile()"><div><b>Add collector</b><span>Create another independent collection</span></div><strong>＋</strong></button>
 
- <div class="sectionHead"><h2>Current profile stats</h2><span id="profileStatsName"></span></div>
- <div class="stats">
-  <div class="stat"><b id="ownedProfile">0</b><span>Owned</span></div>
-  <div class="stat"><b id="masteredProfile">0</b><span>Mastered</span></div>
-  <div class="stat"><b id="completeProfile">0</b><span>Completed</span></div>
-  <div class="stat"><b id="missingProfile">0</b><span>Missing</span></div>
+<section id="family" class="view">
+ <div class="sectionHead"><h2>Family</h2><span>Shared collection view</span></div>
+ <div id="familyEmpty" class="familyCallout"><b>Add a family member</b><span>Export a read-only snapshot from one phone, then import it on the other. Neither collection can overwrite the other.</span></div>
+ <div id="familySummary" hidden>
+  <div class="familyGrid">
+   <div class="familyMetric"><b id="familyOwned">0</b><span>Owned by the family</span></div>
+   <div class="familyMetric"><b id="familyPercent">0%</b><span>Combined completion</span></div>
+   <div class="familyMetric"><b id="familyMissingAll">0</b><span>Needed by everyone</span></div>
+   <div class="familyMetric"><b id="familyMembersCount">1</b><span>Family members</span></div>
+  </div>
+  <div class="sectionHead"><h2>Available to share</h2><span>Who can help whom</span></div>
+  <div id="shareOpportunities" class="shareList"></div>
+  <div class="sectionHead"><h2>Still needed by everyone</h2><span id="neededByAllCount"></span></div>
+  <div id="neededByAll" class="grouped"></div>
  </div>
-
- <div class="sectionHead"><h2>Data</h2><span>All collector profiles</span></div>
+ <div class="qrActions">
+  <button class="qrAction" id="showQrBtn"><b>Show My QR</b><span>Let a family member scan your current collection</span></button>
+  <button class="qrAction" id="scanQrBtn"><b>Scan Family QR</b><span>Add or refresh a read-only family collection</span></button>
+ </div>
+ <details class="advancedDetails">
+  <summary>Advanced file sharing</summary>
+  <button class="primaryAction" id="exportFamilyBtn"><div><b>Export family snapshot</b><span>Create a JSON file</span></div><strong>↗</strong></button>
+  <button class="primaryAction" id="importFamilyBtn"><div><b>Import family snapshot</b><span>Select a JSON file</span></div><strong>＋</strong></button>
+  <input id="familyFileInput" type="file" accept="application/json" hidden>
+ </details>
+ <div class="sectionHead"><h2>Family members</h2><span>Imported snapshots</span></div>
+ <div id="familyMemberList" class="profileList"></div>
+ <div class="sectionHead"><h2>This device</h2><span>Your local collector</span></div>
+ <div id="profileList" class="profileList"></div>
+ <button class="primaryAction" onclick="addProfile()"><div><b>Add local collector</b><span>Create another independent collection on this device</span></div><strong>＋</strong></button>
+ <div class="sectionHead"><h2>Data</h2><span>Local backups</span></div>
  <div class="settings">
-  <div class="setting"><button class="btn primary" id="exportBtn">Export backup</button> <button class="btn" id="importBtn">Import backup</button><input id="fileInput" type="file" accept="application/json" hidden></div>
+  <div class="setting"><button class="btn primary" id="exportBtn">Export full backup</button> <button class="btn" id="importBtn">Import full backup</button><input id="fileInput" type="file" accept="application/json" hidden></div>
   <div class="setting"><button class="btn danger" id="resetBtn">Erase all SpriteDex data</button></div>
  </div>
 </section>
+
 </main>
 </div>
 
@@ -226,7 +285,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 <button class="navBtn active" data-view="home"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5z"/></svg></i>Home</button>
 <button class="navBtn" data-view="collection"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H11v17H5.5A1.5 1.5 0 0 0 4 21.5zm16 0A1.5 1.5 0 0 0 18.5 3H13v17h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg></i>Collection</button>
 <button class="navBtn" data-view="missing"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4zm1 4h4m-4 4h4m-4 4h2"/></svg></i>Missing</button>
-<button class="navBtn" data-view="profiles"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm6.5-1a3 3 0 1 0 0-6m-13 16v-2a5.5 5.5 0 0 1 11 0v2zm11 0v-1.5a4.5 4.5 0 0 0-3-4.24"/></svg></i>Collectors</button>
+<button class="navBtn" data-view="family"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm6.5-1a3 3 0 1 0 0-6m-13 16v-2a5.5 5.5 0 0 1 11 0v2zm11 0v-1.5a4.5 4.5 0 0 0-3-4.24"/></svg></i>Family</button>
 </div></nav>
 
 <div class="modal" id="modal"><div class="sheet">
@@ -236,12 +295,39 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 <div class="sectionHead"><h2>Variants</h2><span>✓ owned · ★ mastered</span></div><div id="variantList" class="variantList"></div>
 </div></div>
 
+
+<div id="showQrModal" class="qrModal" aria-hidden="true">
+ <div class="qrPanel">
+  <div class="qrPanelHead"><h2>My Family QR</h2><button class="qrClose" id="closeShowQrBtn">×</button></div>
+  <div id="qrCanvasWrap" class="qrCanvasWrap"></div>
+  <div class="qrStatus"><b id="qrOwnerName">Collector</b><span id="qrFrameLabel">Ready to scan</span></div>
+  <div id="qrFrameControls" class="qrFrameControls" hidden>
+   <button class="btn" id="prevQrFrame">Previous</button>
+   <span id="qrFrameCounter"></span>
+   <button class="btn primary" id="nextQrFrame">Next</button>
+  </div>
+ </div>
+</div>
+
+<div id="scanQrModal" class="qrModal" aria-hidden="true">
+ <div class="qrPanel">
+  <div class="qrPanelHead"><h2>Scan Family QR</h2><button class="qrClose" id="closeScanQrBtn">×</button></div>
+  <div class="scanViewport">
+   <video id="qrVideo" playsinline muted></video>
+   <canvas id="qrScanCanvas" hidden></canvas>
+   <div class="scanGuide"></div>
+  </div>
+  <div id="scanMessage" class="scanMessage">Point the camera at the SpriteDex QR code.</div>
+ </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
+db.familySnapshots=db.familySnapshots||[];
 let data={sprites:[]},currentSprite=null;
 
 const $=id=>document.getElementById(id);
@@ -262,7 +348,7 @@ function loadDatabase(){
  let oldMeta={};
  try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
  const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
- return{version:11,activeProfileId:first.id,profiles:[first]};
+ return{version:13,activeProfileId:first.id,profiles:[first],familySnapshots:[]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
 async function init(){
@@ -279,6 +365,15 @@ function bind(){
  $('importBtn').onclick=()=>$('fileInput').click();
  $('fileInput').onchange=importBackup;
  $('resetBtn').onclick=resetAll;
+ $('showQrBtn').onclick=showMyQr;
+ $('scanQrBtn').onclick=startQrScanner;
+ $('closeShowQrBtn').onclick=closeShowQr;
+ $('closeScanQrBtn').onclick=stopQrScanner;
+ $('prevQrFrame').onclick=()=>changeQrFrame(-1);
+ $('nextQrFrame').onclick=()=>changeQrFrame(1);
+ $('exportFamilyBtn').onclick=exportFamilySnapshot;
+ $('importFamilyBtn').onclick=()=>$('familyFileInput').click();
+ $('familyFileInput').onchange=importFamilySnapshot;
 }
 function buildFilters(){
  const variants=[...new Set(all().map(x=>x.name))];
@@ -298,7 +393,7 @@ function showView(id){
  document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
  window.scrollTo({top:0,behavior:'smooth'});render();
 }
-function render(){renderHeader();renderHome();renderCollection();renderMissing();renderProfiles()}
+function render(){renderHeader();renderHome();renderCollection();renderMissing();renderFamily()}
 function renderHeader(){
  const p=activeProfile();
  $('topProfileName').textContent=p.name;
@@ -340,18 +435,41 @@ function renderMissing(){
  const groups=data.sprites.map(s=>({sprite:s,rows:rows.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
  $('missingGrouped').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead" onclick="openSprite('${g.sprite.id}')"><div><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity} · Tap to view</small></div><span class="badge">${g.rows.length} missing</span></div><div class="tags">${g.rows.map(x=>`<span class="tag">${x.name}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Nothing missing in this filter.</div>';
 }
-function renderProfiles(){
- const current=activeProfile(),m=metrics(current);
- $('profileStatsName').textContent=current.name;
- $('ownedProfile').textContent=m.owned;
- $('masteredProfile').textContent=m.mastered;
- $('completeProfile').textContent=m.complete;
- $('missingProfile').textContent=m.missing;
+
+function renderFamily(){
+ const current=activeProfile(),snapshots=db.familySnapshots||[];
+ $('familyMembersCount').textContent=1+snapshots.length;
+ $('familyMemberList').innerHTML=snapshots.map(s=>{
+  const sm=metrics({state:s.state||{}}),initial=(s.name||'?').trim().charAt(0).toUpperCase()||'?';
+  const updated=s.sharedAt?new Date(s.sharedAt).toLocaleDateString():'Unknown';
+  return`<div class="familyMember"><div class="profileAvatar">${initial}</div><div><b>${s.name}</b><small>${sm.owned} owned · Updated ${updated}</small></div><button class="btn danger" onclick="removeFamilyMember('${s.id}')">×</button></div>`
+ }).join('')||'<div class="empty">No family members imported yet.</div>';
  $('profileList').innerHTML=db.profiles.map(p=>{
   const pm=metrics(p),initial=p.name.trim().charAt(0).toUpperCase()||'?';
   return`<div class="profileCard ${p.id===db.activeProfileId?'active':''}"><div class="profileAvatar">${initial}</div><div onclick="switchProfile('${p.id}')"><b>${p.name}</b><small>${pm.owned} owned · ${pm.missing} missing</small></div><div class="actions"><button class="btn" onclick="renameProfile('${p.id}')">Edit</button>${db.profiles.length>1?`<button class="btn danger" onclick="deleteProfile('${p.id}')">×</button>`:''}</div></div>`
  }).join('');
+ $('familyEmpty').hidden=snapshots.length>0;
+ $('familySummary').hidden=snapshots.length===0;
+ if(!snapshots.length)return;
+ const rows=all();
+ const people=[{id:'local',name:current.name,state:current.state||{}},...snapshots];
+ const familyOwned=rows.filter(x=>people.some(p=>p.state[x.id]?.owned));
+ const neededByAll=rows.filter(x=>people.every(p=>!p.state[x.id]?.owned));
+ $('familyOwned').textContent=familyOwned.length;
+ $('familyPercent').textContent=Math.round(familyOwned.length/rows.length*100)+'%';
+ $('familyMissingAll').textContent=neededByAll.length;
+ $('neededByAllCount').textContent=neededByAll.length+' variants';
+ const opportunities=[];
+ people.forEach(giver=>people.forEach(receiver=>{
+  if(giver.id===receiver.id)return;
+  const canShare=rows.filter(x=>giver.state[x.id]?.owned&&!receiver.state[x.id]?.owned);
+  if(canShare.length)opportunities.push({giver,receiver,rows:canShare});
+ }));
+ $('shareOpportunities').innerHTML=opportunities.map(o=>`<div class="shareGroup"><div class="shareGroupHead"><div><h3>${o.giver.name} can help ${o.receiver.name}</h3><small>${o.rows.length} variants available to share</small></div><span class="badge">${o.rows.length}</span></div><div class="tags">${o.rows.slice(0,8).map(x=>`<span class="tag">${x.sprite.name} · ${x.name}</span>`).join('')}${o.rows.length>8?`<span class="tag">+ ${o.rows.length-8} more</span>`:''}</div></div>`).join('')||'<div class="empty">No sharing opportunities right now.</div>';
+ const groups=data.sprites.map(s=>({sprite:s,rows:neededByAll.filter(x=>x.sprite.id===s.id)})).filter(g=>g.rows.length);
+ $('neededByAll').innerHTML=groups.map(g=>`<div class="group"><div class="groupHead"><div><h3>${g.sprite.name}</h3><small class="subtle">${g.sprite.rarity}</small></div><span class="badge">${g.rows.length} needed</span></div><div class="tags">${g.rows.map(x=>`<span class="tag">${x.name}</span>`).join('')}</div></div>`).join('')||'<div class="empty">Your family has every released variant.</div>';
 }
+
 function addProfile(){
  const name=prompt('Collector name','Son');
  if(!name||!name.trim())return;
@@ -397,8 +515,160 @@ function toggleEntry(id,key){
  save();if(currentSprite)openSprite(currentSprite.id);
 }
 function toggleFavorite(){state()['favorite:'+currentSprite.id]=!state()['favorite:'+currentSprite.id];save();openSprite(currentSprite.id)}
+
+
+let qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
+
+function compactFamilyPayload(){
+ const p=activeProfile(),owned=[],mastered=[];
+ Object.entries(p.state||{}).forEach(([id,v])=>{
+  if(id.startsWith('favorite:')||!v||typeof v!=='object')return;
+  if(v.owned)owned.push(id);
+  if(v.mastered)mastered.push(id);
+ });
+ return {t:'sd20',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered};
+}
+function buildQrFrames(){
+ if(typeof LZString==='undefined'||typeof qrcode==='undefined')throw new Error('QR tools did not load');
+ const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload()));
+ const session=Math.random().toString(36).slice(2,8);
+ const chunkSize=900,total=Math.ceil(packed.length/chunkSize);
+ return Array.from({length:total},(_,index)=>JSON.stringify({
+  t:'sd20c',s:session,p:index+1,z:total,d:packed.slice(index*chunkSize,(index+1)*chunkSize)
+ }));
+}
+function renderQrFrame(){
+ const wrap=$('qrCanvasWrap');wrap.innerHTML='';
+ const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();
+ wrap.innerHTML=qr.createImgTag(7,8);
+ $('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;
+ $('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`QR frame ${qrFrameIndex+1} of ${qrFrames.length}`;
+ $('qrFrameControls').hidden=qrFrames.length===1;
+ $('prevQrFrame').disabled=qrFrameIndex===0;
+ $('nextQrFrame').disabled=qrFrameIndex===qrFrames.length-1;
+}
+function showMyQr(){
+ try{
+  qrFrames=buildQrFrames();qrFrameIndex=0;
+  $('qrOwnerName').textContent=activeProfile().name;
+  renderQrFrame();
+  $('showQrModal').classList.add('open');
+  $('showQrModal').setAttribute('aria-hidden','false');
+ }catch{
+  alert('QR tools could not load. Check your internet connection and reopen SpriteDex.');
+ }
+}
+function closeShowQr(){
+ $('showQrModal').classList.remove('open');
+ $('showQrModal').setAttribute('aria-hidden','true');
+}
+function changeQrFrame(delta){
+ qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1,qrFrameIndex+delta));renderQrFrame();
+}
+async function startQrScanner(){
+ if(typeof jsQR==='undefined'){alert('QR scanner did not load. Check your internet connection and reopen SpriteDex.');return}
+ qrParts={};
+ $('scanMessage').textContent='Point the camera at the SpriteDex QR code.';
+ $('scanQrModal').classList.add('open');
+ $('scanQrModal').setAttribute('aria-hidden','false');
+ try{
+  qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  const video=$('qrVideo');video.srcObject=qrStream;await video.play();
+  scanQrLoop();
+ }catch{
+  $('scanMessage').textContent='Camera access was blocked. Allow camera access in Safari settings, then try again.';
+ }
+}
+function stopQrScanner(){
+ if(qrScanTimer)cancelAnimationFrame(qrScanTimer);
+ qrScanTimer=null;
+ if(qrStream)qrStream.getTracks().forEach(t=>t.stop());
+ qrStream=null;
+ $('qrVideo').srcObject=null;
+ $('scanQrModal').classList.remove('open');
+ $('scanQrModal').setAttribute('aria-hidden','true');
+}
+function scanQrLoop(){
+ const video=$('qrVideo'),canvas=$('qrScanCanvas');
+ if(video.readyState===video.HAVE_ENOUGH_DATA){
+  canvas.width=video.videoWidth;canvas.height=video.videoHeight;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  const image=ctx.getImageData(0,0,canvas.width,canvas.height);
+  const code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});
+  if(code&&handleQrChunk(code.data))return;
+ }
+ qrScanTimer=requestAnimationFrame(scanQrLoop);
+}
+function handleQrChunk(raw){
+ try{
+  const part=JSON.parse(raw);
+  if(part.t!=='sd20c'||!part.s||!part.p||!part.z||!part.d)return false;
+  qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};
+  qrParts[part.s].chunks[part.p]=part.d;
+  const received=Object.keys(qrParts[part.s].chunks).length;
+  if(received<part.z){
+   $('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next QR frame.`;
+   qrScanTimer=requestAnimationFrame(scanQrLoop);
+   return true;
+  }
+  const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');
+  const decoded=LZString.decompressFromEncodedURIComponent(packed);
+  const payload=JSON.parse(decoded);
+  importQrPayload(payload);
+  return true;
+ }catch{return false}
+}
+function importQrPayload(d){
+ if(d.t!=='sd20'||!d.i||!d.n||!Array.isArray(d.o))throw new Error();
+ if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to the active collector on this phone.';return}
+ const state={};
+ d.o.forEach(id=>state[id]={owned:true,mastered:false});
+ (d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});
+ const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state};
+ db.familySnapshots=db.familySnapshots||[];
+ const existing=db.familySnapshots.findIndex(x=>x.id===snapshot.id);
+ if(existing>=0)db.familySnapshots[existing]=snapshot;else db.familySnapshots.push(snapshot);
+ save();
+ $('scanMessage').textContent=`${snapshot.name} updated successfully.`;
+ setTimeout(()=>{stopQrScanner();showView('family');toast(existing>=0?'Family member updated':'Family member added')},900);
+}
+
+function exportFamilySnapshot(){
+ const p=activeProfile(),cleanState={};
+ Object.entries(p.state||{}).forEach(([k,v])=>{
+  if(k.startsWith('favorite:'))return;
+  if(v&&typeof v==='object'&&(v.owned||v.mastered))cleanState[k]={owned:!!v.owned,mastered:!!v.mastered};
+ });
+ const payload={type:'spritedex-family-snapshot',version:2,id:p.id,name:p.name,sharedAt:new Date().toISOString(),state:cleanState};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='SpriteDex-'+p.name.replace(/[^a-z0-9]+/gi,'-')+'-family.json';a.click();
+ toast('Family snapshot created');
+}
+function importFamilySnapshot(e){
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{try{
+  const d=JSON.parse(r.result);
+  if(d.type!=='spritedex-family-snapshot'||!d.id||!d.name||!d.state)throw new Error();
+  if(d.id===activeProfile().id)throw new Error('same');
+  db.familySnapshots=db.familySnapshots||[];
+  const existing=db.familySnapshots.findIndex(x=>x.id===d.id);
+  const snapshot={id:d.id,name:String(d.name).slice(0,24),sharedAt:d.sharedAt||new Date().toISOString(),state:d.state};
+  if(existing>=0)db.familySnapshots[existing]=snapshot;else db.familySnapshots.push(snapshot);
+  e.target.value='';save();toast(existing>=0?'Family member updated':'Family member added');
+ }catch(err){e.target.value='';alert(err.message==='same'?'This snapshot belongs to the active collector on this phone.':'Invalid SpriteDex family snapshot')}};
+ r.readAsText(f);
+}
+function removeFamilyMember(id){
+ const p=(db.familySnapshots||[]).find(x=>x.id===id);if(!p)return;
+ if(!confirm(`Remove ${p.name} from Family? Their original collection is not affected.`))return;
+ db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);save();toast('Family member removed');
+}
+
 function exportBackup(){
- const blob=new Blob([JSON.stringify({version:11,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
+ const blob=new Blob([JSON.stringify({version:13,exportedAt:new Date().toISOString(),database:db},null,2)],{type:'application/json'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SpriteDex-all-profiles-'+new Date().toISOString().slice(0,10)+'.json';a.click();
 }
 function importBackup(e){
@@ -409,8 +679,9 @@ function importBackup(e){
   if(d.database&&d.database.profiles)db=d.database;
   else if(d.profiles)db=d;
   else throw new Error();
+  db.familySnapshots=db.familySnapshots||[];
   save();toast('All profiles restored');
- }catch{alert('Invalid V11 backup')}};
+ }catch{alert('Invalid SpriteDex backup')}};
  r.readAsText(f);
 }
 function resetAll(){
@@ -421,7 +692,7 @@ function resetAll(){
  db=loadDatabase();save();toast('SpriteDex reset');
 }
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
-Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,addProfile,switchProfile,renameProfile,deleteProfile});
+Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,addProfile,switchProfile,renameProfile,deleteProfile,removeFamilyMember});
 init();
 </script>
 </body>
