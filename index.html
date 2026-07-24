@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-title" content="SpriteDex">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#080c16">
-<link rel="manifest" href="manifest.webmanifest?v=25">
-<link rel="apple-touch-icon" href="icon-192.png?v=25">
-<title>SpriteDex V25</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>SpriteDex V26</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -198,6 +198,18 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 }catch(e){console.warn(e)}})();
 </script>
 
+
+<script>
+try{
+ if(location.search){
+  const url=new URL(location.href);
+  if(url.searchParams.has('refresh')||url.searchParams.has('v')||url.searchParams.has('source')){
+   history.replaceState(null,'',url.pathname);
+  }
+ }
+}catch(e){console.warn(e)}
+</script>
+
 </head>
 <body>
 
@@ -341,7 +353,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 <div id="toast" class="toast"></div>
 
 <script>
-const APP_VERSION='25.0';
+const APP_VERSION='26.0';
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
@@ -354,6 +366,68 @@ const state=()=>activeProfile().state;
 const meta=()=>activeProfile().meta;
 const st=id=>state()[id]||{};
 const all=()=>data.sprites.flatMap(s=>s.variants.map(v=>({...v,sprite:s})));
+
+
+const STORAGE_DB_NAME='SpriteDexStorage';
+const STORAGE_DB_VERSION=1;
+const STORAGE_STORE='app';
+const STORAGE_RECORD='database';
+let storageWriteTimer=null;
+
+function openStorageDb(){
+ return new Promise((resolve,reject)=>{
+  if(!('indexedDB' in window)){resolve(null);return}
+  const request=indexedDB.open(STORAGE_DB_NAME,STORAGE_DB_VERSION);
+  request.onupgradeneeded=()=>{
+   const database=request.result;
+   if(!database.objectStoreNames.contains(STORAGE_STORE))database.createObjectStore(STORAGE_STORE);
+  };
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>reject(request.error);
+ });
+}
+async function readDatabaseMirror(){
+ try{
+  const database=await openStorageDb();
+  if(!database)return null;
+  return await new Promise((resolve,reject)=>{
+   const transaction=database.transaction(STORAGE_STORE,'readonly');
+   const request=transaction.objectStore(STORAGE_STORE).get(STORAGE_RECORD);
+   request.onsuccess=()=>resolve(request.result||null);
+   request.onerror=()=>reject(request.error);
+  });
+ }catch(error){
+  console.warn('IndexedDB read unavailable',error);
+  return null;
+ }
+}
+async function writeDatabaseMirror(value){
+ try{
+  const database=await openStorageDb();
+  if(!database)return;
+  await new Promise((resolve,reject)=>{
+   const transaction=database.transaction(STORAGE_STORE,'readwrite');
+   transaction.objectStore(STORAGE_STORE).put(value,STORAGE_RECORD);
+   transaction.oncomplete=resolve;
+   transaction.onerror=()=>reject(transaction.error);
+  });
+ }catch(error){
+  console.warn('IndexedDB backup unavailable',error);
+ }
+}
+async function bootstrapStorage(){
+ const localRaw=localStorage.getItem(V11_KEY);
+ const mirror=await readDatabaseMirror();
+ if(!localRaw&&mirror&&Array.isArray(mirror.profiles)&&mirror.profiles.length){
+  db=mirror;
+  db.familySnapshots=db.familySnapshots||[];
+  localStorage.setItem(V11_KEY,JSON.stringify(db));
+  return;
+ }
+ if(localRaw){
+  await writeDatabaseMirror(db);
+ }
+}
 
 function makeId(){return 'p-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
 function loadDatabase(){
@@ -368,7 +442,11 @@ function loadDatabase(){
  const first={id:makeId(),name:oldMeta.profileName||'',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
  return{version:11,activeProfileId:first.id,profiles:[first]};
 }
-function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
+function persist(){
+ localStorage.setItem(V11_KEY,JSON.stringify(db));
+ clearTimeout(storageWriteTimer);
+ storageWriteTimer=setTimeout(()=>writeDatabaseMirror(db),120);
+}
 
 function normalizeCollectorName(value){
  const trimmed=String(value||'').trim().replace(/\s+/g,' ');
@@ -442,7 +520,6 @@ function deferAppUpdate(){
  $('updateModal').classList.remove('open');
 }
 async function installAppUpdate(){
- const version=pendingUpdateVersion||Date.now();
  try{
   if('serviceWorker' in navigator){
    const registrations=await navigator.serviceWorker.getRegistrations();
@@ -452,15 +529,16 @@ async function installAppUpdate(){
    const keys=await caches.keys();
    await Promise.all(keys.filter(key=>key.startsWith('spritedex-')).map(key=>caches.delete(key)));
   }
- }catch(error){console.warn('Cache cleanup incomplete',error)}
- const url=new URL(location.href);
- url.searchParams.set('v',version);
+  await writeDatabaseMirror(db);
+ }catch(error){console.warn('Update preparation incomplete',error)}
+ const url=new URL(location.origin+location.pathname);
  url.searchParams.set('refresh',Date.now());
  location.replace(url.toString());
 }
 
-function init(){
+async function init(){
  try{
+  await bootstrapStorage();
   bind();
   if(needsOnboarding()){
    renderHeader();
@@ -595,8 +673,8 @@ Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,
 let qrLibrariesPromise=null,qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 function loadScriptOnce(src,globalName){if(window[globalName])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
 function loadQrLibraries(){if(!qrLibrariesPromise)qrLibrariesPromise=Promise.all([loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')]);return qrLibrariesPromise}
-function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd25',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
-function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd25c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
+function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd26',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
+function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd26c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
 function renderQrFrame(){const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();$('qrCanvasWrap').innerHTML=qr.createImgTag(7,8);$('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;$('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`Frame ${qrFrameIndex+1} of ${qrFrames.length}`;$('qrFrameControls').hidden=qrFrames.length===1}
 async function showMyQr(){try{await loadQrLibraries();qrFrames=buildQrFrames();qrFrameIndex=0;$('qrOwnerName').textContent=activeProfile().name;renderQrFrame();$('showQrModal').classList.add('open')}catch{alert('QR tools could not load. Check your connection and try again.')}}
 function closeShowQr(){$('showQrModal').classList.remove('open')}
@@ -604,8 +682,8 @@ function changeQrFrame(delta){qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1
 async function startQrScanner(){try{await loadQrLibraries();qrParts={};$('scanQrModal').classList.add('open');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('qrVideo').srcObject=qrStream;await $('qrVideo').play();scanQrLoop()}catch{$('scanMessage').textContent='Camera or QR tools could not start. Check permissions and try again.'}}
 function stopQrScanner(){if(qrScanTimer)cancelAnimationFrame(qrScanTimer);qrScanTimer=null;if(qrStream)qrStream.getTracks().forEach(t=>t.stop());qrStream=null;$('scanQrModal').classList.remove('open')}
 function scanQrLoop(){const video=$('qrVideo'),canvas=$('qrScanCanvas');if(video.readyState===video.HAVE_ENOUGH_DATA){canvas.width=video.videoWidth;canvas.height=video.videoHeight;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(video,0,0,canvas.width,canvas.height);const image=ctx.getImageData(0,0,canvas.width,canvas.height),code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});if(code&&handleQrChunk(code.data))return}qrScanTimer=requestAnimationFrame(scanQrLoop)}
-function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd25c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
-function importQrPayload(d){if(d.t!=='sd25'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
+function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd26c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
+function importQrPayload(d){if(d.t!=='sd26'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
 function removeFamilyMember(id){const p=db.familySnapshots.find(x=>x.id===id);if(!p||!confirm(`Remove ${p.name} from Family?`))return;db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);persist();render()}
 
 init();

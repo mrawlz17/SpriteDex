@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "25.0",
+  "version": "26.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "26.0",
+      "date": "2026-07-23",
+      "title": "Persistent Home Screen Storage",
+      "items": [
+        "Home Screen launches now use one permanent SpriteDex URL",
+        "Removed versioned start URLs from the web app manifest",
+        "Added an IndexedDB mirror of collection and family data",
+        "Existing local data automatically migrates into the storage mirror",
+        "Updates use a temporary refresh address and return to the permanent URL"
+      ]
+    },
     {
       "version": "25.0",
       "date": "2026-07-23",
