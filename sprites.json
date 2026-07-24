@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "29.0",
+  "version": "30.0",
   "appUpdated": "2026-07-24",
   "changelog": [
+    {
+      "version": "30.0",
+      "date": "2026-07-24",
+      "title": "In-App Release Source Checker",
+      "items": [
+        "Checks Fortnite.GG for released entries from inside SpriteDex",
+        "Previews newly detected Sprites and variants",
+        "Generates an updated compatible sprites.json",
+        "Removed Python and GitHub Actions folder requirements",
+        "Backup and Restore remain in About"
+      ]
+    },
     {
       "version": "29.0",
       "date": "2026-07-24",
