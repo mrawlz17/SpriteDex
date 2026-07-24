@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "28.0",
+  "version": "29.0",
   "appUpdated": "2026-07-24",
   "changelog": [
+    {
+      "version": "29.0",
+      "date": "2026-07-24",
+      "title": "Automatic Sprite Database Sync",
+      "items": [
+        "SpriteDex now downloads the newest hosted Sprite list whenever the app opens",
+        "New Sprite entries appear without installing a new app version",
+        "Added Sprite database status and Sync Sprite List Now to About",
+        "Moved Export Backup and Import Backup out of Family and into About",
+        "Added a daily GitHub Action that checks Fortnite.GG for released Sprite entries"
+      ]
+    },
     {
       "version": "28.0",
       "date": "2026-07-24",
@@ -918,5 +930,6 @@
         "Visual variant treatments"
       ]
     }
-  ]
+  ],
+  "databaseVersion": "2026.07.24.1"
 }
