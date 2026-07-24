@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V30</title>
+<title>SpriteDex V29</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -382,27 +382,6 @@ try{
   <p style="margin-top:10px;font-size:11px">Force Refresh clears only SpriteDex app caches. Your collection is preserved.</p>
  </div>
 
-
- <div class="settingsCard">
-  <div class="settingsStatus">
-   <div><h3>Release source checker</h3><p id="sourceCheckMessage">Check Fortnite.GG for released Sprites missing from SpriteDex.</p></div>
-   <span id="sourceCheckPill" class="statusPill checking">Ready</span>
-  </div>
-  <div class="aboutRows">
-   <div class="aboutRow"><span>Source</span><b>Fortnite.GG</b></div>
-   <div class="aboutRow"><span>Released at source</span><b id="sourceReleasedCount">—</b></div>
-   <div class="aboutRow"><span>New entries found</span><b id="sourceNewCount">—</b></div>
-  </div>
-  <div class="settingsActions">
-   <button id="checkReleaseSourceBtn" class="btn primary">Check for New Sprites</button>
-  </div>
-  <div class="settingsActions two">
-   <button id="previewSourceChangesBtn" class="btn" disabled>View New Entries</button>
-   <button id="downloadUpdatedDataBtn" class="btn" disabled>Generate sprites.json</button>
-  </div>
-  <p style="margin-top:10px;font-size:11px">The generated file preserves existing Sprite IDs. Upload it to the repository root to publish the updated list.</p>
- </div>
-
  <div class="settingsCard">
   <h3>Backup & restore</h3>
   <p id="settingsBackupStatus">No backup recorded on this installation.</p>
@@ -478,7 +457,7 @@ try{
 <div id="toast" class="toast"></div>
 
 <script>
-const APP_VERSION='30.0';
+const APP_VERSION='29.0';
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 const SPRITE_DATA_CACHE_KEY='spritedex-sprite-data-v29';
@@ -502,10 +481,6 @@ try{
 let hostedSpriteDataVersion=String(data.databaseVersion||data.updated||'Built in');
 let spriteDataSyncState='idle';
 let spriteDataLastAdded=0;
-let sourceCheckState='ready';
-let sourceDetectedEntries=[];
-let sourceGeneratedData=null;
-let sourceReleasedCount=null;
 const all=()=>data.sprites.flatMap(s=>s.variants.map(v=>({...v,sprite:s})));
 
 
@@ -790,99 +765,6 @@ function renderSpriteDataStatus(){
  }
 }
 
-
-const SPRITE_SOURCE_READER='https://r.jina.ai/http://fortnite.gg/sprites';
-const SOURCE_VARIANTS=['Gold','Gummy','Galaxy','Gem','Holofoil','Cube','Quack'];
-
-function sourceSlug(v){return String(v).toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
-function sourceLabel(label){
- let clean=String(label||'').replace(/\s+/g,' ').replace(/\s+Sprite$/i,'').trim(),variant='Base',base=clean;
- for(const prefix of SOURCE_VARIANTS)if(clean.toLowerCase().startsWith(prefix.toLowerCase()+' ')){variant=prefix;base=clean.slice(prefix.length).trim();break}
- return {base,variant,label};
-}
-function parseSource(markdown){
- const out=[],seen=new Set();
- for(const line of String(markdown||'').split(/\r?\n/)){
-  const candidates=[];
-  for(const m of line.matchAll(/!\[([^\]]+?\sSprite)\]/gi))candidates.push(m[1]);
-  const h=line.trim().match(/^#{1,6}\s+(.+?\sSprite)\s*$/i);if(h)candidates.push(h[1]);
-  for(const m of line.matchAll(/\[([^\]]+?\sSprite)\]\([^)]*\/sprites\/[^)]*\)/gi))candidates.push(m[1]);
-  for(const c of candidates){
-   const e=sourceLabel(c),key=(e.base+'|'+e.variant).toLowerCase();
-   if(!e.base||seen.has(key)||/^(all|fortnite|owned|mastered|variant|sprite)$/i.test(e.base))continue;
-   seen.add(key);out.push(e);
-  }
- }
- return out;
-}
-function buildSourceData(entries){
- const next=JSON.parse(JSON.stringify(data)),byName=new Map(next.sprites.map(s=>[s.name.toLowerCase(),s]));
- let order=Math.max(0,...next.sprites.map(s=>Number(s.releaseOrder)||0))+1;
- const added=[];
- for(const entry of entries){
-  let sprite=byName.get(entry.base.toLowerCase());
-  if(!sprite){
-   if(entry.variant!=='Base')continue;
-   sprite={id:sourceSlug(entry.base),name:entry.base,rarity:'Rare',icon:'✨',releaseOrder:order++,variants:[],image:'',source:'Fortnite.GG'};
-   next.sprites.push(sprite);byName.set(entry.base.toLowerCase(),sprite);
-  }
-  if(sprite.variants.some(v=>v.name.toLowerCase()===entry.variant.toLowerCase()))continue;
-  const id=`${sprite.id}-${sourceSlug(entry.variant)}`;
-  sprite.variants.push({id,name:entry.variant,rareHunt:!['Base','Gold','Gummy'].includes(entry.variant)});
-  added.push({base:entry.base,variant:entry.variant,id});
- }
- const now=new Date();
- next.updated=now.toISOString().slice(0,10);
- next.databaseVersion=now.toISOString().replace(/[-:T]/g,'').slice(0,12);
- next.releasedEntries=next.sprites.reduce((n,s)=>n+s.variants.length,0);
- next.dataChangelog=Array.isArray(next.dataChangelog)?next.dataChangelog:[];
- next.dataChangelog.unshift({databaseVersion:next.databaseVersion,date:next.updated,addedEntries:added.length,source:'Fortnite.GG in-app source checker'});
- next.dataChangelog=next.dataChangelog.slice(0,20);
- return {next,added};
-}
-function renderSourceChecker(){
- const msg=$('sourceCheckMessage');if(!msg)return;
- const pill=$('sourceCheckPill');
- $('sourceReleasedCount').textContent=sourceReleasedCount==null?'—':sourceReleasedCount;
- $('sourceNewCount').textContent=sourceCheckState==='ready'?'—':sourceDetectedEntries.length;
- const ready=sourceDetectedEntries.length>0&&sourceGeneratedData;
- $('previewSourceChangesBtn').disabled=!ready;$('downloadUpdatedDataBtn').disabled=!ready;
- if(sourceCheckState==='checking'){pill.className='statusPill checking';pill.textContent='Checking';msg.textContent='Reading Fortnite.GG and comparing released entries…'}
- else if(sourceCheckState==='error'){pill.className='statusPill checking';pill.textContent='Unavailable';msg.textContent='The release source could not be read. Try again later.'}
- else if(sourceCheckState==='changes'){pill.className='statusPill available';pill.textContent='New';msg.textContent=`${sourceDetectedEntries.length} new ${sourceDetectedEntries.length===1?'entry':'entries'} found.`}
- else if(sourceCheckState==='current'){pill.className='statusPill current';pill.textContent='Current';msg.textContent='No released entries are missing from SpriteDex.'}
- else{pill.className='statusPill checking';pill.textContent='Ready';msg.textContent='Check Fortnite.GG for released Sprites missing from SpriteDex.'}
-}
-async function checkReleaseSource(){
- sourceCheckState='checking';sourceDetectedEntries=[];sourceGeneratedData=null;sourceReleasedCount=null;renderSourceChecker();
- try{
-  const r=await fetch(`${SPRITE_SOURCE_READER}?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(r.status);
-  const entries=parseSource(await r.text());if(entries.length<20)throw new Error('Unsafe source parse');
-  sourceReleasedCount=entries.length;
-  const existing=new Set(data.sprites.flatMap(s=>s.variants.map(v=>`${s.name}|${v.name}`.toLowerCase())));
-  const generated=buildSourceData(entries.filter(e=>!existing.has(`${e.base}|${e.variant}`.toLowerCase())));
-  sourceGeneratedData=generated.next;sourceDetectedEntries=generated.added;
-  sourceCheckState=sourceDetectedEntries.length?'changes':'current';renderSourceChecker();
-  toast(sourceDetectedEntries.length?`${sourceDetectedEntries.length} new entries found`:'Sprite source is current');
- }catch(error){console.warn(error);sourceCheckState='error';renderSourceChecker();toast('Release source check unavailable')}
-}
-function openSourcePreview(){
- if(!sourceDetectedEntries.length)return;
- $('sourcePreviewSummary').textContent=`${sourceDetectedEntries.length} new ${sourceDetectedEntries.length===1?'entry':'entries'} will be added.`;
- $('sourcePreviewList').innerHTML=sourceDetectedEntries.map(e=>`<div class="aboutRow"><span>${escapeHtml(e.base)}</span><b>${escapeHtml(e.variant)}</b></div>`).join('');
- $('sourcePreviewModal').classList.add('open');
-}
-function closeSourcePreview(){$('sourcePreviewModal').classList.remove('open')}
-async function downloadUpdatedSpriteData(){
- if(!sourceGeneratedData)return;
- const text=JSON.stringify(sourceGeneratedData,null,2),blob=new Blob([text],{type:'application/json'});
- try{
-  const file=new File([blob],'sprites.json',{type:'application/json'});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'SpriteDex sprites.json'});closeSourcePreview();return}
- }catch(error){console.warn(error)}
- const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sprites.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);closeSourcePreview();toast('sprites.json generated');
-}
-
 function formattedBackupDate(){
  const value=localStorage.getItem('spritedex-last-backup');
  if(!value)return 'No backup recorded on this installation.';
@@ -892,7 +774,6 @@ function formattedBackupDate(){
 }
 function renderSettings(){
  renderSpriteDataStatus();
- renderSourceChecker();
  const installed=$('settingsInstalledVersion');
  if(!installed)return;
  const m=metrics(),p=activeProfile();
@@ -968,12 +849,6 @@ function bind(){
  on('collectorNameInput','keydown',e=>{if(e.key==='Enter')completeOnboarding()});
  on('updateLaterBtn','click',deferAppUpdate);on('updateNowBtn','click',installAppUpdate);
  on('syncSpriteDataBtn','click',()=>syncSpriteData({manual:true}));
- on('checkReleaseSourceBtn','click',checkReleaseSource);
- on('previewSourceChangesBtn','click',openSourcePreview);
- on('downloadUpdatedDataBtn','click',downloadUpdatedSpriteData);
- on('sourcePreviewClose','click',closeSourcePreview);
- on('sourcePreviewCancel','click',closeSourcePreview);
- on('sourcePreviewGenerate','click',downloadUpdatedSpriteData);
  on('checkUpdatesBtn','click',()=>checkForAppUpdate({manual:true}));
  on('settingsUpdateNowBtn','click',openUpdateDialog);
  on('forceRefreshBtn','click',forceRefreshApp);
@@ -1173,8 +1048,8 @@ Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,
 let qrLibrariesPromise=null,qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 function loadScriptOnce(src,globalName){if(window[globalName])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
 function loadQrLibraries(){if(!qrLibrariesPromise)qrLibrariesPromise=Promise.all([loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')]);return qrLibrariesPromise}
-function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd30',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
-function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd30c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
+function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd29',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
+function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd29c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
 function renderQrFrame(){const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();$('qrCanvasWrap').innerHTML=qr.createImgTag(7,8);$('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;$('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`Frame ${qrFrameIndex+1} of ${qrFrames.length}`;$('qrFrameControls').hidden=qrFrames.length===1}
 async function showMyQr(){try{await loadQrLibraries();qrFrames=buildQrFrames();qrFrameIndex=0;$('qrOwnerName').textContent=activeProfile().name;renderQrFrame();$('showQrModal').classList.add('open')}catch{alert('QR tools could not load. Check your connection and try again.')}}
 function closeShowQr(){$('showQrModal').classList.remove('open')}
@@ -1182,8 +1057,8 @@ function changeQrFrame(delta){qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1
 async function startQrScanner(){try{await loadQrLibraries();qrParts={};$('scanQrModal').classList.add('open');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('qrVideo').srcObject=qrStream;await $('qrVideo').play();scanQrLoop()}catch{$('scanMessage').textContent='Camera or QR tools could not start. Check permissions and try again.'}}
 function stopQrScanner(){if(qrScanTimer)cancelAnimationFrame(qrScanTimer);qrScanTimer=null;if(qrStream)qrStream.getTracks().forEach(t=>t.stop());qrStream=null;$('scanQrModal').classList.remove('open')}
 function scanQrLoop(){const video=$('qrVideo'),canvas=$('qrScanCanvas');if(video.readyState===video.HAVE_ENOUGH_DATA){canvas.width=video.videoWidth;canvas.height=video.videoHeight;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(video,0,0,canvas.width,canvas.height);const image=ctx.getImageData(0,0,canvas.width,canvas.height),code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});if(code&&handleQrChunk(code.data))return}qrScanTimer=requestAnimationFrame(scanQrLoop)}
-function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd30c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
-function importQrPayload(d){if(d.t!=='sd30'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
+function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd29c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
+function importQrPayload(d){if(d.t!=='sd29'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
 function removeFamilyMember(id){const p=db.familySnapshots.find(x=>x.id===id);if(!p||!confirm(`Remove ${p.name} from Family?`))return;db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);persist();render()}
 
 init();
