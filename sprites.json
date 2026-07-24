@@ -689,9 +689,20 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "26.0",
+  "version": "27.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "27.0",
+      "date": "2026-07-23",
+      "title": "Backup and Restore",
+      "items": [
+        "Added Export Backup to the Family tab",
+        "Added Import Backup to restore data on another SpriteDex installation",
+        "Backups include collection ownership, mastery, favorites, collector details, and family snapshots",
+        "Imports are validated and require confirmation before replacing local data"
+      ]
+    },
     {
       "version": "26.0",
       "date": "2026-07-23",

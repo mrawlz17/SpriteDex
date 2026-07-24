@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V26</title>
+<title>SpriteDex V27</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -284,6 +284,13 @@ try{
   <button class="qrAction" id="showQrBtn"><b>Show QR</b><span>Let a family member scan your collection</span></button>
   <button class="qrAction" id="scanQrBtn"><b>Scan QR</b><span>Add or refresh a family collection</span></button>
  </div>
+ <div class="sectionHead"><h2>Backup & Restore</h2><span>Move your collection between Safari and Home Screen</span></div>
+ <div class="qrActions">
+  <button class="qrAction" id="exportBackupBtn"><b>Export Backup</b><span>Save your collection, mastery, favorites, and family data</span></button>
+  <button class="qrAction" id="importBackupBtn"><b>Import Backup</b><span>Restore a SpriteDex backup on this installation</span></button>
+ </div>
+ <input id="backupFileInput" type="file" accept=".json,application/json" hidden>
+
  <div id="familySummary" hidden>
   <div class="familyGrid">
    <div class="familyMetric"><b id="familyOwned">0</b><span>Owned by family</span></div>
@@ -353,7 +360,7 @@ try{
 <div id="toast" class="toast"></div>
 
 <script>
-const APP_VERSION='26.0';
+const APP_VERSION='27.0';
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
@@ -559,6 +566,7 @@ function bind(){
  on('search','input',renderCollection);on('statusFilter','change',renderCollection);on('missingSearch','input',renderMissing);
  on('modal','click',e=>{if(e.target===$('modal'))closeModal()});
  on('showQrBtn','click',showMyQr);on('scanQrBtn','click',startQrScanner);on('closeShowQrBtn','click',closeShowQr);on('closeScanQrBtn','click',stopQrScanner);
+ on('exportBackupBtn','click',exportBackup);on('importBackupBtn','click',chooseBackupFile);on('backupFileInput','change',importBackupFile);
  on('prevQrFrame','click',()=>changeQrFrame(-1));on('nextQrFrame','click',()=>changeQrFrame(1));
  on('createCollectorBtn','click',completeOnboarding);
  on('collectorNameInput','keydown',e=>{if(e.key==='Enter')completeOnboarding()});
@@ -667,14 +675,98 @@ function toggleFavorite(){state()['favorite:'+currentSprite.id]=!state()['favori
 
 
 
+
+function backupPayload(){
+ return{
+  type:'SpriteDexBackup',
+  formatVersion:1,
+  appVersion:APP_VERSION,
+  exportedAt:new Date().toISOString(),
+  database:db
+ };
+}
+function safeBackupName(){
+ const name=(activeProfile()?.name||'Collector').trim().replace(/[^a-z0-9_-]+/gi,'-').replace(/^-+|-+$/g,'')||'Collector';
+ const date=new Date().toISOString().slice(0,10);
+ return `SpriteDex-${name}-${date}.json`;
+}
+async function exportBackup(){
+ try{
+  const text=JSON.stringify(backupPayload(),null,2);
+  const file=new File([text],safeBackupName(),{type:'application/json'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+   await navigator.share({title:'SpriteDex Backup',text:'SpriteDex collection backup',files:[file]});
+   toast('Backup ready');
+   return;
+  }
+  const url=URL.createObjectURL(file);
+  const link=document.createElement('a');
+  link.href=url;
+  link.download=file.name;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast('Backup downloaded');
+ }catch(error){
+  if(error&&error.name==='AbortError')return;
+  console.error('Backup export failed',error);
+  alert('SpriteDex could not export the backup. Try again in Safari.');
+ }
+}
+function chooseBackupFile(){
+ const input=$('backupFileInput');
+ input.value='';
+ input.click();
+}
+function validateBackup(parsed){
+ if(!parsed||parsed.type!=='SpriteDexBackup'||!parsed.database)throw new Error('Not a SpriteDex backup file.');
+ const incoming=parsed.database;
+ if(!Array.isArray(incoming.profiles)||!incoming.profiles.length)throw new Error('Backup contains no collector profiles.');
+ if(typeof incoming.activeProfileId!=='string')throw new Error('Backup is missing its active collector.');
+ incoming.familySnapshots=Array.isArray(incoming.familySnapshots)?incoming.familySnapshots:[];
+ incoming.profiles.forEach(profile=>{
+  if(!profile||typeof profile.id!=='string'||typeof profile.name!=='string')throw new Error('Backup contains an invalid collector.');
+  profile.state=profile.state&&typeof profile.state==='object'?profile.state:{};
+  profile.meta=profile.meta&&typeof profile.meta==='object'?profile.meta:{};
+ });
+ if(!incoming.profiles.some(profile=>profile.id===incoming.activeProfileId)){
+  incoming.activeProfileId=incoming.profiles[0].id;
+ }
+ return incoming;
+}
+async function importBackupFile(event){
+ const file=event.target.files&&event.target.files[0];
+ if(!file)return;
+ try{
+  const parsed=JSON.parse(await file.text());
+  const incoming=validateBackup(parsed);
+  const collector=incoming.profiles.find(p=>p.id===incoming.activeProfileId)||incoming.profiles[0];
+  const owned=Object.entries(collector.state||{}).filter(([id,value])=>!id.startsWith('favorite:')&&value&&value.owned).length;
+  const message=`Restore ${collector.name}'s backup with ${owned} owned variants?\n\nThis replaces the data currently stored in this installation.`;
+  if(!confirm(message))return;
+  db=incoming;
+  persist();
+  await writeDatabaseMirror(db);
+  render();
+  toast('Backup restored');
+  setTimeout(()=>location.reload(),500);
+ }catch(error){
+  console.error('Backup import failed',error);
+  alert(error&&error.message?error.message:'SpriteDex could not read that backup file.');
+ }finally{
+  event.target.value='';
+ }
+}
+
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
 Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,removeFamilyMember});
 
 let qrLibrariesPromise=null,qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 function loadScriptOnce(src,globalName){if(window[globalName])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
 function loadQrLibraries(){if(!qrLibrariesPromise)qrLibrariesPromise=Promise.all([loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')]);return qrLibrariesPromise}
-function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd26',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
-function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd26c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
+function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd27',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
+function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd27c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
 function renderQrFrame(){const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();$('qrCanvasWrap').innerHTML=qr.createImgTag(7,8);$('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;$('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`Frame ${qrFrameIndex+1} of ${qrFrames.length}`;$('qrFrameControls').hidden=qrFrames.length===1}
 async function showMyQr(){try{await loadQrLibraries();qrFrames=buildQrFrames();qrFrameIndex=0;$('qrOwnerName').textContent=activeProfile().name;renderQrFrame();$('showQrModal').classList.add('open')}catch{alert('QR tools could not load. Check your connection and try again.')}}
 function closeShowQr(){$('showQrModal').classList.remove('open')}
@@ -682,8 +774,8 @@ function changeQrFrame(delta){qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1
 async function startQrScanner(){try{await loadQrLibraries();qrParts={};$('scanQrModal').classList.add('open');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('qrVideo').srcObject=qrStream;await $('qrVideo').play();scanQrLoop()}catch{$('scanMessage').textContent='Camera or QR tools could not start. Check permissions and try again.'}}
 function stopQrScanner(){if(qrScanTimer)cancelAnimationFrame(qrScanTimer);qrScanTimer=null;if(qrStream)qrStream.getTracks().forEach(t=>t.stop());qrStream=null;$('scanQrModal').classList.remove('open')}
 function scanQrLoop(){const video=$('qrVideo'),canvas=$('qrScanCanvas');if(video.readyState===video.HAVE_ENOUGH_DATA){canvas.width=video.videoWidth;canvas.height=video.videoHeight;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(video,0,0,canvas.width,canvas.height);const image=ctx.getImageData(0,0,canvas.width,canvas.height),code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});if(code&&handleQrChunk(code.data))return}qrScanTimer=requestAnimationFrame(scanQrLoop)}
-function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd26c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
-function importQrPayload(d){if(d.t!=='sd26'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
+function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd27c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
+function importQrPayload(d){if(d.t!=='sd27'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
 function removeFamilyMember(id){const p=db.familySnapshots.find(x=>x.id===id);if(!p||!confirm(`Remove ${p.name} from Family?`))return;db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);persist();render()}
 
 init();
