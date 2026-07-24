@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-title" content="SpriteDex">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#080c16">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V24</title>
+<link rel="manifest" href="manifest.webmanifest?v=25">
+<link rel="apple-touch-icon" href="icon-192.png?v=25">
+<title>SpriteDex V25</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -177,6 +177,18 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .onboardingButton{width:100%;height:52px;margin-top:14px}
 .onboardingError{min-height:18px;color:#ff8b8b;font-size:12px;margin-top:7px}
 
+
+.updateModal{position:fixed;inset:0;z-index:130;background:rgba(2,5,10,.82);display:none;align-items:center;justify-content:center;padding:20px}
+.updateModal.open{display:flex}
+.updateCard{width:min(100%,420px);background:#0e1625;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.updateEyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--cyan);font-weight:900}
+.updateCard h2{margin:7px 0 5px;font-size:27px}
+.updateCard p{margin:0;color:var(--muted)}
+.updateList{margin:17px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.updateList li{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:13px}
+.updateButtons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.updateButtons .btn{height:48px}
+
 </style>
 
 <script>
@@ -235,6 +247,8 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
     <option value="">All status</option>
     <option value="missing">Has missing</option>
     <option value="complete">Complete</option>
+    <option value="mastered">Mastered</option>
+    <option value="not-mastered">Not mastered</option>
     <option value="favorite">Favorites</option>
    </select></div>
  </div>
@@ -310,9 +324,24 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
  </div>
 </div>
 
+
+<div id="updateModal" class="updateModal" role="dialog" aria-modal="true" aria-labelledby="updateTitle">
+ <div class="updateCard">
+  <div class="updateEyebrow">SpriteDex update</div>
+  <h2 id="updateTitle">A new version is available</h2>
+  <p id="updateVersionText"></p>
+  <ul id="updateChangeList" class="updateList"></ul>
+  <div class="updateButtons">
+   <button id="updateLaterBtn" class="btn">Later</button>
+   <button id="updateNowBtn" class="btn primary">Update Now</button>
+  </div>
+ </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
+const APP_VERSION='25.0';
 const LEGACY_KEY='spritedex-v1';
 const V11_KEY='spritedex-v11-profiles';
 let db=loadDatabase();
@@ -379,6 +408,57 @@ function completeOnboarding(){
  toast(`Welcome, ${name}`);
 }
 
+
+function compareVersions(a,b){
+ const pa=String(a).split('.').map(n=>parseInt(n,10)||0);
+ const pb=String(b).split('.').map(n=>parseInt(n,10)||0);
+ const len=Math.max(pa.length,pb.length);
+ for(let i=0;i<len;i++){if((pa[i]||0)!==(pb[i]||0))return(pa[i]||0)-(pb[i]||0)}
+ return 0;
+}
+let pendingUpdateVersion='';
+async function checkForAppUpdate(){
+ try{
+  const response=await fetch(`sprites.json?updateCheck=${Date.now()}`,{cache:'no-store'});
+  if(!response.ok)return;
+  const latest=await response.json();
+  if(!latest.version||compareVersions(latest.version,APP_VERSION)<=0)return;
+  if(sessionStorage.getItem('spritedex-update-later')===String(latest.version))return;
+  pendingUpdateVersion=String(latest.version);
+  const release=(latest.changelog||[]).find(x=>String(x.version)===pendingUpdateVersion)||(latest.changelog||[])[0];
+  $('updateVersionText').textContent=`Version ${pendingUpdateVersion} is ready. Your saved collection will be preserved.`;
+  const items=release&&Array.isArray(release.items)?release.items:['Performance improvements and bug fixes'];
+  $('updateChangeList').innerHTML=items.slice(0,5).map(item=>`<li>${escapeHtml(String(item))}</li>`).join('');
+  $('updateModal').classList.add('open');
+ }catch(error){
+  console.warn('Update check unavailable',error);
+ }
+}
+function escapeHtml(value){
+ return value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));
+}
+function deferAppUpdate(){
+ if(pendingUpdateVersion)sessionStorage.setItem('spritedex-update-later',pendingUpdateVersion);
+ $('updateModal').classList.remove('open');
+}
+async function installAppUpdate(){
+ const version=pendingUpdateVersion||Date.now();
+ try{
+  if('serviceWorker' in navigator){
+   const registrations=await navigator.serviceWorker.getRegistrations();
+   await Promise.all(registrations.map(reg=>reg.unregister()));
+  }
+  if('caches' in window){
+   const keys=await caches.keys();
+   await Promise.all(keys.filter(key=>key.startsWith('spritedex-')).map(key=>caches.delete(key)));
+  }
+ }catch(error){console.warn('Cache cleanup incomplete',error)}
+ const url=new URL(location.href);
+ url.searchParams.set('v',version);
+ url.searchParams.set('refresh',Date.now());
+ location.replace(url.toString());
+}
+
 function init(){
  try{
   bind();
@@ -388,6 +468,7 @@ function init(){
   }else{
    render();
   }
+  setTimeout(checkForAppUpdate,700);
  }catch(error){
   console.error('SpriteDex startup failed',error);
   const strip=$('releaseStrip');
@@ -403,6 +484,7 @@ function bind(){
  on('prevQrFrame','click',()=>changeQrFrame(-1));on('nextQrFrame','click',()=>changeQrFrame(1));
  on('createCollectorBtn','click',completeOnboarding);
  on('collectorNameInput','keydown',e=>{if(e.key==='Enter')completeOnboarding()});
+ on('updateLaterBtn','click',deferAppUpdate);on('updateNowBtn','click',installAppUpdate);
 }
 function buildFilters(){}
 function save(r=true){persist();if(r)render()}
@@ -437,7 +519,19 @@ function renderHome(){
 }
 function renderCollection(){
  const q=$('search').value.toLowerCase().trim(),sf=$('statusFilter').value;
- const shown=data.sprites.filter(s=>{const owned=s.variants.filter(v=>st(v.id).owned).length;const txt=(s.name+' '+s.rarity+' '+s.variants.map(v=>v.name).join(' ')).toLowerCase();return(!q||txt.includes(q))&&(!sf||(sf==='missing'&&owned<s.variants.length)||(sf==='complete'&&owned===s.variants.length)||(sf==='favorite'&&state()['favorite:'+s.id]))});
+ const shown=data.sprites.filter(s=>{
+  const owned=s.variants.filter(v=>st(v.id).owned).length;
+  const mastered=s.variants.filter(v=>st(v.id).mastered).length;
+  const ownedNotMastered=s.variants.some(v=>st(v.id).owned&&!st(v.id).mastered);
+  const txt=(s.name+' '+s.rarity+' '+s.variants.map(v=>v.name).join(' ')).toLowerCase();
+  const statusMatch=!sf
+   ||(sf==='missing'&&owned<s.variants.length)
+   ||(sf==='complete'&&owned===s.variants.length)
+   ||(sf==='mastered'&&mastered>0)
+   ||(sf==='not-mastered'&&ownedNotMastered)
+   ||(sf==='favorite'&&state()['favorite:'+s.id]);
+  return(!q||txt.includes(q))&&statusMatch;
+ });
  $('collectionCount').textContent=shown.length+' Sprites';
  $('spriteGrid').innerHTML=shown.map(s=>{const owned=s.variants.filter(v=>st(v.id).owned).length,p=owned/s.variants.length*100;return`<button class="spriteCard ${owned===s.variants.length?'complete':''} ${state()['favorite:'+s.id]?'favorite':''}" onclick="openSprite('${s.id}')"><div class="art"><img loading="lazy" src="${s.image}" alt="${s.name}"></div><h3>${s.name}</h3><div class="meta"><span>${s.rarity}</span><span>${owned}/${s.variants.length}</span></div><div class="miniTrack"><i style="width:${p}%"></i></div></button>`}).join('')||'<div class="empty">No matching Sprites.</div>';
 }
@@ -501,8 +595,8 @@ Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,
 let qrLibrariesPromise=null,qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 function loadScriptOnce(src,globalName){if(window[globalName])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
 function loadQrLibraries(){if(!qrLibrariesPromise)qrLibrariesPromise=Promise.all([loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')]);return qrLibrariesPromise}
-function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd24',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
-function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd24c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
+function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd25',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
+function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd25c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
 function renderQrFrame(){const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();$('qrCanvasWrap').innerHTML=qr.createImgTag(7,8);$('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;$('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`Frame ${qrFrameIndex+1} of ${qrFrames.length}`;$('qrFrameControls').hidden=qrFrames.length===1}
 async function showMyQr(){try{await loadQrLibraries();qrFrames=buildQrFrames();qrFrameIndex=0;$('qrOwnerName').textContent=activeProfile().name;renderQrFrame();$('showQrModal').classList.add('open')}catch{alert('QR tools could not load. Check your connection and try again.')}}
 function closeShowQr(){$('showQrModal').classList.remove('open')}
@@ -510,8 +604,8 @@ function changeQrFrame(delta){qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1
 async function startQrScanner(){try{await loadQrLibraries();qrParts={};$('scanQrModal').classList.add('open');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('qrVideo').srcObject=qrStream;await $('qrVideo').play();scanQrLoop()}catch{$('scanMessage').textContent='Camera or QR tools could not start. Check permissions and try again.'}}
 function stopQrScanner(){if(qrScanTimer)cancelAnimationFrame(qrScanTimer);qrScanTimer=null;if(qrStream)qrStream.getTracks().forEach(t=>t.stop());qrStream=null;$('scanQrModal').classList.remove('open')}
 function scanQrLoop(){const video=$('qrVideo'),canvas=$('qrScanCanvas');if(video.readyState===video.HAVE_ENOUGH_DATA){canvas.width=video.videoWidth;canvas.height=video.videoHeight;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(video,0,0,canvas.width,canvas.height);const image=ctx.getImageData(0,0,canvas.width,canvas.height),code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});if(code&&handleQrChunk(code.data))return}qrScanTimer=requestAnimationFrame(scanQrLoop)}
-function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd24c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
-function importQrPayload(d){if(d.t!=='sd24'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
+function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd25c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
+function importQrPayload(d){if(d.t!=='sd25'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
 function removeFamilyMember(id){const p=db.familySnapshots.find(x=>x.id===id);if(!p||!confirm(`Remove ${p.name} from Family?`))return;db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);persist();render()}
 
 init();

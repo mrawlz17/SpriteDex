@@ -689,9 +689,20 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "24.0",
+  "version": "25.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "25.0",
+      "date": "2026-07-23",
+      "title": "Smart Updates and Mastery Filters",
+      "items": [
+        "Added automatic version checks with Update Now and Later",
+        "Update reloads the newest files while preserving saved collection data",
+        "Added Mastered and Not mastered Collection filters",
+        "Replaced the Home Screen icon with the new cyan F design"
+      ]
+    },
     {
       "version": "24.0",
       "date": "2026-07-23",
