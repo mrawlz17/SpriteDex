@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "27.0",
-  "appUpdated": "2026-07-23",
+  "version": "28.0",
+  "appUpdated": "2026-07-24",
   "changelog": [
+    {
+      "version": "28.0",
+      "date": "2026-07-24",
+      "title": "Settings and Update Center",
+      "items": [
+        "Added a Settings & About tab with installed and latest version numbers",
+        "Added Check Again, Update Now, and Force Refresh controls",
+        "Added an update badge to the About navigation button",
+        "Added collection, collector, data date, and backup status details",
+        "Automatic launch checks now run silently instead of interrupting the app"
+      ]
+    },
     {
       "version": "27.0",
       "date": "2026-07-23",
