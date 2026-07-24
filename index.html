@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#080c16">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>SpriteDex V23</title>
+<title>SpriteDex V24</title>
 <style>
 :root{
  --bg:#080c16;--card:#111827;--card2:#151f32;--line:#27344e;
@@ -165,6 +165,18 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 .scanMessage{text-align:center;color:var(--muted);font-size:13px;margin-top:12px}
 @media(max-width:390px){.qrActions{grid-template-columns:1fr}}
 
+
+.onboarding{position:fixed;inset:0;z-index:120;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+.onboarding[hidden]{display:none}
+.onboardingCard{width:min(100%,420px);background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:24px}
+.onboardingBrand{font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.onboardingCard h1{margin:0 0 8px;font-size:30px}
+.onboardingCard p{margin:0 0 22px;color:var(--muted)}
+.onboardingCard label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+.onboardingCard input{display:block;width:100%;height:56px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--text);font:inherit;padding:0 16px;box-sizing:border-box}
+.onboardingButton{width:100%;height:52px;margin-top:14px}
+.onboardingError{min-height:18px;color:#ff8b8b;font-size:12px;margin-top:7px}
+
 </style>
 
 <script>
@@ -176,6 +188,19 @@ input,select,textarea{width:100%;border:1px solid var(--line);background:var(--c
 
 </head>
 <body>
+
+<div id="onboarding" class="onboarding" hidden>
+ <div class="onboardingCard">
+  <div class="onboardingBrand">SpriteDex</div>
+  <h1>Create your collection</h1>
+  <p>Enter the collector name for this device.</p>
+  <label for="collectorNameInput">Collector name</label>
+  <input id="collectorNameInput" maxlength="20" autocomplete="name" placeholder="Your name">
+  <div id="collectorNameError" class="onboardingError" aria-live="polite"></div>
+  <button id="createCollectorBtn" class="btn primary onboardingButton">Create Collection</button>
+ </div>
+</div>
+
 <div class="app">
 <header class="top">
  <div class="brand">
@@ -311,13 +336,63 @@ function loadDatabase(){
  try{legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||'{}')}catch{}
  let oldMeta={};
  try{oldMeta=JSON.parse(localStorage.getItem('spritedex-meta-v9')||'{}')}catch{}
- const first={id:makeId(),name:oldMeta.profileName||'Mike',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
+ const first={id:makeId(),name:oldMeta.profileName||'',state:legacy,meta:{recentFound:oldMeta.recentFound||[]}};
  return{version:11,activeProfileId:first.id,profiles:[first]};
 }
 function persist(){localStorage.setItem(V11_KEY,JSON.stringify(db))}
+
+function normalizeCollectorName(value){
+ const trimmed=String(value||'').trim().replace(/\s+/g,' ');
+ if(!trimmed)return '';
+ return trimmed.charAt(0).toUpperCase()+trimmed.slice(1);
+}
+function needsOnboarding(){
+ const p=activeProfile();
+ return !p||!String(p.name||'').trim();
+}
+function showOnboarding(){
+ $('onboarding').hidden=false;
+ $('collectorNameInput').value='';
+ $('collectorNameError').textContent='';
+ setTimeout(()=>$('collectorNameInput').focus(),50);
+}
+function completeOnboarding(){
+ const input=$('collectorNameInput');
+ const name=normalizeCollectorName(input.value);
+ if(name.length<2){
+  $('collectorNameError').textContent='Enter at least 2 characters.';
+  input.focus();
+  return;
+ }
+ if(name.length>20){
+  $('collectorNameError').textContent='Use 20 characters or fewer.';
+  input.focus();
+  return;
+ }
+ const p=activeProfile();
+ p.name=name;
+ if(!p.id)p.id=makeId();
+ db.activeProfileId=p.id;
+ persist();
+ $('onboarding').hidden=true;
+ render();
+ toast(`Welcome, ${name}`);
+}
+
 function init(){
- try{bind();render()}
- catch(error){console.error('SpriteDex startup failed',error);const strip=$('releaseStrip');if(strip)strip.innerHTML='<div class="empty">SpriteDex could not start. Reload once.</div>'}
+ try{
+  bind();
+  if(needsOnboarding()){
+   renderHeader();
+   showOnboarding();
+  }else{
+   render();
+  }
+ }catch(error){
+  console.error('SpriteDex startup failed',error);
+  const strip=$('releaseStrip');
+  if(strip)strip.innerHTML='<div class="empty">SpriteDex could not start. Reload once.</div>';
+ }
 }
 function bind(){
  document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>showView(b.dataset.view));
@@ -326,6 +401,8 @@ function bind(){
  on('modal','click',e=>{if(e.target===$('modal'))closeModal()});
  on('showQrBtn','click',showMyQr);on('scanQrBtn','click',startQrScanner);on('closeShowQrBtn','click',closeShowQr);on('closeScanQrBtn','click',stopQrScanner);
  on('prevQrFrame','click',()=>changeQrFrame(-1));on('nextQrFrame','click',()=>changeQrFrame(1));
+ on('createCollectorBtn','click',completeOnboarding);
+ on('collectorNameInput','keydown',e=>{if(e.key==='Enter')completeOnboarding()});
 }
 function buildFilters(){}
 function save(r=true){persist();if(r)render()}
@@ -424,8 +501,8 @@ Object.assign(window,{showView,openSprite,closeModal,toggleEntry,toggleFavorite,
 let qrLibrariesPromise=null,qrFrames=[],qrFrameIndex=0,qrStream=null,qrScanTimer=null,qrParts={};
 function loadScriptOnce(src,globalName){if(window[globalName])return Promise.resolve();return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=true;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}
 function loadQrLibraries(){if(!qrLibrariesPromise)qrLibrariesPromise=Promise.all([loadScriptOnce('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js','qrcode'),loadScriptOnce('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js','jsQR'),loadScriptOnce('https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js','LZString')]);return qrLibrariesPromise}
-function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd23',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
-function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd23c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
+function compactFamilyPayload(){const p=activeProfile(),owned=[],mastered=[];Object.entries(p.state||{}).forEach(([id,v])=>{if(id.startsWith('favorite:')||!v||typeof v!=='object')return;if(v.owned)owned.push(id);if(v.mastered)mastered.push(id)});return{t:'sd24',v:1,i:p.id,n:p.name,u:Date.now(),o:owned,m:mastered}}
+function buildQrFrames(){const packed=LZString.compressToEncodedURIComponent(JSON.stringify(compactFamilyPayload())),session=Math.random().toString(36).slice(2,8),chunkSize=900,total=Math.ceil(packed.length/chunkSize);return Array.from({length:total},(_,i)=>JSON.stringify({t:'sd24c',s:session,p:i+1,z:total,d:packed.slice(i*chunkSize,(i+1)*chunkSize)}))}
 function renderQrFrame(){const qr=qrcode(0,'M');qr.addData(qrFrames[qrFrameIndex]);qr.make();$('qrCanvasWrap').innerHTML=qr.createImgTag(7,8);$('qrFrameCounter').textContent=`${qrFrameIndex+1} / ${qrFrames.length}`;$('qrFrameLabel').textContent=qrFrames.length===1?'Hold steady for scanning':`Frame ${qrFrameIndex+1} of ${qrFrames.length}`;$('qrFrameControls').hidden=qrFrames.length===1}
 async function showMyQr(){try{await loadQrLibraries();qrFrames=buildQrFrames();qrFrameIndex=0;$('qrOwnerName').textContent=activeProfile().name;renderQrFrame();$('showQrModal').classList.add('open')}catch{alert('QR tools could not load. Check your connection and try again.')}}
 function closeShowQr(){$('showQrModal').classList.remove('open')}
@@ -433,8 +510,8 @@ function changeQrFrame(delta){qrFrameIndex=Math.max(0,Math.min(qrFrames.length-1
 async function startQrScanner(){try{await loadQrLibraries();qrParts={};$('scanQrModal').classList.add('open');qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('qrVideo').srcObject=qrStream;await $('qrVideo').play();scanQrLoop()}catch{$('scanMessage').textContent='Camera or QR tools could not start. Check permissions and try again.'}}
 function stopQrScanner(){if(qrScanTimer)cancelAnimationFrame(qrScanTimer);qrScanTimer=null;if(qrStream)qrStream.getTracks().forEach(t=>t.stop());qrStream=null;$('scanQrModal').classList.remove('open')}
 function scanQrLoop(){const video=$('qrVideo'),canvas=$('qrScanCanvas');if(video.readyState===video.HAVE_ENOUGH_DATA){canvas.width=video.videoWidth;canvas.height=video.videoHeight;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(video,0,0,canvas.width,canvas.height);const image=ctx.getImageData(0,0,canvas.width,canvas.height),code=jsQR(image.data,image.width,image.height,{inversionAttempts:'dontInvert'});if(code&&handleQrChunk(code.data))return}qrScanTimer=requestAnimationFrame(scanQrLoop)}
-function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd23c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
-function importQrPayload(d){if(d.t!=='sd23'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
+function handleQrChunk(raw){try{const part=JSON.parse(raw);if(part.t!=='sd24c')return false;qrParts[part.s]=qrParts[part.s]||{total:part.z,chunks:{}};qrParts[part.s].chunks[part.p]=part.d;const received=Object.keys(qrParts[part.s].chunks).length;if(received<part.z){$('scanMessage').textContent=`Captured ${received} of ${part.z}. Show the next frame.`;qrScanTimer=requestAnimationFrame(scanQrLoop);return true}const packed=Array.from({length:part.z},(_,i)=>qrParts[part.s].chunks[i+1]).join('');importQrPayload(JSON.parse(LZString.decompressFromEncodedURIComponent(packed)));return true}catch{return false}}
+function importQrPayload(d){if(d.t!=='sd24'||!d.i||!d.n||!Array.isArray(d.o))return;if(d.i===activeProfile().id){$('scanMessage').textContent='This QR belongs to this phone.';return}const state={};d.o.forEach(id=>state[id]={owned:true,mastered:false});(d.m||[]).forEach(id=>state[id]={owned:true,mastered:true});const snapshot={id:d.i,name:String(d.n).slice(0,24),sharedAt:new Date(d.u||Date.now()).toISOString(),state},idx=db.familySnapshots.findIndex(x=>x.id===snapshot.id);if(idx>=0)db.familySnapshots[idx]=snapshot;else db.familySnapshots.push(snapshot);persist();render();$('scanMessage').textContent=`${snapshot.name} updated.`;setTimeout(stopQrScanner,700)}
 function removeFamilyMember(id){const p=db.familySnapshots.find(x=>x.id===id);if(!p||!confirm(`Remove ${p.name} from Family?`))return;db.familySnapshots=db.familySnapshots.filter(x=>x.id!==id);persist();render()}
 
 init();

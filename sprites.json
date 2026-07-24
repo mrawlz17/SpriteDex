@@ -689,9 +689,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "23.0",
+  "version": "24.0",
   "appUpdated": "2026-07-23",
   "changelog": [
+    {
+      "version": "24.0",
+      "date": "2026-07-23",
+      "title": "First-Launch Onboarding",
+      "items": [
+        "New devices now ask for a collector name",
+        "Existing collectors skip onboarding and keep saved data",
+        "Collector names are trimmed and capitalized",
+        "Names must be 2 to 20 characters",
+        "Family QR automatically uses the device collector name"
+      ]
+    },
     {
       "version": "18.0",
       "date": "2026-07-23",
