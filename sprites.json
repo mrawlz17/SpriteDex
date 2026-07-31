@@ -1,12 +1,12 @@
 {
-  "updated": "2026-07-23",
-  "releasedEntries": 91,
+  "updated": "2026-07-31",
+  "releasedEntries": 109,
   "sprites": [
     {
       "id": "batman",
       "name": "Batman",
       "rarity": "Mythic",
-      "icon": "\ud83e\udd87",
+      "icon": "🦇",
       "releaseOrder": 1,
       "variants": [
         {
@@ -47,7 +47,7 @@
       "id": "water",
       "name": "Water",
       "rarity": "Rare",
-      "icon": "\ud83d\udca7",
+      "icon": "💧",
       "releaseOrder": 2,
       "variants": [
         {
@@ -58,6 +58,11 @@
         {
           "id": "water-gold",
           "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "water-quack",
+          "name": "Quack",
           "rareHunt": false
         },
         {
@@ -83,7 +88,7 @@
       "id": "earth",
       "name": "Earth",
       "rarity": "Rare",
-      "icon": "\ud83e\udea8",
+      "icon": "🪨",
       "releaseOrder": 3,
       "variants": [
         {
@@ -92,8 +97,18 @@
           "rareHunt": false
         },
         {
+          "id": "earth-cube",
+          "name": "Cube",
+          "rareHunt": true
+        },
+        {
           "id": "earth-gold",
           "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "earth-quack",
+          "name": "Quack",
           "rareHunt": false
         },
         {
@@ -105,11 +120,6 @@
           "id": "earth-galaxy",
           "name": "Galaxy",
           "rareHunt": true
-        },
-        {
-          "id": "earth-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Ch7S3_UI_L.webp",
@@ -119,7 +129,7 @@
       "id": "fire",
       "name": "Fire",
       "rarity": "Rare",
-      "icon": "\ud83d\udd25",
+      "icon": "🔥",
       "releaseOrder": 4,
       "variants": [
         {
@@ -128,8 +138,18 @@
           "rareHunt": false
         },
         {
+          "id": "fire-cube",
+          "name": "Cube",
+          "rareHunt": true
+        },
+        {
           "id": "fire-gold",
           "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "fire-quack",
+          "name": "Quack",
           "rareHunt": false
         },
         {
@@ -146,11 +166,6 @@
           "id": "fire-holofoil",
           "name": "Holofoil",
           "rareHunt": true
-        },
-        {
-          "id": "fire-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Unvault_Ch7S3_ui_L.webp",
@@ -160,7 +175,7 @@
       "id": "duck",
       "name": "Duck",
       "rarity": "Epic",
-      "icon": "\ud83e\udd86",
+      "icon": "🦆",
       "releaseOrder": 5,
       "variants": [
         {
@@ -191,7 +206,7 @@
       "id": "ghost",
       "name": "Ghost",
       "rarity": "Epic",
-      "icon": "\ud83d\udc7b",
+      "icon": "👻",
       "releaseOrder": 6,
       "variants": [
         {
@@ -227,13 +242,18 @@
       "id": "dream",
       "name": "Dream",
       "rarity": "Legendary",
-      "icon": "\u2728",
+      "icon": "✨",
       "releaseOrder": 7,
       "variants": [
         {
           "id": "dream-base",
           "name": "Base",
           "rareHunt": false
+        },
+        {
+          "id": "dream-cube",
+          "name": "Cube",
+          "rareHunt": true
         },
         {
           "id": "dream-gold",
@@ -249,11 +269,6 @@
           "id": "dream-galaxy",
           "name": "Galaxy",
           "rareHunt": true
-        },
-        {
-          "id": "dream-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Sleepy_ui_L.webp",
@@ -263,7 +278,7 @@
       "id": "demon",
       "name": "Demon",
       "rarity": "Epic",
-      "icon": "\ud83d\ude08",
+      "icon": "😈",
       "releaseOrder": 8,
       "variants": [
         {
@@ -294,13 +309,18 @@
       "id": "punk",
       "name": "Punk",
       "rarity": "Legendary",
-      "icon": "\ud83c\udf83",
+      "icon": "🎃",
       "releaseOrder": 9,
       "variants": [
         {
           "id": "punk-base",
           "name": "Base",
           "rareHunt": false
+        },
+        {
+          "id": "punk-cube",
+          "name": "Cube",
+          "rareHunt": true
         },
         {
           "id": "punk-gold",
@@ -316,11 +336,6 @@
           "id": "punk-galaxy",
           "name": "Galaxy",
           "rareHunt": true
-        },
-        {
-          "id": "punk-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Punk_ui_L.webp",
@@ -330,7 +345,7 @@
       "id": "king",
       "name": "King",
       "rarity": "Epic",
-      "icon": "\ud83d\udc51",
+      "icon": "👑",
       "releaseOrder": 10,
       "variants": [
         {
@@ -366,7 +381,7 @@
       "id": "burnt-peanut",
       "name": "Burnt Peanut",
       "rarity": "Mythic",
-      "icon": "\ud83e\udd5c",
+      "icon": "🥜",
       "releaseOrder": 11,
       "variants": [
         {
@@ -382,7 +397,7 @@
       "id": "vini-jr",
       "name": "Vini Jr.",
       "rarity": "Mythic",
-      "icon": "\u26bd",
+      "icon": "⚽",
       "releaseOrder": 12,
       "variants": [
         {
@@ -398,7 +413,7 @@
       "id": "zero-point",
       "name": "Zero Point",
       "rarity": "Mythic",
-      "icon": "\ud83c\udf00",
+      "icon": "🌀",
       "releaseOrder": 13,
       "variants": [
         {
@@ -407,8 +422,18 @@
           "rareHunt": true
         },
         {
+          "id": "zero-point-cube",
+          "name": "Cube",
+          "rareHunt": true
+        },
+        {
           "id": "zero-point-gold",
           "name": "Gold",
+          "rareHunt": true
+        },
+        {
+          "id": "zero-point-quack",
+          "name": "Quack",
           "rareHunt": true
         },
         {
@@ -420,6 +445,11 @@
           "id": "zero-point-galaxy",
           "name": "Galaxy",
           "rareHunt": true
+        },
+        {
+          "id": "zero-point-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ZeroPoint_ui_L.webp",
@@ -429,13 +459,18 @@
       "id": "fishy",
       "name": "Fishy",
       "rarity": "Rare",
-      "icon": "\ud83d\udc1f",
+      "icon": "🐟",
       "releaseOrder": 14,
       "variants": [
         {
           "id": "fishy-base",
           "name": "Base",
           "rareHunt": false
+        },
+        {
+          "id": "fishy-cube",
+          "name": "Cube",
+          "rareHunt": true
         },
         {
           "id": "fishy-gold",
@@ -451,11 +486,6 @@
           "id": "fishy-galaxy",
           "name": "Galaxy",
           "rareHunt": true
-        },
-        {
-          "id": "fishy-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fishy_ui_L.webp",
@@ -465,7 +495,7 @@
       "id": "striker",
       "name": "Striker",
       "rarity": "Epic",
-      "icon": "\ud83c\udfaf",
+      "icon": "🎯",
       "releaseOrder": 15,
       "variants": [
         {
@@ -501,7 +531,7 @@
       "id": "aura",
       "name": "Aura",
       "rarity": "Epic",
-      "icon": "\u26a1",
+      "icon": "⚡",
       "releaseOrder": 16,
       "variants": [
         {
@@ -532,13 +562,18 @@
       "id": "boss",
       "name": "Boss",
       "rarity": "Legendary",
-      "icon": "\ud83d\udcbc",
+      "icon": "💼",
       "releaseOrder": 17,
       "variants": [
         {
           "id": "boss-base",
           "name": "Base",
           "rareHunt": false
+        },
+        {
+          "id": "boss-cube",
+          "name": "Cube",
+          "rareHunt": true
         },
         {
           "id": "boss-gold",
@@ -554,11 +589,6 @@
           "id": "boss-galaxy",
           "name": "Galaxy",
           "rareHunt": true
-        },
-        {
-          "id": "boss-cube",
-          "name": "Cube",
-          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_ui_L.webp",
@@ -568,12 +598,17 @@
       "id": "grim",
       "name": "Grim",
       "rarity": "Mythic",
-      "icon": "\ud83d\udc80",
+      "icon": "💀",
       "releaseOrder": 18,
       "variants": [
         {
           "id": "grim-base",
           "name": "Base",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-cube",
+          "name": "Cube",
           "rareHunt": true
         },
         {
@@ -592,8 +627,8 @@
           "rareHunt": true
         },
         {
-          "id": "grim-cube",
-          "name": "Cube",
+          "id": "grim-holofoil",
+          "name": "Holofoil",
           "rareHunt": true
         }
       ],
@@ -604,7 +639,7 @@
       "id": "air",
       "name": "Air",
       "rarity": "Rare",
-      "icon": "\ud83c\udf2a\ufe0f",
+      "icon": "🌪️",
       "releaseOrder": 19,
       "variants": [
         {
@@ -640,7 +675,7 @@
       "id": "seven",
       "name": "Seven",
       "rarity": "Legendary",
-      "icon": "7\ufe0f\u20e3",
+      "icon": "7️⃣",
       "releaseOrder": 20,
       "variants": [
         {
@@ -676,7 +711,7 @@
       "id": "pollo",
       "name": "Pollo",
       "rarity": "Mythic",
-      "icon": "\ud83c\udfc6",
+      "icon": "🏆",
       "releaseOrder": 21,
       "variants": [
         {
@@ -686,6 +721,94 @@
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_CompanyStargazer_Default_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "john-wick",
+      "name": "John Wick",
+      "rarity": "Mythic",
+      "icon": "🕴️",
+      "releaseOrder": 22,
+      "variants": [
+        {
+          "id": "john-wick-base",
+          "name": "Base",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_Reload_FillerGrunt_icon_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "llama",
+      "name": "Llama",
+      "rarity": "Legendary",
+      "icon": "🦙",
+      "releaseOrder": 23,
+      "variants": [
+        {
+          "id": "llama-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "llama-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "llama-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "llama-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "llama-gem",
+          "name": "Gem",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Llama_ui_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "peely",
+      "name": "Peely",
+      "rarity": "Legendary",
+      "icon": "🍌",
+      "releaseOrder": 24,
+      "variants": [
+        {
+          "id": "peely-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "peely-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "peely-gummy",
+          "name": "Gummy",
+          "rareHunt": false
+        },
+        {
+          "id": "peely-galaxy",
+          "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "peely-holofoil",
+          "name": "Holofoil",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Peely_ui_L.webp",
       "source": "Fortnite.GG"
     }
   ],
@@ -761,175 +884,7 @@
         "Names must be 2 to 20 characters",
         "Family QR automatically uses the device collector name"
       ]
-    },
-    {
-      "version": "18.0",
-      "date": "2026-07-23",
-      "title": "Simplified Sprite Detail",
-      "items": [
-        "Removed duplicates",
-        "Removed notes",
-        "Removed variant thumbnails",
-        "Removed repeated release labels",
-        "Simplified Sprite metadata",
-        "Added larger artwork and roomier variant rows"
-      ]
-    },
-    {
-      "version": "17.0",
-      "date": "2026-07-23",
-      "title": "Premium Polish",
-      "items": [
-        "Unified gradients",
-        "Larger artwork",
-        "Softer corners",
-        "Improved shadows",
-        "Micro animations",
-        "Cleaner typography"
-      ]
-    },
-    {
-      "version": "16.0",
-      "date": "2026-07-23",
-      "title": "Visual Polish",
-      "items": [
-        "Larger artwork",
-        "Softer rounded cards",
-        "Subtle shadows",
-        "Larger release cards",
-        "Rarity badges",
-        "General spacing improvements"
-      ]
-    },
-    {
-      "version": "15.0",
-      "date": "2026-07-23",
-      "title": "Home Simplification",
-      "items": [
-        "Removed the redundant See What's Missing action from Home"
-      ]
-    },
-    {
-      "version": "14.0",
-      "date": "2026-07-23",
-      "title": "Home Cleanup",
-      "items": [
-        "Removed Recently Found from Home",
-        "Added consistent SVG bottom navigation icons",
-        "Made the See What's Missing action more compact"
-      ]
-    },
-    {
-      "version": "13.0",
-      "date": "2026-07-23",
-      "title": "Read-Only Missing",
-      "items": [
-        "Missing tab is now read-only",
-        "Missing variants can no longer be marked owned from the Missing tab",
-        "Tap a Sprite heading to open its detail page",
-        "Collection remains the only place to edit ownership"
-      ]
-    },
-    {
-      "version": "12.0",
-      "date": "2026-07-23",
-      "title": "Simplified Missing",
-      "items": [
-        "Removed Checklist mode",
-        "Removed Wall mode",
-        "Removed Missing view selector",
-        "Kept one grouped Sprite missing list",
-        "Made missing variant buttons larger and easier to tap"
-      ]
-    },
-    {
-      "version": "11.2",
-      "date": "2026-07-23",
-      "title": "Missing Wall Cleanup",
-      "items": [
-        "Completed Sprite collections no longer appear on the Missing wall"
-      ]
-    },
-    {
-      "version": "11.1",
-      "date": "2026-07-23",
-      "title": "Missing View Fix",
-      "items": [
-        "Fixed Sprite, Checklist and Wall mode switching on iPhone Safari"
-      ]
-    },
-    {
-      "version": "11.0",
-      "date": "2026-07-23",
-      "title": "Multi-Collector",
-      "items": [
-        "Removed XP, levels, ranks and achievements",
-        "Removed Hunt and Almost Complete",
-        "Added multiple collector profiles",
-        "Added quick profile switching",
-        "Separate progress, notes, favorites and duplicates per profile",
-        "Migrates existing progress into the first profile"
-      ]
-    },
-    {
-      "version": "10.0",
-      "date": "2026-07-23",
-      "title": "Collection First",
-      "items": [
-        "Simplified home screen",
-        "Removed duplicate navigation tiles",
-        "Reduced Hunt to concise recommendations",
-        "Missing opens directly to grouped checklist",
-        "Cleaner cards, fewer borders and gradients",
-        "Preserved V8/V9 progress compatibility"
-      ]
-    },
-    {
-      "version": "9.0",
-      "date": "2026-07-23",
-      "title": "Hunter Edition",
-      "items": [
-        "Dedicated Missing tab",
-        "Checklist, grouped and wall missing modes",
-        "Smart Hunt recommendations",
-        "Almost Complete sets",
-        "New collector command center",
-        "Improved collection encyclopedia"
-      ]
-    },
-    {
-      "version": "8.0",
-      "date": "2026-07-23",
-      "title": "Collector Universe",
-      "items": [
-        "XP and levels",
-        "Achievements",
-        "Release hub",
-        "Share cards",
-        "Collection comparison",
-        "Trade checklist"
-      ]
-    },
-    {
-      "version": "5.0",
-      "date": "2026-07-23",
-      "title": "Collector Experience",
-      "items": [
-        "Favorites",
-        "Duplicate tracking",
-        "Recently found",
-        "Missing Wall"
-      ]
-    },
-    {
-      "version": "4.0",
-      "date": "2026-07-23",
-      "title": "Visual Collection",
-      "items": [
-        "Sprite artwork",
-        "Visual variant treatments"
-      ]
     }
   ],
-  "databaseVersion": "2026.07.24.1"
+  "databaseVersion": "2026.07.31.1"
 }
