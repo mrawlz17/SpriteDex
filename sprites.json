@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-31",
-  "releasedEntries": 109,
+  "updated": "2026-08-07",
+  "releasedEntries": 117,
   "sprites": [
     {
       "id": "batman",
@@ -79,6 +79,11 @@
           "id": "water-holofoil",
           "name": "Holofoil",
           "rareHunt": true
+        },
+        {
+          "id": "water-gem",
+          "name": "Gem",
+          "rareHunt": false
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Water_Unvault_Ch7S3_ui_L.webp",
@@ -120,6 +125,11 @@
           "id": "earth-galaxy",
           "name": "Galaxy",
           "rareHunt": true
+        },
+        {
+          "id": "earth-gem",
+          "name": "Gem",
+          "rareHunt": false
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Ch7S3_UI_L.webp",
@@ -196,6 +206,11 @@
         {
           "id": "duck-galaxy",
           "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "duck-gem",
+          "name": "Gem",
           "rareHunt": true
         }
       ],
@@ -299,6 +314,11 @@
         {
           "id": "demon-galaxy",
           "name": "Galaxy",
+          "rareHunt": true
+        },
+        {
+          "id": "demon-gem",
+          "name": "Gem",
           "rareHunt": true
         }
       ],
@@ -450,6 +470,11 @@
           "id": "zero-point-holofoil",
           "name": "Holofoil",
           "rareHunt": true
+        },
+        {
+          "id": "zero-point-gem",
+          "name": "Gem",
+          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ZeroPoint_ui_L.webp",
@@ -553,6 +578,11 @@
           "id": "aura-galaxy",
           "name": "Galaxy",
           "rareHunt": true
+        },
+        {
+          "id": "aura-gem",
+          "name": "Gem",
+          "rareHunt": true
         }
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Drifter_ui_L.webp",
@@ -629,6 +659,11 @@
         {
           "id": "grim-holofoil",
           "name": "Holofoil",
+          "rareHunt": true
+        },
+        {
+          "id": "grim-gem",
+          "name": "Gem",
           "rareHunt": true
         }
       ],
@@ -810,6 +845,22 @@
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Peely_ui_L.webp",
       "source": "Fortnite.GG"
+    },
+    {
+      "id": "ironmouse",
+      "name": "Ironmouse",
+      "rarity": "Mythic",
+      "icon": "🐭",
+      "releaseOrder": 25,
+      "variants": [
+        {
+          "id": "ironmouse-base",
+          "name": "Base",
+          "rareHunt": true
+        }
+      ],
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='72' fill='%230b1424'/%3E%3Ctext x='256' y='275' text-anchor='middle' font-size='120' fill='white'%3EIM%3C/text%3E%3C/svg%3E",
+      "source": "Fortnite.GG"
     }
   ],
   "version": "29.0",
@@ -886,5 +937,5 @@
       ]
     }
   ],
-  "databaseVersion": "2026.07.31.1"
+  "databaseVersion": "2026.08.07.1"
 }
