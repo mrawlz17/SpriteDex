@@ -6,7 +6,10 @@ Rules:
 - Reads released Sprite cards from https://fortnite.gg/sprites
 - Skips cards marked Unreleased
 - Preserves existing IDs, state compatibility, rarity, and release order
-- Adds newly released base Sprites and variants\n- Recognizes Cheat Master variants\n- Assigns new base Sprites to sprites.json currentSeason
+- Adds newly released base Sprites and variants to currentSeason only
+- Recognizes Cheat Master variants
+- Never adds variants to archived season records
+- If a Sprite name returns in a later season, creates a new season-specific record
 - Refuses to overwrite sprites.json when the page cannot be parsed safely
 """
 
@@ -109,7 +112,19 @@ def scrape():
 def main():
     current = json.loads(DATA_FILE.read_text(encoding="utf-8"))
     existing_sprites = current.get("sprites", [])
-    existing_by_name = {s["name"].casefold(): s for s in existing_sprites}
+    current_season = current.get("currentSeason", "")
+    current_season_name = next(
+        (s.get("name") for s in current.get("seasons", []) if s.get("id") == current_season),
+        current_season,
+    )
+    # Archived records are deliberately excluded: once a season is archived, its
+    # Sprite definitions are frozen and the automatic updater cannot add to them.
+    existing_by_name = {
+        s["name"].casefold(): s
+        for s in existing_sprites
+        if s.get("season") == current_season
+    }
+    used_sprite_ids = {s.get("id") for s in existing_sprites}
     previous_entries = sum(len(s.get("variants", [])) for s in existing_sprites)
 
     grouped, rarity_by_base = scrape()
@@ -134,14 +149,22 @@ def main():
             if not base_variant:
                 continue
             sprite_id = slug(base_name)
+            if sprite_id in used_sprite_ids:
+                suffix = slug(current_season) or "current"
+                sprite_id = f"{sprite_id}-{suffix}"
+                serial = 2
+                while sprite_id in used_sprite_ids:
+                    sprite_id = f"{slug(base_name)}-{suffix}-{serial}"
+                    serial += 1
+            used_sprite_ids.add(sprite_id)
             sprite = {
                 "id": sprite_id,
                 "name": base_name,
                 "rarity": rarity_by_base.get(base_name, "Rare"),
                 "icon": "✨",
                 "releaseOrder": next_order,
-                "season": current.get("currentSeason", ""),
-                "seasonName": next((s.get("name") for s in current.get("seasons", []) if s.get("id") == current.get("currentSeason")), current.get("currentSeason", "")),
+                "season": current_season,
+                "seasonName": current_season_name,
                 "variants": [],
                 "image": base_variant.get("image", ""),
                 "source": "Fortnite.GG",
