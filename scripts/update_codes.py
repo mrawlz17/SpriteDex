@@ -12,7 +12,7 @@ Safety rules:
 - An expired code can return to Active after two independent active sightings with
   no current expiry sightings.
 - Reward text is only filled automatically when two independent sources agree.
-- If fewer than two source endpoints are reachable, the run exits without writing.
+- If fewer than two source endpoints are reachable, the run exits successfully without writing.
 """
 from __future__ import annotations
 
@@ -36,7 +36,13 @@ STATIC_SOURCES = [
     ("reddit-post:1vth12e", "https://www.reddit.com/r/FortniteXPMaps/comments/1vth12e/all_known_lobby_hacks/.json?raw_json=1", "reddit"),
     ("reddit-post:1vtj0yi", "https://www.reddit.com/r/FortniteBR/comments/1vtj0yi/hello_guys_these_are_19_admin_panel_codes_enjoy/.json?raw_json=1", "reddit"),
     ("site:nerdschalk", "https://nerdschalk.com/fortnite-override-codes/", "html"),
+    ("site:talkesport", "https://www.talkesport.com/news/fortnite/fortnite-chapter-7-season-4-codes/", "html"),
 ]
+
+# A brand-new code seen on only one source can be surfaced as Unverified only
+# when it comes from a maintained source we trust for discovery. Secondary
+# fallback pages can corroborate a code but cannot inject a one-source code.
+SINGLE_SOURCE_DISCOVERY_ALLOWLIST = {"site:nerdschalk"}
 REDDIT_SEARCHES = [
     "Fortnite Override code",
     "Fortnite lobby hack code",
@@ -264,8 +270,12 @@ def main() -> int:
         add_scan(source_id, result, sightings, expired_sightings, reward_suggestions)
 
     if successful_endpoints < 2:
-        print("Safety stop: fewer than two source endpoints were reachable.", file=sys.stderr)
-        return 2
+        print(
+            "Safe no-op: fewer than two source endpoints were reachable; "
+            "codes.json was left unchanged.",
+            file=sys.stderr,
+        )
+        return 0
 
     now = datetime.now(timezone.utc); today = now.date().isoformat(); changed = False
 
@@ -304,6 +314,9 @@ def main() -> int:
     for code_key in sorted(all_discovered):
         if code_key in existing or code_key in STOPWORDS or len(code_key) < 6: continue
         sources = sightings.get(code_key, set()) | expired_sightings.get(code_key, set())
+        if len(sources) < 2 and not (sources & SINGLE_SOURCE_DISCOVERY_ALLOWLIST):
+            print(f"Ignoring one-source fallback candidate {code_key} from {sorted(sources)}")
+            continue
         reward = best_corroborated_reward(reward_suggestions.get(code_key, {})) or "Reward not yet identified"
         item = {
             "id": code_key, "code": code_key, "reward": reward,
