@@ -1,8 +1,8 @@
 {
-  "databaseVersion": "2026.08.20.1",
-  "updated": "2026-08-20T13:42:00Z",
+  "databaseVersion": "2026.08.20.2",
+  "updated": "2026-08-20T15:33:32Z",
   "season": "C7S4",
-  "seasonName": "Chapter 7 Season 4 \u2014 Override",
+  "seasonName": "Chapter 7 Season 4 — Override",
   "sources": [
     "https://www.reddit.com/r/FortniteBR/comments/1vo4bwf/o2_is_collabing_with_fortnite_again_this_time/",
     "https://www.reddit.com/r/FortniteXPMaps/comments/1vth12e/all_known_lobby_hacks/",
@@ -17,7 +17,8 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "GOTTAGOFAST",
@@ -26,7 +27,8 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "IWANNAFLYHIGH",
@@ -35,7 +37,8 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "8BITBLAST",
@@ -44,7 +47,8 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "BORN2PLAY",
@@ -53,7 +57,8 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "OVERRIDEXP",
@@ -62,7 +67,8 @@
       "category": "XP",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "O2OVERRIDE",
@@ -71,7 +77,8 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "TAKEYOURHEART",
@@ -80,7 +87,8 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "SURVIVETHENIGHT",
@@ -89,7 +97,8 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "FINDITCHAT",
@@ -98,7 +107,8 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "PERFECTORDER",
@@ -107,7 +117,8 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "MAGILUME",
@@ -116,7 +127,8 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "CHISPAMBO",
@@ -125,7 +137,8 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "ABGESTAUBT",
@@ -134,7 +147,8 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "PERLIMPINPIN",
@@ -143,7 +157,8 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "REACHYOURIMPOSSIBLE",
@@ -152,7 +167,8 @@
       "category": "Loading Screen",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "BEMOREALIEN",
@@ -161,7 +177,8 @@
       "category": "Loading Screen",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "LETSBLOCKANDROLL",
@@ -170,7 +187,8 @@
       "category": "Lobby Effect",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     },
     {
       "id": "DONTBLOCKME",
@@ -179,7 +197,8 @@
       "category": "Lobby Effect",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-20"
+      "lastSeen": "2026-08-20",
+      "availability": "active"
     }
   ]
 }
