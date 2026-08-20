@@ -1249,9 +1249,20 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "31.0",
+  "version": "31.1",
   "appUpdated": "2026-08-20",
   "changelog": [
+    {
+      "version": "31.1",
+      "date": "2026-08-20",
+      "title": "Dark Retro & Archive Status Fix",
+      "items": [
+        "Darkened the Game Boy and SNES-inspired palette while keeping the same retro-console theme",
+        "Archived Sprite variants now show explicit Owned, Missing, and Mastered read-only status instead of disabled buttons",
+        "Removed the misleading archived check and star controls that could make missing variants look collected",
+        "Archived seasons remain fully view-only"
+      ]
+    },
     {
       "version": "31.0",
       "date": "2026-08-20",
