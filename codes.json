@@ -1,0 +1,185 @@
+{
+  "databaseVersion": "2026.08.20.1",
+  "updated": "2026-08-20T13:42:00Z",
+  "season": "C7S4",
+  "seasonName": "Chapter 7 Season 4 \u2014 Override",
+  "sources": [
+    "https://www.reddit.com/r/FortniteBR/comments/1vo4bwf/o2_is_collabing_with_fortnite_again_this_time/",
+    "https://www.reddit.com/r/FortniteXPMaps/comments/1vth12e/all_known_lobby_hacks/",
+    "https://www.reddit.com/r/FortniteBR/comments/1vtj0yi/hello_guys_these_are_19_admin_panel_codes_enjoy/",
+    "https://nerdschalk.com/fortnite-override-codes/"
+  ],
+  "codes": [
+    {
+      "id": "PLAY4ALL",
+      "code": "PLAY4ALL",
+      "reward": "Cheat Master Jonesy Sprite",
+      "category": "Cheat Master Sprite",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "GOTTAGOFAST",
+      "code": "GOTTAGOFAST",
+      "reward": "Cheat Master Sonic Sprite",
+      "category": "Cheat Master Sprite",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "IWANNAFLYHIGH",
+      "code": "IWANNAFLYHIGH",
+      "reward": "Cheat Master Tails Sprite",
+      "category": "Cheat Master Sprite",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "8BITBLAST",
+      "code": "8BITBLAST",
+      "reward": "Cheat Master 8-Bit Sprite",
+      "category": "Cheat Master Sprite",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "BORN2PLAY",
+      "code": "BORN2PLAY",
+      "reward": "Cheat Master Adventure Sprite",
+      "category": "Cheat Master Sprite",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "OVERRIDEXP",
+      "code": "OVERRIDEXP",
+      "reward": "40,000 XP",
+      "category": "XP",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "O2OVERRIDE",
+      "code": "O2OVERRIDE",
+      "reward": "Llama Supply Drop + 5 Portable Extractors",
+      "category": "Gizmo",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "TAKEYOURHEART",
+      "code": "TAKEYOURHEART",
+      "reward": "2 Extraction Accelerators",
+      "category": "Gizmo",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "SURVIVETHENIGHT",
+      "code": "SURVIVETHENIGHT",
+      "reward": "2 Cheat Code Locators",
+      "category": "Gizmo",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "FINDITCHAT",
+      "code": "FINDITCHAT",
+      "reward": "2 Cheat Code Locators",
+      "category": "Gizmo",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "PERFECTORDER",
+      "code": "PERFECTORDER",
+      "reward": "4 Spicy Tacos",
+      "category": "Gizmo",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "MAGILUME",
+      "code": "MAGILUME",
+      "reward": "2,000 Sprite Dust",
+      "category": "Sprite Dust",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "CHISPAMBO",
+      "code": "CHISPAMBO",
+      "reward": "2,000 Sprite Dust",
+      "category": "Sprite Dust",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "ABGESTAUBT",
+      "code": "ABGESTAUBT",
+      "reward": "2,000 Sprite Dust",
+      "category": "Sprite Dust",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "PERLIMPINPIN",
+      "code": "PERLIMPINPIN",
+      "reward": "2,000 Sprite Dust",
+      "category": "Sprite Dust",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "REACHYOURIMPOSSIBLE",
+      "code": "REACHYOURIMPOSSIBLE",
+      "reward": "Block Party Loading Screen",
+      "category": "Loading Screen",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "BEMOREALIEN",
+      "code": "BEMOREALIEN",
+      "reward": "Override Ready Loading Screen",
+      "category": "Loading Screen",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "LETSBLOCKANDROLL",
+      "code": "LETSBLOCKANDROLL",
+      "reward": "Tetris Block lobby effect",
+      "category": "Lobby Effect",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    },
+    {
+      "id": "DONTBLOCKME",
+      "code": "DONTBLOCKME",
+      "reward": "Tetris Block lobby effect",
+      "category": "Lobby Effect",
+      "status": "confirmed",
+      "firstSeen": "2026-08-20",
+      "lastSeen": "2026-08-20"
+    }
+  ]
+}
