@@ -1,12 +1,12 @@
 {
   "name": "SpriteDex",
   "short_name": "SpriteDex",
-  "description": "Fortnite Sprite collection tracker",
+  "description": "Fortnite Sprite collection tracker with retro console styling",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#090d18",
-  "theme_color": "#090d18",
+  "background_color": "#d4cfc4",
+  "theme_color": "#d6d0c4",
   "icons": [
     {
       "src": "icon-192.png",

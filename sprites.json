@@ -6,7 +6,7 @@
       "id": "batman",
       "name": "Batman",
       "rarity": "Mythic",
-      "icon": "🦇",
+      "icon": "\ud83e\udd87",
       "releaseOrder": 1,
       "variants": [
         {
@@ -49,7 +49,7 @@
       "id": "water",
       "name": "Water",
       "rarity": "Rare",
-      "icon": "💧",
+      "icon": "\ud83d\udca7",
       "releaseOrder": 2,
       "variants": [
         {
@@ -97,7 +97,7 @@
       "id": "earth",
       "name": "Earth",
       "rarity": "Rare",
-      "icon": "🪨",
+      "icon": "\ud83e\udea8",
       "releaseOrder": 3,
       "variants": [
         {
@@ -145,7 +145,7 @@
       "id": "fire",
       "name": "Fire",
       "rarity": "Rare",
-      "icon": "🔥",
+      "icon": "\ud83d\udd25",
       "releaseOrder": 4,
       "variants": [
         {
@@ -193,7 +193,7 @@
       "id": "duck",
       "name": "Duck",
       "rarity": "Epic",
-      "icon": "🦆",
+      "icon": "\ud83e\udd86",
       "releaseOrder": 5,
       "variants": [
         {
@@ -231,7 +231,7 @@
       "id": "ghost",
       "name": "Ghost",
       "rarity": "Epic",
-      "icon": "👻",
+      "icon": "\ud83d\udc7b",
       "releaseOrder": 6,
       "variants": [
         {
@@ -269,7 +269,7 @@
       "id": "dream",
       "name": "Dream",
       "rarity": "Legendary",
-      "icon": "✨",
+      "icon": "\u2728",
       "releaseOrder": 7,
       "variants": [
         {
@@ -307,7 +307,7 @@
       "id": "demon",
       "name": "Demon",
       "rarity": "Epic",
-      "icon": "😈",
+      "icon": "\ud83d\ude08",
       "releaseOrder": 8,
       "variants": [
         {
@@ -345,7 +345,7 @@
       "id": "punk",
       "name": "Punk",
       "rarity": "Legendary",
-      "icon": "🎃",
+      "icon": "\ud83c\udf83",
       "releaseOrder": 9,
       "variants": [
         {
@@ -383,7 +383,7 @@
       "id": "king",
       "name": "King",
       "rarity": "Epic",
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "releaseOrder": 10,
       "variants": [
         {
@@ -421,7 +421,7 @@
       "id": "burnt-peanut",
       "name": "Burnt Peanut",
       "rarity": "Mythic",
-      "icon": "🥜",
+      "icon": "\ud83e\udd5c",
       "releaseOrder": 11,
       "variants": [
         {
@@ -439,7 +439,7 @@
       "id": "vini-jr",
       "name": "Vini Jr.",
       "rarity": "Mythic",
-      "icon": "⚽",
+      "icon": "\u26bd",
       "releaseOrder": 12,
       "variants": [
         {
@@ -457,7 +457,7 @@
       "id": "zero-point",
       "name": "Zero Point",
       "rarity": "Mythic",
-      "icon": "🌀",
+      "icon": "\ud83c\udf00",
       "releaseOrder": 13,
       "variants": [
         {
@@ -510,7 +510,7 @@
       "id": "fishy",
       "name": "Fishy",
       "rarity": "Rare",
-      "icon": "🐟",
+      "icon": "\ud83d\udc1f",
       "releaseOrder": 14,
       "variants": [
         {
@@ -548,7 +548,7 @@
       "id": "striker",
       "name": "Striker",
       "rarity": "Epic",
-      "icon": "🎯",
+      "icon": "\ud83c\udfaf",
       "releaseOrder": 15,
       "variants": [
         {
@@ -586,7 +586,7 @@
       "id": "aura",
       "name": "Aura",
       "rarity": "Epic",
-      "icon": "⚡",
+      "icon": "\u26a1",
       "releaseOrder": 16,
       "variants": [
         {
@@ -624,7 +624,7 @@
       "id": "boss",
       "name": "Boss",
       "rarity": "Legendary",
-      "icon": "💼",
+      "icon": "\ud83d\udcbc",
       "releaseOrder": 17,
       "variants": [
         {
@@ -662,7 +662,7 @@
       "id": "grim",
       "name": "Grim",
       "rarity": "Mythic",
-      "icon": "💀",
+      "icon": "\ud83d\udc80",
       "releaseOrder": 18,
       "variants": [
         {
@@ -710,7 +710,7 @@
       "id": "air",
       "name": "Air",
       "rarity": "Rare",
-      "icon": "🌪️",
+      "icon": "\ud83c\udf2a\ufe0f",
       "releaseOrder": 19,
       "variants": [
         {
@@ -748,7 +748,7 @@
       "id": "seven",
       "name": "Seven",
       "rarity": "Legendary",
-      "icon": "7️⃣",
+      "icon": "7\ufe0f\u20e3",
       "releaseOrder": 20,
       "variants": [
         {
@@ -786,7 +786,7 @@
       "id": "pollo",
       "name": "Pollo",
       "rarity": "Mythic",
-      "icon": "🏆",
+      "icon": "\ud83c\udfc6",
       "releaseOrder": 21,
       "variants": [
         {
@@ -804,7 +804,7 @@
       "id": "john-wick",
       "name": "John Wick",
       "rarity": "Mythic",
-      "icon": "🕴️",
+      "icon": "\ud83d\udd74\ufe0f",
       "releaseOrder": 22,
       "variants": [
         {
@@ -822,7 +822,7 @@
       "id": "llama",
       "name": "Llama",
       "rarity": "Legendary",
-      "icon": "🦙",
+      "icon": "\ud83e\udd99",
       "releaseOrder": 23,
       "variants": [
         {
@@ -860,7 +860,7 @@
       "id": "peely",
       "name": "Peeky Peely",
       "rarity": "Legendary",
-      "icon": "🍌",
+      "icon": "\ud83c\udf4c",
       "releaseOrder": 24,
       "variants": [
         {
@@ -898,7 +898,7 @@
       "id": "ironmouse",
       "name": "Ironmouse",
       "rarity": "Mythic",
-      "icon": "🐭",
+      "icon": "\ud83d\udc2d",
       "releaseOrder": 25,
       "variants": [
         {
@@ -916,7 +916,7 @@
       "id": "jackrabbit",
       "name": "Jackrabbit",
       "rarity": "Legendary",
-      "icon": "🐇",
+      "icon": "\ud83d\udc07",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_JazzJackrabbit_L.webp",
       "releaseOrder": 26,
       "season": "C7S4",
@@ -944,7 +944,7 @@
       "id": "shadow",
       "name": "Shadow",
       "rarity": "Epic",
-      "icon": "🌑",
+      "icon": "\ud83c\udf11",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_Scribe_L.webp",
       "releaseOrder": 27,
       "season": "C7S4",
@@ -972,7 +972,7 @@
       "id": "bush",
       "name": "Bush",
       "rarity": "Rare",
-      "icon": "🌿",
+      "icon": "\ud83c\udf3f",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BushRanger_L.webp",
       "releaseOrder": 28,
       "season": "C7S4",
@@ -1000,7 +1000,7 @@
       "id": "tails",
       "name": "Tails",
       "rarity": "Epic",
-      "icon": "🦊",
+      "icon": "\ud83e\udd8a",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_Monkey_L.webp",
       "releaseOrder": 29,
       "season": "C7S4",
@@ -1028,7 +1028,7 @@
       "id": "killswitch",
       "name": "Killswitch",
       "rarity": "Epic",
-      "icon": "🎯",
+      "icon": "\ud83c\udfaf",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Killswitch_L.webp",
       "releaseOrder": 30,
       "season": "C7S4",
@@ -1056,7 +1056,7 @@
       "id": "adventure",
       "name": "Adventure",
       "rarity": "Rare",
-      "icon": "🧭",
+      "icon": "\ud83e\udded",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Dwarf_L.webp",
       "releaseOrder": 31,
       "season": "C7S4",
@@ -1084,7 +1084,7 @@
       "id": "klombo",
       "name": "Klombo",
       "rarity": "Mythic",
-      "icon": "🦖",
+      "icon": "\ud83e\udd96",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Klombo_L.webp",
       "releaseOrder": 32,
       "season": "C7S4",
@@ -1112,7 +1112,7 @@
       "id": "jonesy",
       "name": "Jonesy",
       "rarity": "Rare",
-      "icon": "🕶️",
+      "icon": "\ud83d\udd76\ufe0f",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Jonesy_L.webp",
       "releaseOrder": 33,
       "season": "C7S4",
@@ -1140,7 +1140,7 @@
       "id": "sonic",
       "name": "Sonic",
       "rarity": "Epic",
-      "icon": "💨",
+      "icon": "\ud83d\udca8",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_Obsidian_L.webp",
       "releaseOrder": 34,
       "season": "C7S4",
@@ -1168,7 +1168,7 @@
       "id": "crown",
       "name": "Crown",
       "rarity": "Mythic",
-      "icon": "👑",
+      "icon": "\ud83d\udc51",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Crown_L.webp",
       "releaseOrder": 35,
       "season": "C7S4",
@@ -1196,7 +1196,7 @@
       "id": "8-bit",
       "name": "8-Bit",
       "rarity": "Rare",
-      "icon": "🎮",
+      "icon": "\ud83c\udfae",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_L.webp",
       "releaseOrder": 36,
       "season": "C7S4",
@@ -1224,7 +1224,7 @@
       "id": "storm-scout",
       "name": "Storm Scout",
       "rarity": "Rare",
-      "icon": "⛈️",
+      "icon": "\u26c8\ufe0f",
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_L.webp",
       "releaseOrder": 37,
       "season": "C7S4",
@@ -1249,9 +1249,21 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "30.0",
+  "version": "31.0",
   "appUpdated": "2026-08-20",
   "changelog": [
+    {
+      "version": "31.0",
+      "date": "2026-08-20",
+      "title": "Retro Console Theme & Locked Archives",
+      "items": [
+        "Redesigned SpriteDex with Game Boy-inspired green screens and SNES-inspired shell and button colors",
+        "Moved the season selector into Settings and simplified the labels to Current season and Archived season",
+        "Archived season Sprites are now view-only and cannot have ownership, mastery, or favorites changed",
+        "Updated the app icon and bottom navigation icons with a retro pixel-game look",
+        "Automatic Sprite syncing now updates only the current season so archived season databases stay frozen"
+      ]
+    },
     {
       "version": "30.0",
       "date": "2026-08-20",
@@ -1341,14 +1353,14 @@
     {
       "id": "C7S4",
       "name": "Chapter 7 Season 4",
-      "label": "Season 4 · Override",
+      "label": "Current season",
       "status": "current",
       "started": "2026-08-20"
     },
     {
       "id": "C7S3",
       "name": "Chapter 7 Season 3",
-      "label": "Season 3 · Archived",
+      "label": "Archived season",
       "status": "archived",
       "ended": "2026-08-20"
     }
