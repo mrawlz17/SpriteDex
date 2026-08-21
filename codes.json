@@ -1,6 +1,6 @@
 {
-  "databaseVersion": "2026.08.21.1",
-  "updated": "2026-08-21T17:40:00Z",
+  "databaseVersion": "2026.08.21.1900",
+  "updated": "2026-08-21T19:00:04.074141Z",
   "season": "C7S4",
   "seasonName": "Chapter 7 Season 4 — Override",
   "sources": [
@@ -18,7 +18,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "GOTTAGOFAST",
@@ -28,7 +35,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "IWANNAFLYHIGH",
@@ -38,7 +52,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "8BITBLAST",
@@ -48,7 +69,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "BORN2PLAY",
@@ -58,7 +86,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "OVERRIDEXP",
@@ -68,7 +103,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "O2OVERRIDE",
@@ -78,7 +120,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "TAKEYOURHEART",
@@ -88,7 +137,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "SURVIVETHENIGHT",
@@ -98,7 +154,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "FINDITCHAT",
@@ -108,7 +171,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "PERFECTORDER",
@@ -118,7 +188,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "MAGILUME",
@@ -128,7 +205,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "CHISPAMBO",
@@ -138,7 +222,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "ABGESTAUBT",
@@ -148,7 +239,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "PERLIMPINPIN",
@@ -158,7 +256,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "REACHYOURIMPOSSIBLE",
@@ -168,7 +273,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "BEMOREALIEN",
@@ -178,7 +290,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "LETSBLOCKANDROLL",
@@ -188,7 +307,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "DONTBLOCKME",
@@ -198,7 +324,14 @@
       "status": "confirmed",
       "firstSeen": "2026-08-20",
       "lastSeen": "2026-08-21",
-      "availability": "active"
+      "availability": "active",
+      "observedSources": [
+        "site:allthingshow",
+        "site:fortnitegg",
+        "site:nerdschalk"
+      ],
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "H0P0NVC",
@@ -214,7 +347,8 @@
         "site:fortnitegg",
         "site:nerdschalk"
       ],
-      "sourceCount": 3
+      "sourceCount": 3,
+      "expiredSources": []
     },
     {
       "id": "GATHERANDCRAFT",
@@ -229,7 +363,190 @@
         "site:allthingshow-bush",
         "site:fortnitegg"
       ],
-      "sourceCount": 2
+      "sourceCount": 2,
+      "expiredSources": []
+    },
+    {
+      "id": "COMMUNITY",
+      "code": "Community",
+      "reward": "📰 News",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "COSMETICS",
+      "code": "Cosmetics",
+      "reward": "My Wishlist",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "CREATIVE",
+      "code": "Creative",
+      "reward": "Player Count",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "DEUTSCH",
+      "code": "Deutsch",
+      "reward": "Español",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "DISCOVER",
+      "code": "Discover",
+      "reward": "My Collections",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "ENGLISH",
+      "code": "English",
+      "reward": "العربية",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "ITALIANO",
+      "code": "Italiano",
+      "reward": "日本語",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "LEAKS",
+      "code": "Leaks",
+      "reward": "Most Used",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "LOREBOOK",
+      "code": "Lorebook",
+      "reward": "More",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "POLSKI",
+      "code": "Polski",
+      "reward": "Português (Brasil",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "RANKINGS",
+      "code": "Rankings",
+      "reward": "Best Cosmetics",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "STATS",
+      "code": "Stats",
+      "reward": "BR Stats",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
+    },
+    {
+      "id": "WEAPONS",
+      "code": "Weapons",
+      "reward": "XP Calculator",
+      "category": "Cheat Master Sprite",
+      "status": "unverified",
+      "firstSeen": "2026-08-21",
+      "lastSeen": "2026-08-21",
+      "availability": "active",
+      "observedSources": [
+        "site:fortnitegg"
+      ],
+      "sourceCount": 1
     }
   ]
 }
