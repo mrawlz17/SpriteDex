@@ -1,6 +1,6 @@
 {
-  "databaseVersion": "2026.08.21.1900",
-  "updated": "2026-08-21T19:00:04.074141Z",
+  "databaseVersion": "2026.08.21.1941",
+  "updated": "2026-08-21T19:41:07.955983Z",
   "season": "C7S4",
   "seasonName": "Chapter 7 Season 4 — Override",
   "sources": [
@@ -378,7 +378,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "COSMETICS",
@@ -392,7 +393,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "CREATIVE",
@@ -406,7 +408,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "DEUTSCH",
@@ -420,7 +423,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "DISCOVER",
@@ -434,7 +438,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "ENGLISH",
@@ -448,7 +453,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "ITALIANO",
@@ -462,7 +468,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "LEAKS",
@@ -476,7 +483,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "LOREBOOK",
@@ -490,7 +498,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "POLSKI",
@@ -504,7 +513,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "RANKINGS",
@@ -518,7 +528,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "STATS",
@@ -532,7 +543,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     },
     {
       "id": "WEAPONS",
@@ -546,7 +558,8 @@
       "observedSources": [
         "site:fortnitegg"
       ],
-      "sourceCount": 1
+      "sourceCount": 1,
+      "expiredSources": []
     }
   ]
 }
