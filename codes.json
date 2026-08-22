@@ -1,6 +1,6 @@
 {
-  "databaseVersion": "2026.08.21.1941",
-  "updated": "2026-08-21T19:41:07.955983Z",
+  "databaseVersion": "2026.08.22.0153",
+  "updated": "2026-08-22T01:53:31.178342Z",
   "season": "C7S4",
   "seasonName": "Chapter 7 Season 4 — Override",
   "sources": [
@@ -17,7 +17,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -34,7 +34,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -51,7 +51,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -68,7 +68,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -85,7 +85,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -102,7 +102,7 @@
       "category": "XP",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -119,7 +119,7 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -136,7 +136,7 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -153,7 +153,7 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -170,7 +170,7 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -187,7 +187,7 @@
       "category": "Gizmo",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -204,7 +204,7 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -221,7 +221,7 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -238,7 +238,7 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -255,7 +255,7 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -272,7 +272,7 @@
       "category": "Loading Screen",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -289,7 +289,7 @@
       "category": "Loading Screen",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -306,7 +306,7 @@
       "category": "Lobby Effect",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -323,7 +323,7 @@
       "category": "Lobby Effect",
       "status": "confirmed",
       "firstSeen": "2026-08-20",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -340,7 +340,7 @@
       "category": "Sprite Dust",
       "status": "confirmed",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow",
@@ -357,7 +357,7 @@
       "category": "Cheat Master Sprite",
       "status": "confirmed",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:allthingshow-bush",
@@ -373,7 +373,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -388,7 +388,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -403,7 +403,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -418,7 +418,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -433,7 +433,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -448,7 +448,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -463,7 +463,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -478,7 +478,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -493,7 +493,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -508,7 +508,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -523,7 +523,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -538,7 +538,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
@@ -553,7 +553,7 @@
       "category": "Cheat Master Sprite",
       "status": "unverified",
       "firstSeen": "2026-08-21",
-      "lastSeen": "2026-08-21",
+      "lastSeen": "2026-08-22",
       "availability": "active",
       "observedSources": [
         "site:fortnitegg"
