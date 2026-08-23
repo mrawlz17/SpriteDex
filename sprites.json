@@ -1249,9 +1249,20 @@
       "source": "Fortnite.GG"
     }
   ],
-  "version": "32.0",
-  "appUpdated": "2026-08-20",
+  "version": "32.1",
+  "appUpdated": "2026-08-23",
   "changelog": [
+    {
+      "version": "32.1",
+      "date": "2026-08-23",
+      "title": "Sprite-Only Cleanup",
+      "items": [
+        "Removed the Override Codes tab and code-tracking interface",
+        "Removed automatic Override-code syncing from the app",
+        "Returned SpriteDex to the five-tab Sprite collection layout",
+        "Kept automatic Sprite database updates, season archives, Family, and Settings unchanged"
+      ]
+    },
     {
       "version": "32.0",
       "date": "2026-08-20",
