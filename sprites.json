@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-21",
-  "releasedEntries": 153,
+  "updated": "2026-09-03",
+  "releasedEntries": 178,
   "sprites": [
     {
       "id": "batman",
@@ -1247,6 +1247,404 @@
         }
       ],
       "source": "Fortnite.GG"
+    },
+    {
+      "id": "overshield",
+      "name": "Overshield",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 38,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "overshield-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "overshield-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        },
+        {
+          "id": "overshield-gold",
+          "name": "Gold",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Overshield_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-overshield",
+      "name": "Loot Hacker Overshield",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 39,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-overshield-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Overshield_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "mega-man",
+      "name": "Mega Man",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 40,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "mega-man-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ImprovedSlide_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "x-ray",
+      "name": "X-Ray",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 41,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "x-ray-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "x-ray-gold",
+          "name": "Gold",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerB_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "cheatmaster-x-ray",
+      "name": "Cheatmaster X-Ray",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 42,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "cheatmaster-x-ray-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerB_Cheatmaster_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-x-ray",
+      "name": "Loot Hacker X-Ray",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 43,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-x-ray-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerB_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "onigiri",
+      "name": "Onigiri",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 44,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "onigiri-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "onigiri-gold",
+          "name": "Gold",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerC_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "cheatmaster-onigiri",
+      "name": "Cheatmaster Onigiri",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 45,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "cheatmaster-onigiri-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerC_Cheatmaster_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-onigiri",
+      "name": "Loot Hacker Onigiri",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 46,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-onigiri-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerC_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-jackrabbit",
+      "name": "Loot Hacker Jackrabbit",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 47,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-jackrabbit-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_DoubleJump_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-shadow",
+      "name": "Loot Hacker Shadow",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 48,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-shadow-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ReloadOverTime_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-bushranger",
+      "name": "Loot Hacker Bushranger",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 49,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-bushranger-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BushRanger_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-tails",
+      "name": "Loot Hacker Tails",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 50,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-tails-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_Monkey_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-killswitch",
+      "name": "Loot Hacker Killswitch",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 51,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-killswitch-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Killswitch_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-adventure",
+      "name": "Loot Hacker Adventure",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 52,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-adventure-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Dwarf_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-klombo",
+      "name": "Loot Hacker Klombo",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 53,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-klombo-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Klombo_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-jonesy",
+      "name": "Loot Hacker Jonesy",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 54,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-jonesy-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Jonesy_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-sonic",
+      "name": "Loot Hacker Sonic",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 55,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-sonic-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-crown",
+      "name": "Loot Hacker Crown",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 56,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-crown-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Crown_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-8-bit",
+      "name": "Loot Hacker 8-Bit",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 57,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-8-bit-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_EightBitBlaster_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-storm-scout",
+      "name": "Loot Hacker Storm Scout",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 58,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-storm-scout-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_Hacker_L.webp",
+      "source": "Fortnite.GG"
     }
   ],
   "version": "32.1",
@@ -1381,7 +1779,7 @@
       ]
     }
   ],
-  "databaseVersion": "2026.08.21.1732",
+  "databaseVersion": "2026.09.03.1432",
   "currentSeason": "C7S4",
   "seasons": [
     {
@@ -1400,6 +1798,13 @@
     }
   ],
   "dataChangelog": [
+    {
+      "databaseVersion": "2026.09.03.1432",
+      "date": "2026-09-03",
+      "addedEntries": 25,
+      "removedEntries": 0,
+      "source": "Fortnite.GG automatic check with season guard"
+    },
     {
       "databaseVersion": "2026.08.21.1732",
       "date": "2026-08-21",
