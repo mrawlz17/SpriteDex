@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-03",
-  "releasedEntries": 178,
+  "updated": "2026-09-17",
+  "releasedEntries": 218,
   "sprites": [
     {
       "id": "batman",
@@ -1645,6 +1645,596 @@
       ],
       "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_Hacker_L.webp",
       "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-jonesy",
+      "name": "Bounty Hunter Jonesy",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 59,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-jonesy-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Jonesy_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-adventure",
+      "name": "Bounty Hunter Adventure",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 60,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-adventure-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Dwarf_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-bush",
+      "name": "Bounty Hunter Bush",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 61,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-bush-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BushRanger_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-sonic",
+      "name": "Bounty Hunter Sonic",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 62,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-sonic-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFlea_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-tails",
+      "name": "Bounty Hunter Tails",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 63,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-tails-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_NarrowFleaMonkey_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-shadow",
+      "name": "Bounty Hunter Shadow",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 64,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-shadow-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_ReloadOverTime_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-8-bit",
+      "name": "Bounty Hunter 8-Bit",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 65,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-8-bit-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_8BitBlaster_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-jackrabbit",
+      "name": "Bounty Hunter Jackrabbit",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 66,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-jackrabbit-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_DoubleJump_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-crown",
+      "name": "Bounty Hunter Crown",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 67,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-crown-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Crown_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-killswitch",
+      "name": "Bounty Hunter Killswitch",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 68,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-killswitch-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Killswitch_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-klombo",
+      "name": "Bounty Hunter Klombo",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 69,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-klombo-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Klombo_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-overshield",
+      "name": "Bounty Hunter Overshield",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 70,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-overshield-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Overshield_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-x-ray",
+      "name": "Bounty Hunter X-Ray",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 71,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-x-ray-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerB_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-onigiri",
+      "name": "Bounty Hunter Onigiri",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 72,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-onigiri-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerC_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-storm-scout",
+      "name": "Bounty Hunter Storm Scout",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 73,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-storm-scout-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_StormScout_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "blinky",
+      "name": "Blinky",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 74,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "blinky-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "blinky-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "blinky-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_GhostDamage_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-blinky",
+      "name": "Loot Hacker Blinky",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 75,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-blinky-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_GhostDamage_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-blinky",
+      "name": "Bounty Hunter Blinky",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 76,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-blinky-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_GhostDamage_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "birthday",
+      "name": "Birthday",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 77,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "birthday-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "birthday-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "birthday-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Birthday_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-birthday",
+      "name": "Loot Hacker Birthday",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 78,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-birthday-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Birthday_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-birthday",
+      "name": "Bounty Hunter Birthday",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 79,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-birthday-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Birthday_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "crash-bandicoot",
+      "name": "Crash Bandicoot",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 80,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "crash-bandicoot-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "crash-bandicoot-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "crash-bandicoot-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BodySlam_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-crash-bandicoot",
+      "name": "Loot Hacker Crash Bandicoot",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 81,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-crash-bandicoot-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BodySlam_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-body-slam",
+      "name": "Bounty Hunter Body Slam",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 82,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-body-slam-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_BodySlam_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "pond",
+      "name": "Pond",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 83,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "pond-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "pond-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "pond-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerA_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-pond",
+      "name": "Loot Hacker Pond",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 84,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-pond-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerA_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-pond",
+      "name": "Bounty Hunter Pond",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 85,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-pond-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_WinnerA_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "morgana",
+      "name": "Morgana",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 86,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "morgana-base",
+          "name": "Base",
+          "rareHunt": false
+        },
+        {
+          "id": "morgana-gold",
+          "name": "Gold",
+          "rareHunt": false
+        },
+        {
+          "id": "morgana-cheat-master",
+          "name": "Cheat Master",
+          "rareHunt": true
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_IncreaseHeals_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "loot-hacker-morgana",
+      "name": "Loot Hacker Morgana",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 87,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "loot-hacker-morgana-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_IncreaseHeals_Hacker_L.webp",
+      "source": "Fortnite.GG"
+    },
+    {
+      "id": "bounty-hunter-morgana",
+      "name": "Bounty Hunter Morgana",
+      "rarity": "Rare",
+      "icon": "✨",
+      "releaseOrder": 88,
+      "season": "C7S4",
+      "seasonName": "Chapter 7 Season 4",
+      "variants": [
+        {
+          "id": "bounty-hunter-morgana-base",
+          "name": "Base",
+          "rareHunt": false
+        }
+      ],
+      "image": "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_IncreaseHeals_BountyHunter_L.webp",
+      "source": "Fortnite.GG"
     }
   ],
   "version": "32.1",
@@ -1779,7 +2369,7 @@
       ]
     }
   ],
-  "databaseVersion": "2026.09.03.1432",
+  "databaseVersion": "2026.09.17.1459",
   "currentSeason": "C7S4",
   "seasons": [
     {
@@ -1798,6 +2388,13 @@
     }
   ],
   "dataChangelog": [
+    {
+      "databaseVersion": "2026.09.17.1459",
+      "date": "2026-09-17",
+      "addedEntries": 40,
+      "removedEntries": 0,
+      "source": "Fortnite.GG automatic check with season guard"
+    },
     {
       "databaseVersion": "2026.09.03.1432",
       "date": "2026-09-03",
